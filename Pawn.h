@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QPainter>
 #include <iostream>
+#include <QPainterPath>
+#include <QBrush>
 
 class Pawn : public QWidget
 {
@@ -16,7 +18,11 @@ public:
 signals:
 
 public slots:
+
 private:
+    void displayEmptyPawn();
+    void displayWhitePawn();
+    void displayBlackPawn();
     enum State {empty, black, white};
     State _state;
     bool _isLock;
