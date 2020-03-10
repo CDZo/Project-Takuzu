@@ -25,10 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        presenter.cpp
+        presenter.cpp \
+    Pawn.cpp
 
 HEADERS += \
-        presenter.h
+        presenter.h \
+    Pawn.h
 
 FORMS += \
         vue.ui
