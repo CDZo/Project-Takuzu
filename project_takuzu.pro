@@ -34,3 +34,8 @@ HEADERS += \
 
 FORMS += \
         vue.ui
+
+TRANSLATIONS = takuzu_fr.ts \
+    takuzu_en.ts
+
+DISTFILES +=
