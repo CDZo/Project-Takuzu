@@ -23,7 +23,6 @@ private:
     void loadGrid();
     /*2d array in oned */
     Pawn *_pawnGrid;
-    int * _stateGrid;
     int _gridSize = 0;
 };
 

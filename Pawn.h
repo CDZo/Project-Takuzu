@@ -15,7 +15,8 @@ public:
     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
     void setPosition(const int &lign, const int & column);
-
+    void setState(const int &state);
+    int getState();
 signals:
 void onClicked(const int lign,const int column,const int state);
 

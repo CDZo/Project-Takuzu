@@ -37,6 +37,16 @@ void Pawn::mousePressEvent(QMouseEvent *) {
     update();
 }
 
+void Pawn::setState(const int &state)
+{
+    _state = State(state);
+}
+
+int Pawn::getState()
+{
+    return _state;
+}
+
 
 void Pawn::displayWhitePawn()
 {
