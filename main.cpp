@@ -11,6 +11,9 @@ int main(int argc, char *argv[])
  *  However the *.qm files are still in the folder of development.
  * More research are needed to find another solution.
 */
+    /*TODO
+     * Setup language detection.
+*/
     if(translator.load("takuzu_en","../project_takuzu/")) {
         std::cout << "translator loaded"<< std::endl;
     } else {

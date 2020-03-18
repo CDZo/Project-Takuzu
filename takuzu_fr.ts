@@ -4,7 +4,6 @@
 <context>
     <name>QPushButton</name>
     <message>
-        <location filename="main.cpp" line="15"/>
         <source>Hello world!</source>
         <translation>Essai !!</translation>
     </message>
@@ -20,6 +19,16 @@
         <location filename="vue.ui" line="24"/>
         <source>Hello World!</source>
         <translation>Essai!</translation>
+    </message>
+    <message>
+        <location filename="vue.ui" line="52"/>
+        <source>&amp;Save</source>
+        <translation>&amp;Enregistrer</translation>
+    </message>
+    <message>
+        <location filename="vue.ui" line="55"/>
+        <source>Save your current grid</source>
+        <translation>Enregistrer votre grille</translation>
     </message>
 </context>
 </TS>
