@@ -2,7 +2,7 @@
 #define PRESENTER_H
 
 #include <QMainWindow>
-
+#include "ModelTakuzu.h"
 namespace Ui {
 class presenter;
 }
@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::presenter *ui;
+    ModelTakuzu *_model;
 };
 
 #endif // PRESENTER_H

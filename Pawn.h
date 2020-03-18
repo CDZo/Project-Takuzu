@@ -14,8 +14,10 @@ public:
     explicit Pawn(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
+    void setPosition(const int &lign, const int & column);
 
 signals:
+void onClicked(const int lign,const int column,const int state);
 
 public slots:
 
@@ -24,8 +26,8 @@ private:
     void displayWhitePawn();
     void displayBlackPawn();
     enum State {empty, black, white};
-    State _state;
-    bool _isLock;
+    State _state = empty;
+    bool _isLock = false;
 };
 
 #endif // PAWN_H

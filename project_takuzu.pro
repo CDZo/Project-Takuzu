@@ -24,11 +24,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    ModelTakuzu.cpp \
         main.cpp \
         presenter.cpp \
     Pawn.cpp
 
 HEADERS += \
+    ModelTakuzu.h \
         presenter.h \
     Pawn.h
 

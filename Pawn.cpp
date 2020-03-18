@@ -33,7 +33,7 @@ void Pawn::mousePressEvent(QMouseEvent *) {
         _state = black;
         break;
     }
-    std::cout << "J'ai été cliqué " << _state << std::endl;
+    emit onClicked(0,0,_state);
     update();
 }
 

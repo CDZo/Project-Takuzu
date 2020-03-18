@@ -6,17 +6,15 @@ presenter::presenter(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::presenter)
 {
-    /*See
-     * https://specifications.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html
-     * For more Icon
-    */
+    _model = new ModelTakuzu(this);
+    _model->initGrid(6);
 
     ui->setupUi(this);
+
     ui->actionNew->setIcon(QIcon::fromTheme("document-new"));
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open"));
     ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
-    std::cout <<"defaulty";
-    std::cout << std::flush;
+    connect(ui->toto,SIGNAL(onClicked(int,int,int)),_model,SLOT(onPawnChanged(int,int,int)));
 }
 
 presenter::~presenter()
