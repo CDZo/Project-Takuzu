@@ -22,6 +22,7 @@ private:
     void should_return_gridsize_when_all_columns_are_balanced();
     void should_return_column_when_it_is_unbalanced();
 
+
 };
 
 #endif // TESTMODEL_H

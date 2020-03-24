@@ -89,7 +89,6 @@ void TestModel::should_return_gridsize_when_pawns_are_correctly_set_in_column()
     model.initGrid(size);
     assert(model.putInGrid(0,4,WHITE) == true);
     assert(model.putInGrid(1,4,WHITE) == true);
-    model.display();
     assert(model.checkColumnSideBySidePawn() == size);
 }
 
@@ -113,7 +112,8 @@ void TestModel::should_return_gridsize_when_all_ligns_are_balanced()
     assert(model.putInGrid(0,1,BLACK) == true);
     assert(model.putInGrid(0,4,WHITE) == true);
     assert(model.putInGrid(1,5,WHITE) == true);
-    //assert(model.checkNumberLign() == size);
+    assert(model.putInGrid(1,4,BLACK) == true);
+    assert(model.checkBalancedNumberLign() == size);
 
 }
 
@@ -123,10 +123,9 @@ void TestModel::should_return_lign_when_it_is_unbalanced()
     int size = 6 ;
     model.setSize(size);
     model.initGrid(size);
-    assert(model.putInGrid(1,5,WHITE) == true);
     assert(model.putInGrid(3,1,WHITE) == true);
     assert(model.putInGrid(3,4,WHITE) == true);
-    //assert(model.checkNumberLign() == 3);
+    assert(model.checkBalancedNumberLign() == 3);
 }
 
 void TestModel::should_return_gridsize_when_all_columns_are_balanced()
@@ -135,12 +134,25 @@ void TestModel::should_return_gridsize_when_all_columns_are_balanced()
     int size = 6 ;
     model.setSize(size);
     model.initGrid(size);
-    assert(model.putInGrid(1,5,WHITE) == true);
-    assert(model.putInGrid(3,1,WHITE) == true);
+    assert(model.putInGrid(0,1,WHITE) == true);
+    assert(model.putInGrid(1,1,BLACK) == true);
     assert(model.putInGrid(3,4,BLACK) == true);
-    assert(model.putInGrid(3,4,WHITE) == true);
-model.display();
-   // assert(model.checkNumberLign() == 3);
+    assert(model.putInGrid(4,4,WHITE) == true);
+    std::cout << model.checkBalancedNumberColumn() << std::endl;
+    assert(model.checkBalancedNumberColumn() == size);
+}
+
+void TestModel::should_return_column_when_it_is_unbalanced()
+{
+    ModelTakuzu model(nullptr);
+    int size = 6 ;
+    model.setSize(size);
+    model.initGrid(size);
+    assert(model.putInGrid(0,1,WHITE) == true);
+    assert(model.putInGrid(1,1,BLACK) == true);
+    assert(model.putInGrid(3,4,BLACK) == true);
+    assert(model.putInGrid(4,4,BLACK) == true);
+    assert(model.checkBalancedNumberColumn() == 4);
 }
 
 

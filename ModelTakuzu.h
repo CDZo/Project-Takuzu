@@ -20,18 +20,28 @@ public:
 
     /**
      * @brief check on every ligns for more than 2 pawn side by side
-     * @return the lign where it first detects more than 2 pawn side by side or gridsizes;
+     * @return the lign where it first detects more than 2 pawn side by side or gridsize
      */
     int checkLignSideBySidePawn();
 
     /**
      * @brief check on every column for more than 2 pawn side by side
-     * @return
+     * @return the column where it first detects more than 2 pawnside by side or gridsize
      */
     int checkColumnSideBySidePawn();
 
-    int checkNumberLign();
-    bool checkNumberColumn();
+    /**
+     * @brief check on every lign that colors and numbers of pawn are balanced
+     * @return the first lign unbalanced or gridsize
+     */
+    int checkBalancedNumberLign();
+
+    /**
+     * @brief check on every column that colors and numbers of pawn are balanced
+     * @return the first column unbalanced or gridsize
+     */
+    bool checkBalancedNumberColumn();
+
 
     bool isAllColumnUnique();
     bool isAllLignUnique();

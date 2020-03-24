@@ -50,8 +50,7 @@ void ModelTakuzu::onPawnChanged(const int &lign, const int &column, const int &s
 {
     std::cout <<"old state:" <<  _pawnGrid[lign * _gridSize + column].getState() << std::endl;
     std::cout << "lign:" << lign << " column:" << column << " state:" << state << std::endl;
-    _pawnGrid[lign * _gridSize + column
-            ].setState(state);
+    _pawnGrid[lign * _gridSize + column].setState(state);
     std::cout <<"new state:" <<  _pawnGrid[lign * _gridSize + column].getState() << std::endl;
 }
 
@@ -108,4 +107,58 @@ int ModelTakuzu::checkColumnSideBySidePawn()
         counter = 0;
     }
     return _gridSize;
+}
+
+int ModelTakuzu::checkBalancedNumberLign()
+{
+    int counter = 0;
+    int previousState;
+    for(int lign = 0; lign < _gridSize; lign++) {
+        for(int column = 0; column < _gridSize; column++) {
+            previousState = _pawnGrid[lign * _gridSize + column].getState();
+            switch(previousState) {
+            case 1:counter++;
+                break;
+            case 2:counter--;
+                break;
+            }
+        }
+        if (counter != 0) {
+            return lign;
+        }
+        counter = 0;
+    }
+    return _gridSize;
+}
+
+bool ModelTakuzu::checkBalancedNumberColumn()
+{
+    int counter = 0;
+    int previousState;
+    for(int column = 0; column < _gridSize; column++) {
+        for(int lign = 0; lign < _gridSize; lign++) {
+            previousState = _pawnGrid[lign * _gridSize + column].getState();
+            switch(previousState) {
+            case 1:counter++;
+                break;
+            case 2:counter--;
+                break;
+            }
+        }
+        if (counter != 0) {
+            return column;
+        }
+        counter = 0;
+    }
+    return _gridSize;
+}
+
+bool ModelTakuzu::isAllColumnUnique()
+{
+
+}
+
+bool ModelTakuzu::isAllLignUnique()
+{
+
 }
