@@ -10,7 +10,6 @@ presenter::presenter(QWidget *parent) :
     _model->initGrid(6);
 
     ui->setupUi(this);
-
     ui->actionNew->setIcon(QIcon::fromTheme("document-new"));
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open"));
     ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
