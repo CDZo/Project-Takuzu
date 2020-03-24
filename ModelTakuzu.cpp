@@ -92,7 +92,7 @@ int ModelTakuzu::checkColumnSideBySidePawn()
         if(previousState != 0) {
             counter++;
         }
-        for(int lign = 0; lign < _gridSize; lign++) {
+        for(int lign = 1; lign < _gridSize; lign++) {
             if(_pawnGrid[lign * _gridSize + column].getState() == previousState) {
                 if(previousState != 0) {
                     counter++;
