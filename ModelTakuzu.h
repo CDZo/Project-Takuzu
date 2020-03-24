@@ -17,10 +17,19 @@ public:
     bool putInGrid(int lign, int column, int state);
     void display();
 
+    /**
+     * @brief check on every ligns for more than 2 pawn side by side
+     * @return the lign where it first detects more than 2 pawn side by side or gridsizes;
+     */
     int checkLignSideBySidePawn();
+
+    /**
+     * @brief check on every column for more than 2 pawn side by side
+     * @return
+     */
     int checkColumnSideBySidePawn();
 
-    bool checkNumberLign();
+    int checkNumberLign();
     bool checkNumberColumn();
 
     bool isAllColumnUnique();
@@ -34,10 +43,7 @@ public slots:
 
 private:
     void loadGrid();
-    /**
-     * @brief check on every ligns to detect more than 2 pawn side by side
-     * @return the lign where it first detect more than 2 pawn side by side or gridsizes;
-     */
+
 
     /*2d array in oned */
     Pawn *_pawnGrid;

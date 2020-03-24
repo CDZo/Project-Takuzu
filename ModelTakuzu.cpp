@@ -87,21 +87,21 @@ int ModelTakuzu::checkColumnSideBySidePawn()
 {
     int counter = 0;
     int previousState;
-    for(int i = 0; i < _gridSize; i++) {
-        previousState = _pawnGrid[i*_gridSize].getState();
+    for(int column = 0; column < _gridSize; column++) {
+        previousState = _pawnGrid[column].getState();
         if(previousState != 0) {
             counter++;
         }
-        for(int j = 1; j < _gridSize; j++) {
-            if(_pawnGrid[i*_gridSize+j].getState() == previousState) {
+        for(int lign = 0; lign < _gridSize; lign++) {
+            if(_pawnGrid[lign * _gridSize + column].getState() == previousState) {
                 if(previousState != 0) {
                     counter++;
                 }
                 if (counter > 2) {
-                    return i;
+                    return column;
                 }
             } else {
-                previousState = _pawnGrid[i*_gridSize+j].getState();
+                previousState = _pawnGrid[lign*_gridSize+column].getState();
                 counter = 1;
             }
         }
