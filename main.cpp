@@ -11,8 +11,6 @@ int main(int argc, char *argv[])
         std::cout << "Usage : programm id_programme (0 takuzu, 1 test)" <<std::endl;
         return 0;
     }
-    int id_prog;
-
     if (strncmp("1", argv[1],1) == 0) {
         QApplication a(argc, argv);
         TestModel test;

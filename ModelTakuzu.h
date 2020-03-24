@@ -12,6 +12,7 @@ public:
     void isFinalCorrect();
     void isLignCorrect(const int & lign);
     void isColumnCorrect(const int & column);
+
     void setSize(const int & size);
     void initGrid(const int &size);
     bool putInGrid(int lign, int column, int state);
