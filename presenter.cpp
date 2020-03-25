@@ -13,7 +13,7 @@ presenter::presenter(QWidget *parent) :
     ui->actionNew->setIcon(QIcon::fromTheme("document-new"));
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open"));
     ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
-    connect(ui->toto,SIGNAL(onClicked(int,int,int)),_model,SLOT(onPawnChanged(int,int,int)));
+    connect(ui->firstPawn,SIGNAL(onClicked(int,int,int)),_model,SLOT(onPawnChanged(int,int,int)));
 }
 
 presenter::~presenter()

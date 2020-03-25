@@ -55,7 +55,7 @@
      <widget class="Pawn" name="widget_27" native="true"/>
     </item>
     <item row="0" column="0">
-     <widget class="Pawn" name="toto" native="true"/>
+     <widget class="Pawn" name="firstPawn" native="true"/>
     </item>
     <item row="4" column="2">
      <widget class="Pawn" name="widget_29" native="true"/>
