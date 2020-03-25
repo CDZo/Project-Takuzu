@@ -131,7 +131,7 @@ int ModelTakuzu::checkBalancedNumberLign()
     return _gridSize;
 }
 
-bool ModelTakuzu::checkBalancedNumberColumn()
+int ModelTakuzu::checkBalancedNumberColumn()
 {
     int counter = 0;
     int previousState;
@@ -153,12 +153,12 @@ bool ModelTakuzu::checkBalancedNumberColumn()
     return _gridSize;
 }
 
-bool ModelTakuzu::isAllColumnUnique()
+std::set<std::pair<int,int>> ModelTakuzu::isAllColumnUnique()
 {
 
 }
 
-bool ModelTakuzu::isAllLignUnique()
+std::set<std::pair<int,int>> ModelTakuzu::isAllLignUnique()
 {
 
 }

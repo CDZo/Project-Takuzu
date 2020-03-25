@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "Pawn.h"
+#include <set>
 class ModelTakuzu : public QObject
 {
     Q_OBJECT
@@ -40,11 +41,15 @@ public:
      * @brief check on every column that colors and numbers of pawn are balanced
      * @return the first column unbalanced or gridsize
      */
-    bool checkBalancedNumberColumn();
+    int checkBalancedNumberColumn();
 
+    /**
+     * @brief check the uniqueness of every columns
+     * @return return a set of pair of twin colunms or a set with an unique pair with gridsize
+     */
+    std::set<std::pair<int,int>> isAllColumnUnique();
 
-    bool isAllColumnUnique();
-    bool isAllLignUnique();
+    std::set<std::pair<int,int>> isAllLignUnique();
 
 signals:
     void notify();

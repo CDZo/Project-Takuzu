@@ -23,6 +23,15 @@ private:
     void should_return_column_when_it_is_unbalanced();
 
 
+    void should_return_gridsize_when_all_columns_are_unique();
+    void should_return_gridsize_when_columns_are_unique_but_ligns_not();
+    void should_return_faulty_column_when_uniqueness_is_not_respected();
+
+    void should_return_gridsize_when_all_ligns_are_unique();
+    void should_return_gridsize_when_ligns_are_correct_but_columns_not();
+    void should_return_faulty_lign_when_uniqueness_is_not_respected();
+
+
 };
 
 #endif // TESTMODEL_H
