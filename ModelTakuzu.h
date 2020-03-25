@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "Pawn.h"
+
 #include <set>
 class ModelTakuzu : public QObject
 {
@@ -41,7 +42,7 @@ signals:
     void notify();
 
 public slots:
-    void onPawnChanged(const int & row, const int & column,const int &state);
+    void onPawnChanged(const int & row, const int & column,const State &state);
 
 private:
     void loadGrid();

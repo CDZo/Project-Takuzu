@@ -23,21 +23,21 @@ void Pawn::paintEvent(QPaintEvent *) {
 void Pawn::mousePressEvent(QMouseEvent *) {
 
     switch (_state){
-    case white:
-        _state = empty;
+    case White:
+        _state = Empty;
         break;
-    case black:
-        _state = white;
+    case Black:
+        _state = White;
         break;
-    case empty:
-        _state = black;
+    case Empty:
+        _state = Black;
         break;
     }
     emit onClicked(0,0,_state);
     update();
 }
 
-void Pawn::setState(const int &state)
+void Pawn::setState(const State &state)
 {
     _state = State(state);
 }

@@ -45,7 +45,7 @@ void ModelTakuzu::display()
     std::cout << std::endl;
 }
 
-void ModelTakuzu::onPawnChanged(const int &row, const int &column, const int &state)
+void ModelTakuzu::onPawnChanged(const int &row, const int &column, const State &state)
 {
     std::cout <<"old state:" <<  _pawnGrid[row * _gridSize + column].getState() << std::endl;
     std::cout << "row:" << row << " column:" << column << " state:" << state << std::endl;

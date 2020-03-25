@@ -33,6 +33,7 @@ SOURCES += \
 
 HEADERS += \
     ModelTakuzu.h \
+    State.h \
     TestModel.h \
     TestPawn.h \
         presenter.h \

@@ -6,7 +6,7 @@
 #include <iostream>
 #include <QPainterPath>
 #include <QBrush>
-
+#include "State.h"
 class Pawn : public QWidget
 {
     Q_OBJECT
@@ -15,12 +15,12 @@ public:
     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
     void setPosition(const int &lign, const int & column);
-    void setState(const int &state);
+    void setState(const State &state);
     int getState();
     bool operator==(const Pawn & other);
 
 signals:
-void onClicked(const int lign,const int column,const int state);
+void onClicked(const int lign,const int column,const State state);
 
 public slots:
 
@@ -28,8 +28,7 @@ private:
     void displayEmptyPawn();
     void displayWhitePawn();
     void displayBlackPawn();
-    enum State {empty, black, white};
-    State _state = empty;
+    State _state = Empty;
     bool _isLock = false;
 };
 
