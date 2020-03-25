@@ -3,18 +3,18 @@
 Pawn::Pawn(QWidget *parent) : QWidget(parent)
 {
     _isLock = false;
-    _state = empty;
+    _state = State::Empty;
 }
 
 void Pawn::paintEvent(QPaintEvent *) {
     switch (_state){
-    case empty:
+    case State::Empty:
         displayEmptyPawn();
         break;
-    case black:
+    case State::Black:
         displayBlackPawn();
         break;
-    case white:
+    case State::White:
         displayWhitePawn();
         break;
     }
