@@ -84,7 +84,6 @@ void TestModel::should_return_position_of_faulty_pawns_when_3pawns_are_side_by_s
     faultyPawns.insert(std::make_pair(1,0));
     faultyPawns.insert(std::make_pair(1,1));
     faultyPawns.insert(std::make_pair(1,2));
-
     assert(model.checkRowSideBySidePawn() == faultyPawns);
 }
 

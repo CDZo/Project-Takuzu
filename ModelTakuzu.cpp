@@ -53,6 +53,22 @@ void ModelTakuzu::onPawnChanged(const int &row, const int &column, const int &st
     std::cout <<"new state:" <<  _pawnGrid[row * _gridSize + column].getState() << std::endl;
 }
 
+void updateVariablesWith(const int & state,int * counter,int * firstIncorrectPawn, const int & valueIncorrectPawn)
+{
+    if(state) {
+        (*counter)++;
+        (*firstIncorrectPawn) = valueIncorrectPawn;
+    }
+}
+
+void insertIncorrectPawns(std::set<std::pair<int,int>> *faultyPawns,const int & row,const int & firstIncorrectPawn,const int & counter)
+{
+        for(int i = 0; i < counter; i++) {
+            faultyPawns->insert(std::make_pair(row,firstIncorrectPawn + i));
+       }
+
+}
+
 std::set<std::pair<int,int>> ModelTakuzu::checkRowSideBySidePawn()
 {
     std::set<std::pair<int,int>> faultyPawns;
@@ -62,34 +78,22 @@ std::set<std::pair<int,int>> ModelTakuzu::checkRowSideBySidePawn()
     for(int row = 0; row < _gridSize; row++) {
         counter = 0;
         previousState = _pawnGrid[ row * _gridSize].getState();
-        if(previousState) {
-            counter++;
-            firstIncorrectPawn = 0;
-        }
+        updateVariablesWith(previousState,&counter,&firstIncorrectPawn,0);
         for(int column = 1; column < _gridSize; column++) {
             currentState = _pawnGrid[row * _gridSize + column].getState();
             if( currentState == previousState) {
-                if(previousState) {
-                    counter++;
-                }
+                updateVariablesWith(currentState,&counter,&firstIncorrectPawn,firstIncorrectPawn);
             } else {
                 if(counter > 2) {
-                    for(int i = 0; i < counter; i++) {
-                        faultyPawns.insert(std::make_pair(row,firstIncorrectPawn + i));
-                    }
+                    insertIncorrectPawns(&faultyPawns,row,firstIncorrectPawn,counter);
                 }
                 counter = 0;
-                if(currentState) {
-                    counter++;
-                    firstIncorrectPawn = column;
-                }
+                updateVariablesWith(currentState,&counter,&firstIncorrectPawn,column);
                 previousState = currentState;
             }
         }
         if(counter > 2) {
-            for(int i = 0; i < counter; i++) {
-                faultyPawns.insert(std::make_pair(row,firstIncorrectPawn + i));
-            }
+           insertIncorrectPawns(&faultyPawns,row,firstIncorrectPawn,counter);
         }
     }
     return faultyPawns;
