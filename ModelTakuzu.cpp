@@ -56,66 +56,85 @@ void ModelTakuzu::onPawnChanged(const int &row, const int &column, const int &st
 std::set<std::pair<int,int>> ModelTakuzu::checkRowSideBySidePawn()
 {
     std::set<std::pair<int,int>> faultyPawns;
-    int firstPawn;
-    int counter = 0;
-    int previousState;
-    for(int row = 0; row< _gridSize; row++) {
+    int firstIncorrectPawn;
+    int counter;
+    int previousState, currentState;
+    for(int row = 0; row < _gridSize; row++) {
+        counter = 0;
         previousState = _pawnGrid[ row * _gridSize].getState();
         if(previousState) {
             counter++;
-            firstPawn = 0;
+            firstIncorrectPawn = 0;
         }
         for(int column = 1; column < _gridSize; column++) {
-            if(_pawnGrid[row * _gridSize + column].getState() == previousState) {
+            currentState = _pawnGrid[row * _gridSize + column].getState();
+            if( currentState == previousState) {
                 if(previousState) {
                     counter++;
                 }
-            } else {/*TODO wip*/
-                previousState = _pawnGrid[row * _gridSize + column].getState();
-                if(previousState) {
-                    counter = 1;
-                    firstPawn = column;
-                } else {
-                    for(int i=0; i< counter;i++) {
-
+            } else {
+                if(counter > 2) {
+                    for(int i = 0; i < counter; i++) {
+                        faultyPawns.insert(std::make_pair(row,firstIncorrectPawn + i));
                     }
                 }
+                counter = 0;
+                if(currentState) {
+                    counter++;
+                    firstIncorrectPawn = column;
+                }
+                previousState = currentState;
             }
         }
-        counter = 0;
+        if(counter > 2) {
+            for(int i = 0; i < counter; i++) {
+                faultyPawns.insert(std::make_pair(row,firstIncorrectPawn + i));
+            }
+        }
     }
     return faultyPawns;
 }
 
 std::set<std::pair<int,int>> ModelTakuzu::checkColumnSideBySidePawn()
 {
-    int counter = 0;
-    int previousState;
+    std::set<std::pair<int,int>> faultyPawns;
+    int firstIncorrectPawn;
+    int counter;
+    int previousState, currentState;
     for(int column = 0; column < _gridSize; column++) {
+        counter = 0;
         previousState = _pawnGrid[column].getState();
         if(previousState) {
             counter++;
+            firstIncorrectPawn = 0;
         }
         for(int row = 1; row < _gridSize; row++) {
-            if(_pawnGrid[row * _gridSize + column].getState() == previousState) {
+            currentState = _pawnGrid[row * _gridSize + column].getState();
+            if( currentState == previousState) {
                 if(previousState) {
                     counter++;
                 }
-                if (counter > 2) {
-                    std::set<std::pair<int,int>> t;
-                    t.insert(std::make_pair(0,0));
-                    return t;
-                }
             } else {
-                previousState = _pawnGrid[row*_gridSize+column].getState();
-                counter = 1;
+                if(counter > 2) {
+                    for(int i = 0; i < counter; i++) {
+                        faultyPawns.insert(std::make_pair(firstIncorrectPawn + i,column));
+                    }
+                }
+                counter = 0;
+                if(currentState) {
+                    counter++;
+                    firstIncorrectPawn = row;
+                }
+                previousState = currentState;
             }
         }
-        counter = 0;
+        if(counter > 2) {
+            for(int i = 0; i < counter; i++) {
+                faultyPawns.insert(std::make_pair(firstIncorrectPawn + i,column));
+            }
+        }
     }
-    std::set<std::pair<int,int>> t;
-    t.insert(std::make_pair(0,0));
-    return t;
+    return faultyPawns;
 }
 
 std::set<int> ModelTakuzu::findUnbalancedRows()
