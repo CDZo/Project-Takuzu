@@ -49,6 +49,10 @@ public:
      */
     std::set<std::pair<int,int>> isAllColumnUnique();
 
+    /**
+     * @brief check the uniqueness of every ligns
+     * @return return a set of pair of twin ligns or a set with an unique pair with gridsize
+     */
     std::set<std::pair<int,int>> isAllLignUnique();
 
 signals:

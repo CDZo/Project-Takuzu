@@ -9,7 +9,9 @@
 //enum State {empty, black, white};
 TestModel::TestModel()
 {
-    std::cout << "TestModel constructor" <<std::endl;
+    should_return_true_when_put_pawn_in_boundary();
+    should_return_false_when_put_pawn_out_out_of_bounds();
+
     should_return_faulty_lign_when_3pawns_are_side_by_side_in_ligns();
     should_return_gridsize_when_pawns_are_correctly_set_in_lign();
     should_return_gridsize_when_testing_ligns_with_pawns_set_in_column();
@@ -32,7 +34,33 @@ TestModel::TestModel()
     should_return_gridsize_when_all_ligns_are_unique();
     should_return_gridsize_when_ligns_are_correct_but_columns_not();
     should_return_faulty_lign_when_uniqueness_is_not_respected();
-    std::cout << "All Tests ok" << std::endl;
+    std::cout << "Tests for model: ok" << std::endl;
+}
+
+void TestModel::should_return_true_when_put_pawn_in_boundary()
+{
+    ModelTakuzu model(nullptr);
+    model.setSize(6);
+    model.initGrid(6);
+    assert(model.putInGrid(5,3,BLACK) == true);
+    assert(model.putInGrid(5,4,BLACK) == true);
+    assert(model.putInGrid(5,5,BLACK) == true);
+}
+
+void TestModel::should_return_false_when_put_pawn_out_out_of_bounds()
+{
+    ModelTakuzu model(nullptr);
+    int size = 6;
+    model.setSize(size);
+    model.initGrid(size);
+    assert(model.putInGrid(-1,0,BLACK) == false);
+    assert(model.putInGrid(size,0,BLACK) == false);
+
+    assert(model.putInGrid(0,-1,BLACK) == false);
+    assert(model.putInGrid(0,size,BLACK) == false);
+
+    assert(model.putInGrid(-1,-1,BLACK) == false);
+    assert(model.putInGrid(size,size,BLACK) == false);
 }
 
 void TestModel::should_return_faulty_lign_when_3pawns_are_side_by_side_in_ligns()
@@ -205,17 +233,71 @@ void TestModel::should_return_gridsize_when_columns_are_unique_but_ligns_not()
 void TestModel::should_return_faulty_column_when_uniqueness_is_not_respected()
 {
     ModelTakuzu model(nullptr);
-    int size = 2 ;
+    int size = 3 ;
     model.setSize(size);
     model.initGrid(size);
     assert(model.putInGrid(0,0,WHITE) == true);
     assert(model.putInGrid(0,1,WHITE) == true);
+    assert(model.putInGrid(0,2,WHITE) == true);
+
     assert(model.putInGrid(1,0,BLACK) == true);
     assert(model.putInGrid(1,1,BLACK) == true);
+    assert(model.putInGrid(1,2,BLACK) == true);
+
     std::set<std::pair<int,int>> wrongColumn;
     wrongColumn.insert(std::make_pair(0,1));
-
+    wrongColumn.insert(std::make_pair(1,2));
     assert(model.isAllColumnUnique() == wrongColumn);
+}
+
+void TestModel::should_return_gridsize_when_all_ligns_are_unique()
+{
+    ModelTakuzu model(nullptr);
+    int size = 2 ;
+    model.setSize(size);
+    model.initGrid(size);
+    assert(model.putInGrid(0,0,WHITE) == true);
+    assert(model.putInGrid(0,1,BLACK) == true);
+    assert(model.putInGrid(1,0,BLACK) == true);
+    assert(model.putInGrid(1,1,WHITE) == true);
+    std::set<std::pair<int,int>> lign;
+    lign.insert(std::make_pair(size,size));
+    assert(model.isAllLignUnique() == lign);
+}
+
+void TestModel::should_return_gridsize_when_ligns_are_correct_but_columns_not()
+{
+    ModelTakuzu model(nullptr);
+    int size = 3 ;
+    model.setSize(size);
+    model.initGrid(size);
+    assert(model.putInGrid(0,0,BLACK) == true);//
+    assert(model.putInGrid(0,1,WHITE) == true);
+    assert(model.putInGrid(0,2,WHITE) == true);
+    assert(model.putInGrid(1,0,WHITE) == true);
+    assert(model.putInGrid(1,1,BLACK) == true);
+    assert(model.putInGrid(1,2,BLACK) == true);
+    assert(model.putInGrid(2,0,WHITE) == true);
+    assert(model.putInGrid(2,1,WHITE) == true);
+    assert(model.putInGrid(2,2,WHITE) == true);
+    std::set<std::pair<int,int>> lign;
+    lign.insert(std::make_pair(size,size));
+    assert(model.isAllLignUnique() == lign);
+}
+
+void TestModel::should_return_faulty_lign_when_uniqueness_is_not_respected()
+{
+    ModelTakuzu model(nullptr);
+    int size = 2 ;
+    model.setSize(size);
+    model.initGrid(size);
+    assert(model.putInGrid(0,0,BLACK) == true);//
+    assert(model.putInGrid(0,1,BLACK) == true);
+    assert(model.putInGrid(1,0,BLACK) == true);
+    assert(model.putInGrid(1,1,BLACK) == true);
+    std::set<std::pair<int,int>> lign;
+    lign.insert(std::make_pair(0,1));
+    assert(model.isAllLignUnique() == lign);
 }
 
 

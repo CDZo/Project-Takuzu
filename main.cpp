@@ -1,10 +1,12 @@
-#include "presenter.h"
-#include "TestModel.h"
 #include <QApplication>
 #include <QTranslator>
 #include <QPushButton>
 #include <iostream>
 #include <string.h>
+#include "presenter.h"
+#include "TestPawn.h"
+#include "TestModel.h"
+
 int main(int argc, char *argv[])
 {
     if (argc != 2) {
@@ -13,7 +15,8 @@ int main(int argc, char *argv[])
     }
     if (strncmp("1", argv[1],1) == 0) {
         QApplication a(argc, argv);
-        TestModel test;
+        TestPawn testPawn;
+        TestModel testModel;
         return 0;
     }
     if (strncmp("0", argv[1],1) == 0) {

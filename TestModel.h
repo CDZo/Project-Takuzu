@@ -7,6 +7,10 @@ class TestModel
 public:
     TestModel();
 private:
+
+    void should_return_true_when_put_pawn_in_boundary();
+    void should_return_false_when_put_pawn_out_out_of_bounds();
+
     void should_return_faulty_lign_when_3pawns_are_side_by_side_in_ligns();
     void should_return_gridsize_when_pawns_are_correctly_set_in_lign();
     void should_return_gridsize_when_testing_ligns_with_pawns_set_in_column();

@@ -17,6 +17,7 @@ public:
     void setPosition(const int &lign, const int & column);
     void setState(const int &state);
     int getState();
+    bool operator==(const Pawn & other);
 
 signals:
 void onClicked(const int lign,const int column,const int state);

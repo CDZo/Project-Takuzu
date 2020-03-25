@@ -26,7 +26,7 @@ void ModelTakuzu::initGrid(const int &size)
 bool ModelTakuzu::putInGrid(int lign, int column, int state)
 {
     if (column >= 0 && lign >= 0) {
-        if (column < _gridSize || lign < _gridSize) {
+        if (column < _gridSize && lign < _gridSize) {
             _pawnGrid[lign*_gridSize+column].setState(state);
             return true;
         }
@@ -155,10 +155,42 @@ int ModelTakuzu::checkBalancedNumberColumn()
 
 std::set<std::pair<int,int>> ModelTakuzu::isAllColumnUnique()
 {
-
+    bool areEqual;
+    std::set<std::pair<int,int>> twinColumns;
+    for(int column = 0; column < _gridSize - 1; column++) {
+        for(int lign = 0; lign < _gridSize;lign++) {
+            areEqual = (_pawnGrid[lign * _gridSize + column] == _pawnGrid[lign * _gridSize + column+1]);
+            if(!areEqual) {
+                break;
+            }
+        }
+        if (areEqual) {
+            twinColumns.insert(std::make_pair(column,column+1));
+        }
+    }
+    if (twinColumns.empty()) {
+        twinColumns.insert(std::make_pair(_gridSize,_gridSize));
+    }
+    return twinColumns;
 }
 
 std::set<std::pair<int,int>> ModelTakuzu::isAllLignUnique()
 {
-
+    bool areEqual;
+    std::set<std::pair<int,int>> twinLigns;
+    for(int lign = 0; lign < _gridSize - 1; lign++) {
+        for(int column = 0; column < _gridSize; column++) {
+            areEqual = (_pawnGrid[lign * _gridSize + column] == _pawnGrid[(lign + 1) * _gridSize + column]);
+            if(!areEqual) {
+                break;
+            }
+        }
+        if (areEqual) {
+            twinLigns.insert(std::make_pair(lign,lign+1));
+        }
+    }
+    if (twinLigns.empty()) {
+        twinLigns.insert(std::make_pair(_gridSize,_gridSize));
+    }
+    return twinLigns;
 }

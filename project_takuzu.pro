@@ -26,6 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     ModelTakuzu.cpp \
     TestModel.cpp \
+    TestPawn.cpp \
         main.cpp \
         presenter.cpp \
     Pawn.cpp
@@ -33,6 +34,7 @@ SOURCES += \
 HEADERS += \
     ModelTakuzu.h \
     TestModel.h \
+    TestPawn.h \
         presenter.h \
     Pawn.h
 

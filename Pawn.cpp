@@ -47,6 +47,11 @@ int Pawn::getState()
     return _state;
 }
 
+bool Pawn::operator==(const Pawn &other)
+{
+    return _state == other._state;
+}
+
 
 void Pawn::displayWhitePawn()
 {
