@@ -22,7 +22,7 @@ void ModelTakuzu::initGrid(const int &size)
     _pawnGrid = new Pawn[size * size];
 }
 
-bool ModelTakuzu::putInGrid(int row, int column, int state)
+bool ModelTakuzu::putInGrid(int row, int column, State state)
 {
     if (column >= 0 && row >= 0) {
         if (column < _gridSize && row < _gridSize) {

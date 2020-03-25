@@ -14,7 +14,7 @@ public:
 
     void setSize(const int & size);
     void initGrid(const int &size);
-    bool putInGrid(int row, int column, int state);
+    bool putInGrid(int row, int column, State state);
     void display();
 
 
