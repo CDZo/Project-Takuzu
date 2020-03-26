@@ -55,7 +55,7 @@ void ModelTakuzu::onPawnChanged(const int &row, const int &column, const State &
 
 void updateVariablesWith(const int & state,int * counter,int * firstIncorrectPawn, const int & valueIncorrectPawn)
 {
-    if(state) {
+    if(state != Empty) {
         (*counter)++;
         (*firstIncorrectPawn) = valueIncorrectPawn;
     }
@@ -115,7 +115,7 @@ std::set<std::pair<int,int>> ModelTakuzu::checkColumnSideBySidePawn()
         for(int row = 1; row < _gridSize; row++) {
             currentState = _pawnGrid[row * _gridSize + column].getState();
             if( currentState == previousState) {
-                if(previousState) {
+                if(previousState != Empty) {
                     counter++;
                 }
             } else {
@@ -125,7 +125,7 @@ std::set<std::pair<int,int>> ModelTakuzu::checkColumnSideBySidePawn()
                     }
                 }
                 counter = 0;
-                if(currentState) {
+                if(currentState != Empty) {
                     counter++;
                     firstIncorrectPawn = row;
                 }
