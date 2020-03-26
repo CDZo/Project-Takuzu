@@ -9,54 +9,49 @@
         <translation>Takuzu</translation>
     </message>
     <message>
-        <location filename="vue.ui" line="24"/>
-        <source>Hello World!</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="vue.ui" line="67"/>
+        <location filename="vue.ui" line="72"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Save</translation>
     </message>
     <message>
-        <location filename="vue.ui" line="70"/>
+        <location filename="vue.ui" line="75"/>
         <source>Save your current grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="vue.ui" line="73"/>
-        <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Save your current grid</translation>
     </message>
     <message>
         <location filename="vue.ui" line="78"/>
+        <source>Ctrl+S</source>
+        <translation>Ctrl+S</translation>
+    </message>
+    <message>
+        <location filename="vue.ui" line="83"/>
         <source>&amp;Open</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Open</translation>
     </message>
     <message>
-        <location filename="vue.ui" line="81"/>
+        <location filename="vue.ui" line="86"/>
         <source>Open a grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="vue.ui" line="84"/>
-        <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Open a grid</translation>
     </message>
     <message>
         <location filename="vue.ui" line="89"/>
+        <source>Ctrl+O</source>
+        <translation>Ctrl+O</translation>
+    </message>
+    <message>
+        <location filename="vue.ui" line="94"/>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;New</translation>
     </message>
     <message>
-        <location filename="vue.ui" line="92"/>
+        <location filename="vue.ui" line="97"/>
         <source>Create a new grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Create a new grid</translation>
     </message>
     <message>
-        <location filename="vue.ui" line="95"/>
+        <location filename="vue.ui" line="100"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
 </context>
 </TS>

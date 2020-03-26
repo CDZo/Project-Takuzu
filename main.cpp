@@ -22,14 +22,10 @@ int main(int argc, char *argv[])
     if (strncmp("0", argv[1],1) == 0) {
         QApplication a(argc, argv);
         QTranslator translator;
-        /*QtCreator create a build folder where it executes the main.
-         *  However the *.qm files are still in the folder of development.
-         * More research are needed to find another solution.
-         */
         /*TODO
          * Setup language detection.
         */
-        if(translator.load("takuzu_en","../project_takuzu/")) {
+        if(translator.load(QLocale(),"takuzu","_",":/translation/")) {
             std::cout << "translator loaded"<< std::endl;
         } else {
             std::cout << "translator failed"<< std::endl;

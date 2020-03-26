@@ -46,3 +46,7 @@ TRANSLATIONS = takuzu_fr.ts \
     takuzu_en.ts
 
 DISTFILES +=
+
+RESOURCES += \
+    translation.qrc
+

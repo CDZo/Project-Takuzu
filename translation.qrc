@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/translation">
+        <file>takuzu_fr.qm</file>
+        <file>takuzu_en.qm</file>
+    </qresource>
+</RCC>
