@@ -1,6 +1,10 @@
 #include "presenter.h"
 #include "ui_vue.h"
 #include <QIcon>
+#include <QLineEdit>
+#include <QTextStream>
+#include <QRandomGenerator>
+#include <QIODevice>
 
 presenter::presenter(QWidget *parent) :
     QMainWindow(parent),
@@ -15,7 +19,7 @@ presenter::presenter(QWidget *parent) :
     ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
     ui->firstPawn->setPosition(0,0);
     ui->secondPawn->setPosition(0,1);
-
+    createGrid(6,0);
     ui->firstPawn->setLock(true);
     ui->firstPawn->setState(State::White);
     ui->secondPawn->setState(State::Black);
@@ -29,4 +33,38 @@ presenter::presenter(QWidget *parent) :
 presenter::~presenter()
 {
     delete ui;
+}
+
+void presenter::createGrid(int size, int difficulty){
+    QString filePath = ":/grid/";
+    filePath += QString::number(size);
+    switch (difficulty){
+    case 0:
+        filePath += "_easy.txt";
+        break;
+    case 1:
+        filePath += "_hard.txt";
+        break;
+    }
+    std::cout<<filePath.toStdString()<<std::endl<<std::flush;
+
+    QString grid = "";
+
+    QFile file(filePath);
+
+    if (file.open(QIODevice::ReadOnly)){
+        QTextStream text(&file);
+        int i = text.readLine().toInt();
+        QRandomGenerator rand;
+        i = rand.bounded(1,i+1);
+        for (int k=0;k<i;k++) {
+            grid=text.readLine();
+        }
+        std::cout<<grid.toStdString()<<std::endl<<std::flush;
+        file.close();
+    }
+    else {
+        std::cout<<"Error opening file"<<std::endl<<std::flush;
+    }
+
 }

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>462</width>
-    <height>430</height>
+    <width>447</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,112 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="Pawn" name="firstPawn" native="true"/>
+     <widget class="Pawn" name="toto" native="true"/>
     </item>
     <item row="0" column="1">
-     <widget class="Pawn" name="secondPawn" native="true"/>
+     <widget class="Pawn" name="widget_2" native="true"/>
+    </item>
+    <item row="0" column="2">
+     <widget class="Pawn" name="widget_3" native="true"/>
+    </item>
+    <item row="0" column="3">
+     <widget class="Pawn" name="widget_4" native="true"/>
+    </item>
+    <item row="0" column="4">
+     <widget class="Pawn" name="widget_5" native="true"/>
+    </item>
+    <item row="0" column="5">
+     <widget class="Pawn" name="widget_6" native="true"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="Pawn" name="widget_10" native="true"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="Pawn" name="widget_13" native="true"/>
+    </item>
+    <item row="1" column="2">
+     <widget class="Pawn" name="widget_8" native="true"/>
+    </item>
+    <item row="1" column="3">
+     <widget class="Pawn" name="widget_14" native="true"/>
+    </item>
+    <item row="1" column="4">
+     <widget class="Pawn" name="widget_11" native="true"/>
+    </item>
+    <item row="1" column="5">
+     <widget class="Pawn" name="widget_12" native="true"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="Pawn" name="widget_17" native="true"/>
+    </item>
+    <item row="2" column="1">
+     <widget class="Pawn" name="widget_20" native="true"/>
+    </item>
+    <item row="2" column="2">
+     <widget class="Pawn" name="widget_15" native="true"/>
+    </item>
+    <item row="2" column="3">
+     <widget class="Pawn" name="widget_21" native="true"/>
+    </item>
+    <item row="2" column="4">
+     <widget class="Pawn" name="widget_18" native="true"/>
+    </item>
+    <item row="2" column="5">
+     <widget class="Pawn" name="widget_19" native="true"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="Pawn" name="widget_24" native="true"/>
+    </item>
+    <item row="3" column="1">
+     <widget class="Pawn" name="widget_27" native="true"/>
+    </item>
+    <item row="3" column="2">
+     <widget class="Pawn" name="widget_22" native="true"/>
+    </item>
+    <item row="3" column="3">
+     <widget class="Pawn" name="widget_28" native="true"/>
+    </item>
+    <item row="3" column="4">
+     <widget class="Pawn" name="widget_25" native="true"/>
+    </item>
+    <item row="3" column="5">
+     <widget class="Pawn" name="widget_26" native="true"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="Pawn" name="widget_31" native="true"/>
+    </item>
+    <item row="4" column="1">
+     <widget class="Pawn" name="widget_34" native="true"/>
+    </item>
+    <item row="4" column="2">
+     <widget class="Pawn" name="widget_29" native="true"/>
+    </item>
+    <item row="4" column="3">
+     <widget class="Pawn" name="widget_35" native="true"/>
+    </item>
+    <item row="4" column="4">
+     <widget class="Pawn" name="widget_32" native="true"/>
+    </item>
+    <item row="4" column="5">
+     <widget class="Pawn" name="widget_33" native="true"/>
+    </item>
+    <item row="5" column="0">
+     <widget class="Pawn" name="widget_38" native="true"/>
+    </item>
+    <item row="5" column="1">
+     <widget class="Pawn" name="widget_41" native="true"/>
+    </item>
+    <item row="5" column="2">
+     <widget class="Pawn" name="widget_36" native="true"/>
+    </item>
+    <item row="5" column="3">
+     <widget class="Pawn" name="widget_42" native="true"/>
+    </item>
+    <item row="5" column="4">
+     <widget class="Pawn" name="widget_39" native="true"/>
+    </item>
+    <item row="5" column="5">
+     <widget class="Pawn" name="widget_40" native="true"/>
     </item>
    </layout>
   </widget>
@@ -28,8 +130,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>462</width>
-     <height>22</height>
+     <width>447</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>

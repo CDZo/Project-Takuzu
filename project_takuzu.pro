@@ -49,4 +49,5 @@ DISTFILES +=
 
 RESOURCES += \
     translation.qrc
+    grid.qrc
 
