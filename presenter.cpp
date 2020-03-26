@@ -14,7 +14,12 @@ presenter::presenter(QWidget *parent) :
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open"));
     ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
     ui->firstPawn->setPosition(0,0);
-    connect(ui->firstPawn,SIGNAL(onClicked(int,int,int)),_model,SLOT(onPawnChanged(int,int,int)));
+    ui->secondPawn->setPosition(0,1);
+
+    ui->firstPawn->setLock(true);
+    ui->firstPawn->setState(State::White);
+    connect(ui->firstPawn,SIGNAL(onClicked(int,int,State)),_model,SLOT(onPawnChanged(int,int,State)));
+    connect(ui->secondPawn,SIGNAL(onClicked(int,int,State)),_model,SLOT(onPawnChanged(int,int,State)));
 }
 
 presenter::~presenter()
