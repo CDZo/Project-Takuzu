@@ -15,6 +15,7 @@ public:
     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
     void setPosition(const int &row, const int & column);
+    void setFalse(bool isFalse);
     void setLock(bool isLock);
     void setState(const State &state);
     State getState();
@@ -30,8 +31,9 @@ private:
     void displayWhitePawn();
     void displayBlackPawn();
     void displayLockPawn();
-    State _state = Empty;
+    State _state = State::Empty;
     bool _isLock = false;
+    bool _isFalse= false;
     int _row, _column;
 };
 

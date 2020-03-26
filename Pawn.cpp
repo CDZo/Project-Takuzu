@@ -2,8 +2,6 @@
 #define PI 3.14159
 Pawn::Pawn(QWidget *parent) : QWidget(parent)
 {
-    _isLock = false;
-    _state = State::Empty;
     _row = -1;
     _column = -1;
 }
@@ -50,6 +48,11 @@ void Pawn::setPosition(const int &row, const int &column)
     _column = column;
 }
 
+void Pawn::setFalse(bool isFalse)
+{
+    _isFalse = isFalse;
+}
+
 void Pawn::setLock(bool isLock)
 {
     _isLock = isLock;
@@ -76,8 +79,11 @@ void Pawn::displayWhitePawn()
 
     QBrush brush(Qt::white);
     QPen pen(Qt::white);
-
-    painter.fillRect(rect(),Qt::gray);
+    if(_isFalse) {
+        painter.fillRect(rect(),Qt::red);
+    } else {
+        painter.fillRect(rect(),Qt::gray);
+    }
     painter.setBrush(brush);
     painter.setPen(pen);
     painter.drawEllipse(width()*0.05,height()*0.05,width()*0.9,height()*0.9);
@@ -87,8 +93,11 @@ void Pawn::displayBlackPawn()
 {
     QPainter painter(this);
     QBrush brush(Qt::black);
-
-    painter.fillRect(rect(),Qt::gray);
+    if(_isFalse) {
+        painter.fillRect(rect(),Qt::red);
+    } else {
+        painter.fillRect(rect(),Qt::gray);
+    }
     painter.setBrush(brush);
     painter.drawEllipse(width()*0.05,height()*0.05,width()*0.9,height()*0.9);
 
@@ -105,6 +114,14 @@ void Pawn::displayLockPawn(){
         QPainter painter(this);
         QBrush brush(Qt::gray);
         QPen pen(Qt::gray);
+
+        if(_isFalse) {
+            pen.setColor(Qt::red);
+            brush.setColor(Qt::red);
+        } else {
+            pen.setColor(Qt::gray);
+            brush.setColor(Qt::gray);
+        }
         painter.setBrush(brush);
         painter.setPen(pen);
 

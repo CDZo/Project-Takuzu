@@ -18,6 +18,10 @@ presenter::presenter(QWidget *parent) :
 
     ui->firstPawn->setLock(true);
     ui->firstPawn->setState(State::White);
+    ui->secondPawn->setState(State::Black);
+    //ui->secondPawn->setLock(true);
+    ui->secondPawn->setFalse(true);
+
     connect(ui->firstPawn,SIGNAL(onClicked(int,int,State)),_model,SLOT(onPawnChanged(int,int,State)));
     connect(ui->secondPawn,SIGNAL(onClicked(int,int,State)),_model,SLOT(onPawnChanged(int,int,State)));
 }
