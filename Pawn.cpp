@@ -4,8 +4,6 @@ Pawn::Pawn(QWidget *parent) : QWidget(parent)
 {
     _row = -1;
     _column = -1;
-    _row = -1;
-    _column = -1;
 }
 
 void Pawn::paintEvent(QPaintEvent *) {
@@ -105,7 +103,6 @@ void Pawn::displayBlackPawn()
 
 }
 
-
 void Pawn::displayEmptyPawn()
 {
     QPainter painter(this);
@@ -133,6 +130,6 @@ void Pawn::displayLockPawn(){
         int diameterX = width()-2*marginX;
         int diameterY = height() -2*marginY;
 
+        
         painter.drawEllipse(marginX, marginY, diameterX, diameterY);
-    }
-}
+}}
