@@ -94,7 +94,6 @@ void Pawn::displayBlackPawn()
 
 }
 
-
 void Pawn::displayEmptyPawn()
 {
     QPainter painter(this);
@@ -114,6 +113,6 @@ void Pawn::displayLockPawn(){
         int radiusX = width() * 0.1;
         int radiusY = height() * 0.1;
 
-        painter.fillRect(marginX, marginY, radiusX * 2 , radiusY * 2, Qt::green);
+        painter.drawEllipse(marginX, marginY, radiusX * 2 , radiusY * 2);
     }
 }
