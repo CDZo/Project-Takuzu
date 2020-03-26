@@ -103,16 +103,16 @@ void Pawn::displayEmptyPawn()
 void Pawn::displayLockPawn(){
     if (_isLock) {
         QPainter painter(this);
-        QBrush brush(Qt::green);
-        QPen pen(Qt::green);
+        QBrush brush(Qt::gray);
+        QPen pen(Qt::gray);
         painter.setBrush(brush);
         painter.setPen(pen);
 
-        int marginX = width() * 0.4;
-        int marginY = height() * 0.4;
-        int radiusX = width() * 0.1;
-        int radiusY = height() * 0.1;
+        int marginX = width() * 0.45;
+        int marginY = height() * 0.45;
+        int diameterX = width()-2*marginX;
+        int diameterY = height() -2*marginY;
 
-        painter.drawEllipse(marginX, marginY, radiusX * 2 , radiusY * 2);
+        painter.drawEllipse(marginX, marginY, diameterX, diameterY);
     }
 }
