@@ -42,7 +42,7 @@ void Pawn::setState(const State &state)
     _state = State(state);
 }
 
-int Pawn::getState()
+State Pawn::getState()
 {
     return _state;
 }
@@ -51,7 +51,6 @@ bool Pawn::operator==(const Pawn &other)
 {
     return _state == other._state;
 }
-
 
 void Pawn::displayWhitePawn()
 {
@@ -75,8 +74,10 @@ void Pawn::displayBlackPawn()
     painter.setBrush(brush);
     painter.drawEllipse(rect());
 }
+
 void Pawn::displayEmptyPawn()
 {
     QPainter painter(this);
     painter.fillRect(rect(),Qt::gray);
 }
+
