@@ -4,37 +4,55 @@ Pawn::Pawn(QWidget *parent) : QWidget(parent)
 {
     _isLock = false;
     _state = State::Empty;
+    _row = -1;
+    _column = -1;
 }
 
 void Pawn::paintEvent(QPaintEvent *) {
     switch (_state){
     case State::Empty:
         displayEmptyPawn();
+        displayLockPawn();
         break;
     case State::Black:
         displayBlackPawn();
+        displayLockPawn();
         break;
     case State::White:
         displayWhitePawn();
+        displayLockPawn();
         break;
     }
 }
 
 void Pawn::mousePressEvent(QMouseEvent *) {
-
-    switch (_state){
-    case White:
-        _state = Empty;
-        break;
-    case Black:
-        _state = White;
-        break;
-    case Empty:
-        _state = Black;
-        break;
+    if (!_isLock) {
+        switch (_state){
+        case White:
+            _state = Empty;
+            break;
+        case Black:
+            _state = White;
+            break;
+        case Empty:
+            _state = Black;
+            break;
+        }
+        emit onClicked(_row,_column,_state);
+        update();
     }
-    emit onClicked(0,0,_state);
-    update();
+
+}
+
+void Pawn::setPosition(const int &row, const int &column)
+{
+    _row = row;
+    _column = column;
+}
+
+void Pawn::setLock(bool isLock)
+{
+    _isLock = isLock;
 }
 
 void Pawn::setState(const State &state)
@@ -62,7 +80,7 @@ void Pawn::displayWhitePawn()
     painter.fillRect(rect(),Qt::gray);
     painter.setBrush(brush);
     painter.setPen(pen);
-    painter.drawEllipse(rect());
+    painter.drawEllipse(width()*0.05,height()*0.05,width()*0.9,height()*0.9);
 }
 
 void Pawn::displayBlackPawn()
@@ -72,8 +90,10 @@ void Pawn::displayBlackPawn()
 
     painter.fillRect(rect(),Qt::gray);
     painter.setBrush(brush);
-    painter.drawEllipse(rect());
+    painter.drawEllipse(width()*0.05,height()*0.05,width()*0.9,height()*0.9);
+
 }
+
 
 void Pawn::displayEmptyPawn()
 {
@@ -81,3 +101,19 @@ void Pawn::displayEmptyPawn()
     painter.fillRect(rect(),Qt::gray);
 }
 
+void Pawn::displayLockPawn(){
+    if (_isLock) {
+        QPainter painter(this);
+        QBrush brush(Qt::green);
+        QPen pen(Qt::green);
+        painter.setBrush(brush);
+        painter.setPen(pen);
+
+        int marginX = width() * 0.4;
+        int marginY = height() * 0.4;
+        int radiusX = width() * 0.1;
+        int radiusY = height() * 0.1;
+
+        painter.fillRect(marginX, marginY, radiusX * 2 , radiusY * 2, Qt::green);
+    }
+}
