@@ -22,9 +22,7 @@ int main(int argc, char *argv[])
     if (strncmp("0", argv[1],1) == 0) {
         QApplication a(argc, argv);
         QTranslator translator;
-        /*TODO
-         * Setup language detection.
-        */
+
         if(translator.load(QLocale(),"takuzu","_",":/translation/")) {
             std::cout << "translator loaded"<< std::endl;
         } else {
