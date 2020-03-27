@@ -131,5 +131,5 @@ void Pawn::displayLockPawn(){
         int diameterY = height() -2*marginY;
 
         painter.drawEllipse(marginX, marginY, diameterX, diameterY);
-    }
+        }
 }

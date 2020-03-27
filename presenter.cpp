@@ -20,7 +20,7 @@ presenter::presenter(QWidget *parent) :
     ui->firstPawn->setPosition(0,0);
     createGrid(6,0);
     ui->secondPawn->setPosition(0,1);
-
+    createGrid(6,0);
     ui->firstPawn->setLock(true);
     ui->firstPawn->setState(State::White);
     ui->secondPawn->setState(State::Black);
