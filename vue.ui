@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="Pawn" name="toto" native="true"/>
+     <widget class="Pawn" name="firstPawn" native="true"/>
     </item>
     <item row="0" column="1">
      <widget class="Pawn" name="widget_2" native="true"/>
@@ -34,7 +34,7 @@
      <widget class="Pawn" name="widget_6" native="true"/>
     </item>
     <item row="1" column="0">
-     <widget class="Pawn" name="widget_10" native="true"/>
+     <widget class="Pawn" name="secondPawn" native="true"/>
     </item>
     <item row="1" column="1">
      <widget class="Pawn" name="widget_13" native="true"/>
@@ -131,7 +131,7 @@
      <x>0</x>
      <y>0</y>
      <width>447</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
