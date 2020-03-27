@@ -48,6 +48,6 @@ TRANSLATIONS = takuzu_fr.ts \
 DISTFILES +=
 
 RESOURCES += \
+    grid.qrc \
     translation.qrc
-    grid.qrc
 

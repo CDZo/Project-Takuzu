@@ -22,16 +22,16 @@
      <widget class="Pawn" name="widget_2" native="true"/>
     </item>
     <item row="0" column="2">
-     <widget class="Pawn" name="widget_3" native="true"/>
+     <widget class="Pawn" name="widget_43" native="true"/>
     </item>
     <item row="0" column="3">
-     <widget class="Pawn" name="widget_4" native="true"/>
+     <widget class="Pawn" name="widget_49" native="true"/>
     </item>
     <item row="0" column="4">
-     <widget class="Pawn" name="widget_5" native="true"/>
+     <widget class="Pawn" name="widget_59" native="true"/>
     </item>
     <item row="0" column="5">
-     <widget class="Pawn" name="widget_6" native="true"/>
+     <widget class="Pawn" name="widget_69" native="true"/>
     </item>
     <item row="1" column="0">
      <widget class="Pawn" name="secondPawn" native="true"/>
