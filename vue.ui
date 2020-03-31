@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>presenter</class>
- <widget class="QMainWindow" name="presenter">
+ <class>View</class>
+ <widget class="QMainWindow" name="View">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>462</width>
-    <height>430</height>
+    <width>447</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>presenter</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="Pawn" name="firstPawn" native="true"/>
-    </item>
-    <item row="0" column="1">
-     <widget class="Pawn" name="secondPawn" native="true"/>
-    </item>
-   </layout>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>40</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>462</width>
+     <width>447</width>
      <height>22</height>
     </rect>
    </property>
@@ -102,14 +107,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>Pawn</class>
-   <extends>QWidget</extends>
-   <header>Pawn.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

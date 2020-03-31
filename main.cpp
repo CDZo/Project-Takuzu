@@ -3,7 +3,7 @@
 #include <QPushButton>
 #include <iostream>
 #include <string.h>
-#include "presenter.h"
+#include "Presenter.h"
 #include "TestPawn.h"
 #include "TestModel.h"
 
@@ -29,9 +29,9 @@ int main(int argc, char *argv[])
             std::cout << "translator failed"<< std::endl;
         }
         a.installTranslator(&translator);
-        presenter w;
+        Presenter presenter;
 
-        w.show();
+        presenter.show();
         return a.exec();
     }
     std::cout << "Wrong id_programm" <<std::endl;

@@ -25,18 +25,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     ModelTakuzu.cpp \
+    Presenter.cpp \
     TestModel.cpp \
     TestPawn.cpp \
+    View.cpp \
         main.cpp \
-        presenter.cpp \
     Pawn.cpp
 
 HEADERS += \
     ModelTakuzu.h \
+    Presenter.h \
     State.h \
     TestModel.h \
     TestPawn.h \
-        presenter.h \
+    View.h \
     Pawn.h
 
 FORMS += \
@@ -48,5 +50,6 @@ TRANSLATIONS = takuzu_fr.ts \
 DISTFILES +=
 
 RESOURCES += \
+    grid.qrc \
     translation.qrc
 
