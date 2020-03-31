@@ -14,6 +14,7 @@ public:
 
     void setSize(const int & size);
     void initGrid(const int &size);
+    void initGrid(const int & size, Pawn* pawns);
     bool putInGrid(int row, int column, State state);
     void display();
 
@@ -30,16 +31,23 @@ public:
      * @brief check the uniqueness of every columns
      * @return return a set of pair of twin colunms or a set with an unique pair with gridsize
      */
-    std::set<std::pair<int,int>> isAllColumnUnique();
+    std::set<std::pair<int,int>> findIdenticalColumns();
 
     /**
      * @brief check the uniqueness of every rows
      * @return return a set of pair of twin rows or a set with an unique pair with gridsize
      */
-    std::set<std::pair<int,int>> isAllRowUnique();
+    std::set<std::pair<int,int>> findIdenticalRows();
 
+    void rulesLoop();
 signals:
     void notify();
+    std::set<std::pair<int,int>> incorrectPawnsInRow(std::set<std::pair<int,int>> pawns);
+    std::set<std::pair<int,int>> incorrectPawnsInColumn(std::set<std::pair<int,int>> pawns);
+    std::set<int> unbalancedRows(std::set<int> rows);
+    std::set<int> unbalancedColumns(std::set<int> rows);
+    std::set<std::pair<int,int>> identicalRows( std::set<std::pair<int,int>> rows);
+    std::set<std::pair<int,int>> identicalColumns( std::set<std::pair<int,int>> columns);
 
 public slots:
     void onPawnChanged(const int & id,const State &state);
@@ -47,10 +55,8 @@ public slots:
 private:
     void loadGrid();
 
-
-    /*2d array in oned */
-    Pawn *_pawnGrid;
     int _gridSize = 0;
+    Pawn* _pawnGrid;
 };
 
 #endif // MODELTAKUZU_H
