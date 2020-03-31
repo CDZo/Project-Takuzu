@@ -32,5 +32,6 @@ void View::loadPawnsOnGrid(Pawn * pawns, const int & size)
             gridLayout->addWidget(&pawns[ row * size + column],row,column);
         }
     }
+    gridLayout->addWidget(ui->pushButton,size,0,1,size);
     ui->centralWidget->setLayout(gridLayout);
 }
