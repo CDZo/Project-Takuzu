@@ -4,18 +4,20 @@
 #include <QRandomGenerator>
 Presenter::Presenter()
 {
-    _size = 8;
+    _size = 4;
     _model = new ModelTakuzu;
     _model->initGrid(_size);
     _visualPawns = new Pawn[_size*_size];
     _visualPawns[0].setLock(true);
     _visualPawns[0].setState(Black);
-
+    _view = new View;
+    _view->loadPawnsOnGrid(_visualPawns,_size);
 }
 
 Presenter::~Presenter()
 {
-   delete[] _visualPawns;
+    delete[] _visualPawns;
+    delete _view;
 }
 
 void Presenter::createGrid(const int &size, const int &difficulty)
@@ -51,4 +53,9 @@ void Presenter::createGrid(const int &size, const int &difficulty)
         std::cout<<"Error opening file"<<std::endl<<std::flush;
     }
 
+}
+
+void Presenter::show()
+{
+    _view->show();
 }
