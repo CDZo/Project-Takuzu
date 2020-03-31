@@ -2,8 +2,7 @@
 #define PI 3.14159
 Pawn::Pawn(QWidget *parent) : QWidget(parent)
 {
-    _row = -1;
-    _column = -1;
+
 }
 
 void Pawn::paintEvent(QPaintEvent *) {
@@ -36,16 +35,15 @@ void Pawn::mousePressEvent(QMouseEvent *) {
             _state = Black;
             break;
         }
-        emit onClicked(_row,_column,_state);
+        emit onClicked(_id,_state);
         update();
     }
 
 }
 
-void Pawn::setPosition(const int &row, const int &column)
+void Pawn::setId(const int &id)
 {
-    _row = row;
-    _column = column;
+    _id = id;
 }
 
 void Pawn::setFalse(bool isFalse)

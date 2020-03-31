@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>presenter</class>
- <widget class="QMainWindow" name="presenter">
+ <class>View</class>
+ <widget class="QMainWindow" name="View">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,9 +13,7 @@
   <property name="windowTitle">
    <string>presenter</string>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout"/>
-  </widget>
+  <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>

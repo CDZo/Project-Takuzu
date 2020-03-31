@@ -5,24 +5,24 @@
 #include <QFile>
 #include <QString>
 #include "ModelTakuzu.h"
-
+#include <QGridLayout>
 
 namespace Ui {
-class presenter;
+class View;
 }
 
-class presenter : public QMainWindow
+class View : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit presenter(QWidget *parent = 0);
-    void createGrid(int size, int difficulty); //difficulty is an int, if =0 -> easy, if =1 -> hard
-    ~presenter();
+    explicit View(QWidget *parent = 0);
+    ~View();
+    QGridLayout * loadPawnOnGrid(Pawn* pawns, const int & size);
 
 private:
-    Ui::presenter *ui;
-    ModelTakuzu *_model;
+    Ui::View *ui;
+
 };
 
 #endif // PRESENTER_H
