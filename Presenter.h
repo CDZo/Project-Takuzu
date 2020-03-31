@@ -14,4 +14,4 @@ private:
     int _size = 0;
 };
 
-#endif // PRESENTER_H
+#endif

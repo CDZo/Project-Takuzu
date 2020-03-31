@@ -1,5 +1,5 @@
-#ifndef PRESENTER_H
-#define PRESENTER_H
+#ifndef VIEW_H
+#define VIEW_H
 
 #include <QMainWindow>
 #include <QFile>
@@ -24,4 +24,4 @@ private:
     Ui::View *ui;
 };
 
-#endif // PRESENTER_H
+#endif
