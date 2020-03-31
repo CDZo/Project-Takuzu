@@ -239,7 +239,7 @@ void TestModel::should_return_empty_set_when_all_columns_are_unique()
     assert(model.putInGrid(0,1,State::Black));
     assert(model.putInGrid(1,0,State::Black));
     assert(model.putInGrid(1,1,State::White));
-    std::set<std::pair<int,int>> columns = model.isAllRowUnique();
+    std::set<std::pair<int,int>> columns = model.findIdenticalRows();
     assert(columns.empty());
 }
 
@@ -258,7 +258,7 @@ void TestModel::should_return_empty_set_when_columns_are_unique_but_rows_not()
     assert(model.putInGrid(2,0,State::Black));
     assert(model.putInGrid(2,1,State::White));
     assert(model.putInGrid(2,2,State::White));
-    std::set<std::pair<int,int>> columns = model.isAllColumnUnique();
+    std::set<std::pair<int,int>> columns = model.findIdenticalColumns();
     assert(columns.empty());
 }
 
@@ -279,7 +279,7 @@ void TestModel::should_return_faulty_column_when_uniqueness_is_not_respected()
     std::set<std::pair<int,int>> wrongColumn;
     wrongColumn.insert(std::make_pair(0,1));
     wrongColumn.insert(std::make_pair(1,2));
-    assert(model.isAllColumnUnique() == wrongColumn);
+    assert(model.findIdenticalColumns() == wrongColumn);
 }
 
 void TestModel::should_return_empty_set_when_all_rows_are_unique()
@@ -292,7 +292,7 @@ void TestModel::should_return_empty_set_when_all_rows_are_unique()
     assert(model.putInGrid(0,1,State::Black));
     assert(model.putInGrid(1,0,State::Black));
     assert(model.putInGrid(1,1,State::White));
-    std::set<std::pair<int,int>> Row = model.isAllRowUnique();
+    std::set<std::pair<int,int>> Row = model.findIdenticalRows();
     assert(Row.empty());
 }
 
@@ -311,7 +311,7 @@ void TestModel::should_return_empty_set_when_rows_are_correct_but_columns_not()
     assert(model.putInGrid(2,0,State::White));
     assert(model.putInGrid(2,1,State::White));
     assert(model.putInGrid(2,2,State::White));
-    std::set<std::pair<int,int>> Row = model.isAllRowUnique();
+    std::set<std::pair<int,int>> Row = model.findIdenticalRows();
     assert(Row.empty());
 }
 
@@ -327,7 +327,7 @@ void TestModel::should_return_faulty_row_when_uniqueness_is_not_respected()
     assert(model.putInGrid(1,1,State::Black));
     std::set<std::pair<int,int>> Row;
     Row.insert(std::make_pair(0,1));
-    assert(model.isAllRowUnique() == Row);
+    assert(model.findIdenticalRows() == Row);
 }
 
 
