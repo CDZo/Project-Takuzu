@@ -1,8 +1,8 @@
 #ifndef MODELTAKUZU_H
 #define MODELTAKUZU_H
 
-#include <QObject>
 #include "Pawn.h"
+#include <QObject>
 
 #include <set>
 class ModelTakuzu : public QObject

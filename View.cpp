@@ -11,6 +11,7 @@ View::View(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::View)
 {
+
     ui->setupUi(this);
 }
 
