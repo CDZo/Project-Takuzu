@@ -42,7 +42,7 @@ signals:
     void notify();
 
 public slots:
-    void onPawnChanged(const int & row, const int & column,const State &state);
+    void onPawnChanged(const int & id,const State &state);
 
 private:
     void loadGrid();

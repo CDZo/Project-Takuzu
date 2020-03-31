@@ -45,12 +45,12 @@ void ModelTakuzu::display()
     std::cout << std::endl;
 }
 
-void ModelTakuzu::onPawnChanged(const int &row, const int &column, const State &state)
+void ModelTakuzu::onPawnChanged(const int &id, const State &state)
 {
-    std::cout <<"old state:" <<  _pawnGrid[row * _gridSize + column].getState() << std::endl;
-    std::cout << "row:" << row << " column:" << column << " state:" << state << std::endl;
-    _pawnGrid[row * _gridSize + column].setState(state);
-    std::cout <<"new state:" <<  _pawnGrid[row * _gridSize + column].getState() << std::endl;
+    std::cout <<"old state:" <<  _pawnGrid[id].getState() << std::endl;
+    std::cout << "row:" << id/_gridSize << " column:" << id%_gridSize << " state:" << state << std::endl;
+    _pawnGrid[id].setState(state);
+    std::cout <<"new state:" <<  _pawnGrid[id].getState() << std::endl;
 }
 
 void updateVariablesWith(const int & state,int * counter,int * firstIncorrectPawn, const int & valueIncorrectPawn)
