@@ -4,7 +4,7 @@
 #include <QRandomGenerator>
 Presenter::Presenter()
 {
-    _size = 4;
+    _size = 10;
     _visualPawns = new Pawn[_size*_size];
 
     _visualPawns[0].setState(Black);
@@ -19,6 +19,9 @@ Presenter::Presenter()
     _model->initGrid(_size,_visualPawns);
 
     for(int i = 0; i < _size*_size;i++) {
+        _visualPawns[i].setMinimumSize(32,32);
+        //_visualPawns[i].setFixedSize(32,32);
+
         connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
         _visualPawns[i].setId(i);
     }
