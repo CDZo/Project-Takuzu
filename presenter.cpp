@@ -14,21 +14,10 @@ presenter::presenter(QWidget *parent) :
     _model->initGrid(6);
 
     ui->setupUi(this);
-    ui->actionNew->setIcon(QIcon::fromTheme("document-new"));
-    ui->actionOpen->setIcon(QIcon::fromTheme("document-open"));
-    ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
-    ui->firstPawn->setPosition(0,0);
-    createGrid(6,0);
-    ui->secondPawn->setPosition(0,1);
-    createGrid(6,0);
-    ui->firstPawn->setLock(true);
-    ui->firstPawn->setState(State::White);
-    ui->secondPawn->setState(State::Black);
-    //ui->secondPawn->setLock(true);
-    ui->secondPawn->setFalse(true);
 
-    connect(ui->firstPawn,SIGNAL(onClicked(int,int,State)),_model,SLOT(onPawnChanged(int,int,State)));
-    connect(ui->secondPawn,SIGNAL(onClicked(int,int,State)),_model,SLOT(onPawnChanged(int,int,State)));
+    QGridLayout *gridLayout = new QGridLayout(this);
+    gridLayout->addWidget(new Pawn(),0,0);
+    ui->centralWidget->setLayout(gridLayout);
 }
 
 presenter::~presenter()
