@@ -13,7 +13,8 @@ Presenter::Presenter()
     _visualPawns[1].setLock(true);
 
     _view = new View;
-    _view->loadPawnsOnGrid(_visualPawns,_size);
+    _view->loadUi(_visualPawns,_size);
+
 
     _model = new ModelTakuzu;
     _model->initGrid(_size,_visualPawns);
@@ -21,10 +22,10 @@ Presenter::Presenter()
     for(int i = 0; i < _size*_size;i++) {
         _visualPawns[i].setMinimumSize(32,32);
         //_visualPawns[i].setFixedSize(32,32);
-
         connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
         _visualPawns[i].setId(i);
     }
+
     connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));
     connect(_model,SIGNAL(incorrectPawnsInRow(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInRow(std::set<std::pair<int,int>>)));
     connect(_model,SIGNAL(incorrectPawnsInColumn(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInColumn(std::set<std::pair<int,int>>)));
