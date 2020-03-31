@@ -11,8 +11,12 @@ View::View(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::View)
 {
-
     ui->setupUi(this);
+
+    ui->actionNew->setIcon(QIcon::fromTheme("document-new"));
+    ui->actionOpen->setIcon(QIcon::fromTheme("document-open"));
+    ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
+
 }
 
 View::~View()
@@ -20,7 +24,7 @@ View::~View()
     delete ui;
 }
 
-QGridLayout *View::loadPawnOnGrid(Pawn * pawns, const int & size)
+void View::loadPawnsOnGrid(Pawn * pawns, const int & size)
 {
     QGridLayout *gridLayout = new QGridLayout(this);
     for (int row = 0; row < size; row++) {
@@ -28,5 +32,5 @@ QGridLayout *View::loadPawnOnGrid(Pawn * pawns, const int & size)
             gridLayout->addWidget(&pawns[ row * size + column],row,column);
         }
     }
-    return gridLayout;
+    ui->centralWidget->setLayout(gridLayout);
 }

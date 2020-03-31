@@ -5,7 +5,7 @@
 #include <QFile>
 #include <QString>
 #include <QGridLayout>
-#include "Presenter.h"
+#include "Pawn.h"
 
 namespace Ui {
 class View;
@@ -18,7 +18,7 @@ class View : public QMainWindow
 public:
     explicit View(QWidget *parent = 0);
     ~View();
-    QGridLayout * loadPawnOnGrid(Pawn * pawns, const int & size);
+    void loadPawnsOnGrid(Pawn * pawns, const int & size);
 
 private:
     Ui::View *ui;
