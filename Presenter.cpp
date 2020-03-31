@@ -8,11 +8,21 @@ Presenter::Presenter()
     _model = new ModelTakuzu;
     _model->initGrid(_size);
     _visualPawns = new Pawn[_size*_size];
-    _visualPawns[0].setLock(true);
+
     _visualPawns[0].setState(Black);
+    _visualPawns[0].setId(0);
+    _visualPawns[1].setState(White);
+    _visualPawns[1].setLock(true);
+
     _view = new View;
     _view->loadPawnsOnGrid(_visualPawns,_size);
+    for(int i = 0; i < _size*_size;i++) {
+        connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
+        _visualPawns[i].setId(i);
+    }
+    connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));
 }
+
 
 Presenter::~Presenter()
 {
@@ -58,4 +68,10 @@ void Presenter::createGrid(const int &size, const int &difficulty)
 void Presenter::show()
 {
     _view->show();
+}
+
+void Presenter::onPawnClicked(const int & id, const State & state)
+{
+    std::cout << "id: "<<id<<" state : "<<state <<std::endl;
+    emit pawnChanged(id, state);
 }
