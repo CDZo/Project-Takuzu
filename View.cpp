@@ -5,7 +5,8 @@
 #include <QTextStream>
 #include <QRandomGenerator>
 #include <QIODevice>
-
+#include <QPushButton>
+#include <QTimer>
 
 View::View(QWidget *parent) :
     QMainWindow(parent),
@@ -16,6 +17,8 @@ View::View(QWidget *parent) :
     ui->actionNew->setIcon(QIcon::fromTheme("document-new"));
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open"));
     ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
+    QPushButton rightButton("button",this);
+    rightButton.setGeometry(10,10,100,100);
 
 }
 
@@ -24,14 +27,50 @@ View::~View()
     delete ui;
 }
 
-void View::loadPawnsOnGrid(Pawn * pawns, const int & size)
+QGridLayout* View::loadPawnsOnGrid(Pawn * pawns, const int & size)
 {
-    QGridLayout *gridLayout = new QGridLayout(this);
+
+    QGridLayout *gridLayout = new QGridLayout;
+
     for (int row = 0; row < size; row++) {
         for (int column = 0; column <size; column++) {
             gridLayout->addWidget(&pawns[ row * size + column],row,column);
         }
     }
-    gridLayout->addWidget(ui->pushButton,size,0,1,size);
-    ui->centralWidget->setLayout(gridLayout);
+    return gridLayout;
+}
+
+void View::loadUi(Pawn *pawns, const int &size)
+{
+    //borderLayoutExample todo
+
+    QHBoxLayout *mainLayout = new QHBoxLayout;
+    QGridLayout *leftLayout = loadPawnsOnGrid(pawns,size);
+    //leftLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    mainLayout->addLayout(leftLayout);
+
+    QVBoxLayout *rightLayout = new QVBoxLayout;
+    rightLayout->setAlignment(Qt::AlignTop);
+    mainLayout->addLayout(rightLayout);
+
+    _chronometer = new QTimeEdit;
+    _chronometer->setDisplayFormat("mm: ss");
+    _chronometer->setReadOnly(true);
+    rightLayout->addWidget(_chronometer);
+
+    _time = new QElapsedTimer;
+
+    QTimer * timerChronometer = new QTimer(this);
+    timerChronometer->setInterval(1000);
+
+    connect(timerChronometer,SIGNAL(timeout()),this,SLOT(onTimerTimeout()));
+
+    ui->centralWidget->setLayout(mainLayout);
+    timerChronometer->start();
+    _time->start();
+}
+
+void View::onTimerTimeout()
+{
+    _chronometer->setTime(_chronometer->time().addMSecs(_time->restart()));
 }
