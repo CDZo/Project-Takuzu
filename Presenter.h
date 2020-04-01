@@ -7,7 +7,7 @@ class Presenter
 public:
     Presenter();
     ~Presenter();
-    void createGrid(const int & size, const int & difficulty);
+    void createGrid(const int & difficulty);
     void show();
 private:
     View *_view;
