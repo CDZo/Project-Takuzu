@@ -24,6 +24,7 @@ Presenter::Presenter()
         _visualPawns[i].setId(i);
     }
     _view = new View;
+
     _view->loadUi(_visualPawns,_size);
 
     connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));

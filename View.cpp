@@ -48,7 +48,7 @@ void View::loadUi(Pawn *pawns, const int &size)
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     QGridLayout *leftLayout = loadPawnsOnGrid(pawns,size);
-    leftLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    //leftLayout->setSizeConstraint(QLayout::SetMinimumSize);
     mainLayout->addLayout(leftLayout);
 
     QVBoxLayout *rightLayout = new QVBoxLayout;
@@ -61,8 +61,9 @@ void View::loadUi(Pawn *pawns, const int &size)
     rightLayout->addWidget(_chronometer);
     rightLayout->setSizeConstraint(QLayout::SetMinimumSize);
 
-    //mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
-    mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+    mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    //mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+    mainLayout->setStretch(0,5);
     ui->centralWidget->setLayout(mainLayout);
 
     _time = new QElapsedTimer;
