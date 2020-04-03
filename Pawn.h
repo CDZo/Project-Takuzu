@@ -35,6 +35,14 @@ private:
     bool _isLock = false;
     bool _isFalse = false;
     int _id = -1;
+
+private:
+    class Design {
+        void displayEmptyPawn();
+        void displayWhitePawn();
+        void displayBlackPawn();
+        void displayLockPawn();
+    };
 };
 
 #endif // PAWN_H

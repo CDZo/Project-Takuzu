@@ -22,6 +22,16 @@ void ModelTakuzu::initGrid(const int &size)
     _pawnGrid = new Pawn[size * size];
 }
 
+void ModelTakuzu::initGrid(const int &size, Pawn *pawns)
+{
+    _gridSize = size;
+    _pawnGrid = new Pawn[size * size];
+    for(int i = 0; i< size*size;i++ ) {
+        _pawnGrid[i].setState(pawns[i].getState());
+        _pawnGrid[i].setId(i);
+    }
+}
+
 bool ModelTakuzu::putInGrid(int row, int column, State state)
 {
     if (column >= 0 && row >= 0) {
@@ -45,12 +55,11 @@ void ModelTakuzu::display()
     std::cout << std::endl;
 }
 
-void ModelTakuzu::onPawnChanged(const int &row, const int &column, const State &state)
+void ModelTakuzu::onPawnChanged(const int &id, const State &state)
 {
-    std::cout <<"old state:" <<  _pawnGrid[row * _gridSize + column].getState() << std::endl;
-    std::cout << "row:" << row << " column:" << column << " state:" << state << std::endl;
-    _pawnGrid[row * _gridSize + column].setState(state);
-    std::cout <<"new state:" <<  _pawnGrid[row * _gridSize + column].getState() << std::endl;
+    _pawnGrid[id].setState(state);
+    //std::cout << "row:" << id/_gridSize << " column:" << id%_gridSize << " state:" << state << std::endl;
+    rulesLoop();
 }
 
 void updateVariablesWith(const int & state,int * counter,int * firstIncorrectPawn, const int & valueIncorrectPawn)
@@ -63,9 +72,9 @@ void updateVariablesWith(const int & state,int * counter,int * firstIncorrectPaw
 
 void insertIncorrectPawns(std::set<std::pair<int,int>> *faultyPawns,const int & row,const int & firstIncorrectPawn,const int & counter)
 {
-        for(int i = 0; i < counter; i++) {
-            faultyPawns->insert(std::make_pair(row,firstIncorrectPawn + i));
-       }
+    for(int i = 0; i < counter; i++) {
+        faultyPawns->insert(std::make_pair(row,firstIncorrectPawn + i));
+    }
 
 }
 
@@ -93,7 +102,7 @@ std::set<std::pair<int,int>> ModelTakuzu::checkRowSideBySidePawn()
             }
         }
         if(counter > 2) {
-           insertIncorrectPawns(&faultyPawns,row,firstIncorrectPawn,counter);
+            insertIncorrectPawns(&faultyPawns,row,firstIncorrectPawn,counter);
         }
     }
     return faultyPawns;
@@ -187,7 +196,7 @@ std::set<int> ModelTakuzu::findUnbalancedColumns()
     return unbalancedColumns;
 }
 
-std::set<std::pair<int,int>> ModelTakuzu::isAllColumnUnique()
+std::set<std::pair<int,int>> ModelTakuzu::findIdenticalColumns()
 {
     bool areEqual;
     std::set<std::pair<int,int>> twinColumns;
@@ -205,7 +214,7 @@ std::set<std::pair<int,int>> ModelTakuzu::isAllColumnUnique()
     return twinColumns;
 }
 
-std::set<std::pair<int,int>> ModelTakuzu::isAllRowUnique()
+std::set<std::pair<int,int>> ModelTakuzu::findIdenticalRows()
 {
     bool areEqual;
     std::set<std::pair<int,int>> twinRows;
@@ -222,3 +231,35 @@ std::set<std::pair<int,int>> ModelTakuzu::isAllRowUnique()
     }
     return twinRows;
 }
+
+void ModelTakuzu::rulesLoop()
+{
+    std::set<std::pair<int,int>> faultyPawnInRow = checkRowSideBySidePawn();
+    std::set<std::pair<int,int>> faultyPawnInColumn = checkColumnSideBySidePawn();
+    std::set<int> irregularRows = findUnbalancedRows();
+    std::set<int> irregularColumns = findUnbalancedColumns();
+    std::set<std::pair<int,int>> equivalentRows = findIdenticalRows();
+    std::set<std::pair<int,int>> equivalentColumns = findIdenticalColumns();
+
+    //display();
+    if (!faultyPawnInRow.empty()){
+        emit incorrectPawnsInRow(faultyPawnInRow);
+    }
+    if(!faultyPawnInColumn.empty()){
+        emit incorrectPawnsInColumn(faultyPawnInColumn);
+    }
+    if(!irregularRows.empty()) {
+        emit unbalancedRows(irregularRows);
+    }
+    if(!irregularColumns.empty()){
+        emit unbalancedColumns(irregularColumns);
+    }
+    if(!equivalentRows.empty()) {
+        emit identicalRows(equivalentRows);
+    }
+    if (!equivalentColumns.empty()) {
+        emit identicalColumns(equivalentColumns);
+    }
+
+}
+
