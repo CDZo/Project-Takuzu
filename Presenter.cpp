@@ -11,17 +11,13 @@ Presenter::Presenter()
 {
     _size = 6;
     _visualPawns = new Pawn[_size*_size];
-
-    _visualPawns[0].setId(0);
-    _visualPawns[1].setState(White);
-    _visualPawns[1].setLock(true);
-
-    _view = new View;
-    createGrid(0);
-
+    initVisualPawnWithDifficulty(Hard);
 
     _model = new ModelTakuzu;
     _model->initGrid(_size,_visualPawns);
+
+    _view = new View;
+    _view->loadUi(_visualPawns,_size);
 
     for(int i = 0; i < _size*_size;i++) {
         _visualPawns[i].setMinimumSize(32,32);
@@ -46,15 +42,15 @@ Presenter::~Presenter()
     delete _view;
 }
 
-void Presenter::createGrid(const int &difficulty)
+void Presenter::initVisualPawnWithDifficulty(const Difficulty & difficulty)
 {
     QString filePath = ":/grid/";
     filePath += QString::number(_size);
     switch (difficulty){
-    case 0:
+    case Easy:
         filePath += "_easy.txt";
         break;
-    case 1:
+    case Hard:
         filePath += "_hard.txt";
         break;
     }
@@ -70,29 +66,27 @@ void Presenter::createGrid(const int &difficulty)
         QRandomGenerator rand;
         rand.seed(time(NULL));
         i = rand.bounded(1,i+1);
-        for (int k=0;k<i;k++) {
+        for (int k = 0;k < i;k++) {
             grid=text.readLine();
         }
 
         const QChar* data=grid.constData();
 
-        for(int k=0;k<grid.length();k++){
-            QChar character = data[k];
-            if (data[k]=="."){
+        for(int k = 0; k < grid.length();k++){
+            if (data[k] == "."){
                 _visualPawns[k].setLock(false);
                 _visualPawns[k].setState(Empty);
             }
-            else if (data[k]=="B"){
+            else if (data[k] == "B"){
                 _visualPawns[k].setLock(true);
                 _visualPawns[k].setState(Black);
             }
-            else if (data[k]=="W"){
+            else if (data[k] == "W"){
                 _visualPawns[k].setLock(true);
                 _visualPawns[k].setState(White);
             }
 
         }
-        _view->loadPawnsOnGrid(_visualPawns,_size);
         std::cout<<_size<<std::endl<<std::flush;
         std::cout<<grid.toStdString()<<std::endl<<std::flush;
         file.close();

@@ -9,7 +9,7 @@ class Presenter: public QObject
 public:
     Presenter();
     ~Presenter();
-    void createGrid(const int & difficulty);
+    void initVisualPawnWithDifficulty(const Difficulty & difficulty);
     void show();
 private:
     void resetFalsePawns();
