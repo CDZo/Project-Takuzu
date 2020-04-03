@@ -6,7 +6,7 @@
 #define EMPTY 0
 #define BLACK 1
 #define WHITE 2
-#include "State.h"
+#include "Constant.h"
 //enum State {empty, black, white};
 TestModel::TestModel()
 {

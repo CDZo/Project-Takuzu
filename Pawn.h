@@ -6,7 +6,7 @@
 #include <iostream>
 #include <QPainterPath>
 #include <QBrush>
-#include "State.h"
+#include "Constant.h"
 class Pawn : public QWidget
 {
     Q_OBJECT

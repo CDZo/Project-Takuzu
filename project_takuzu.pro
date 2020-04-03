@@ -33,9 +33,9 @@ SOURCES += \
     Pawn.cpp
 
 HEADERS += \
+    Constant.h \
     ModelTakuzu.h \
     Presenter.h \
-    State.h \
     TestModel.h \
     TestPawn.h \
     View.h \
