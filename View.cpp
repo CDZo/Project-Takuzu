@@ -37,16 +37,17 @@ QGridLayout* View::loadPawnsOnGrid(Pawn * pawns, const int & size)
             gridLayout->addWidget(&pawns[ row * size + column],row,column);
         }
     }
+    gridLayout->setSizeConstraint(QLayout::SetFixedSize);
+
     return gridLayout;
 }
 
 void View::loadUi(Pawn *pawns, const int &size)
 {
-    //borderLayoutExample todo
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     QGridLayout *leftLayout = loadPawnsOnGrid(pawns,size);
-    //leftLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    leftLayout->setSizeConstraint(QLayout::SetMinimumSize);
     mainLayout->addLayout(leftLayout);
 
     QVBoxLayout *rightLayout = new QVBoxLayout;
@@ -57,6 +58,11 @@ void View::loadUi(Pawn *pawns, const int &size)
     _chronometer->setDisplayFormat("mm: ss");
     _chronometer->setReadOnly(true);
     rightLayout->addWidget(_chronometer);
+    rightLayout->setSizeConstraint(QLayout::SetMinimumSize);
+
+    //mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+    ui->centralWidget->setLayout(mainLayout);
 
     _time = new QElapsedTimer;
 
@@ -65,7 +71,7 @@ void View::loadUi(Pawn *pawns, const int &size)
 
     connect(timerChronometer,SIGNAL(timeout()),this,SLOT(onTimerTimeout()));
 
-    ui->centralWidget->setLayout(mainLayout);
+
     timerChronometer->start();
     _time->start();
 }
