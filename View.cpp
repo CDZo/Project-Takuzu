@@ -17,6 +17,7 @@ View::View(QWidget *parent) :
     ui->actionNew->setIcon(QIcon::fromTheme("document-new"));
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open"));
     ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
+    ui->statusBar->showMessage("status bar here");
     QPushButton rightButton("button",this);
     rightButton.setGeometry(10,10,100,100);
 
