@@ -37,8 +37,9 @@ private:
     int _id = -1;
 
 private:
-    class Design {
-        virtual ~Design() = 0;
+    class IDesign {
+    public:
+        virtual ~IDesign() = 0;
         virtual void displayEmptyPawn(Pawn* pawn) = 0;
         virtual void displayWhitePawn(Pawn* pawn) = 0;
         virtual void displayBlackPawn(Pawn* pawn) = 0;
@@ -46,7 +47,8 @@ private:
 
     };
 
-    class BrightCircle final: public Design{
+    class BrightCircle: public IDesign{
+    public:
         BrightCircle();
         ~BrightCircle();
         void displayEmptyPawn(Pawn* pawn) override;
@@ -56,7 +58,7 @@ private:
     };
 
 private:
-    Design* _design;
+    IDesign* _design;
 
 };
 

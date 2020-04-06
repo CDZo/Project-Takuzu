@@ -29,7 +29,7 @@ SOURCES += \
     TestModel.cpp \
     TestPawn.cpp \
     View.cpp \
-        main.cpp \
+    main.cpp \
     Pawn.cpp
 
 HEADERS += \

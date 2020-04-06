@@ -2,16 +2,18 @@
 #define PI 3.14159
 Pawn::Pawn(QWidget *parent) : QWidget(parent)
 {
-    //_design = new BrightCircle;
+   _design = new BrightCircle;
+
 }
 
 void Pawn::paintEvent(QPaintEvent *) {
     switch (_state){
     case State::Empty:
-        displayEmptyPawn();
-        displayLockPawn();
+        //_design->displayEmptyPawn(this);
+       // _design->displayLockPawn(this);
         break;
     case State::Black:
+
         displayBlackPawn();
         displayLockPawn();
         break;
@@ -129,18 +131,39 @@ void Pawn::displayLockPawn(){
         int diameterY = height() -2*marginY;
 
         painter.drawEllipse(marginX, marginY, diameterX, diameterY);
-        }
+    }
 }
 
 
-/*
-Pawn::BrightCircle::BrightCircle()
-{
-
-}
-*/
 void Pawn::BrightCircle::displayEmptyPawn(Pawn *pawn)
 {
     QPainter painter(pawn);
     painter.fillRect(pawn->rect(),Qt::gray);
 }
+
+void Pawn::BrightCircle::displayLockPawn(Pawn *pawn)
+{
+    if (pawn->_isLock) {
+        QPainter painter(pawn);
+        QBrush brush(Qt::gray);
+        QPen pen(Qt::gray);
+
+        if(pawn->_isFalse) {
+            pen.setColor(Qt::red);
+            brush.setColor(Qt::red);
+        } else {
+            pen.setColor(Qt::gray);
+            brush.setColor(Qt::gray);
+        }
+        painter.setBrush(brush);
+        painter.setPen(pen);
+
+        int marginX = pawn->width() * 0.45;
+        int marginY = pawn->height() * 0.45;
+        int diameterX = pawn->width()-2*marginX;
+        int diameterY = pawn->height() -2*marginY;
+
+        painter.drawEllipse(marginX, marginY, diameterX, diameterY);
+    }
+}
+
