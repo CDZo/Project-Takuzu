@@ -2,7 +2,7 @@
 #define PI 3.14159
 Pawn::Pawn(QWidget *parent) : QWidget(parent)
 {
-
+    //_design = new BrightCircle;
 }
 
 void Pawn::paintEvent(QPaintEvent *) {
@@ -130,4 +130,17 @@ void Pawn::displayLockPawn(){
 
         painter.drawEllipse(marginX, marginY, diameterX, diameterY);
         }
+}
+
+
+/*
+Pawn::BrightCircle::BrightCircle()
+{
+
+}
+*/
+void Pawn::BrightCircle::displayEmptyPawn(Pawn *pawn)
+{
+    QPainter painter(pawn);
+    painter.fillRect(pawn->rect(),Qt::gray);
 }

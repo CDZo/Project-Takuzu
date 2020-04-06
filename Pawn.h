@@ -22,7 +22,7 @@ public:
     bool operator==(const Pawn & other);
 
 signals:
-void onClicked(const int id, const State state);
+    void onClicked(const int id, const State state);
 
 public slots:
 
@@ -38,11 +38,26 @@ private:
 
 private:
     class Design {
-        void displayEmptyPawn();
-        void displayWhitePawn();
-        void displayBlackPawn();
-        void displayLockPawn();
+        virtual ~Design() = 0;
+        virtual void displayEmptyPawn(Pawn* pawn) = 0;
+        virtual void displayWhitePawn(Pawn* pawn) = 0;
+        virtual void displayBlackPawn(Pawn* pawn) = 0;
+        virtual void displayLockPawn(Pawn* pawn) = 0;
+
     };
+
+    class BrightCircle final: public Design{
+        BrightCircle();
+        ~BrightCircle();
+        void displayEmptyPawn(Pawn* pawn) override;
+        void displayWhitePawn(Pawn* pawn) override;
+        void displayBlackPawn(Pawn* pawn) override;
+        void displayLockPawn(Pawn* pawn) override;
+    };
+
+private:
+    Design* _design;
+
 };
 
 #endif // PAWN_H
