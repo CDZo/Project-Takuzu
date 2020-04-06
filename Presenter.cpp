@@ -9,31 +9,12 @@
 
 Presenter::Presenter()
 {
-    _size = 6;
-    _visualPawns = new Pawn[_size*_size];
-    initVisualPawnWithDifficulty(Hard);
+    _visualPawns = new Pawn;
+    _visualPawns->setMinimumSize(128,128);
 
-    _model = new ModelTakuzu;
-    _model->initGrid(_size,_visualPawns);
-
-
-    for(int i = 0; i < _size*_size;i++) {
-        _visualPawns[i].setMinimumSize(32,32);
-        //_visualPawns[i].setFixedSize(32,32);
-        connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
-        _visualPawns[i].setId(i);
-    }
     _view = new View;
 
-    _view->loadUi(_visualPawns,_size);
-
-    connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));
-    connect(_model,SIGNAL(incorrectPawnsInRow(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInRow(std::set<std::pair<int,int>>)));
-    connect(_model,SIGNAL(incorrectPawnsInColumn(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInColumn(std::set<std::pair<int,int>>)));
-    connect(_model,SIGNAL(unbalancedRows(std::set<int>)),this,SLOT(onUnbalancedRows(std::set<int>)));
-    connect(_model,SIGNAL(unbalancedColumns(std::set<int>)),this,SLOT(onUnbalancedColumns(std::set<int>)));
-    connect(_model,SIGNAL(identicalRows(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalRows(std::set<std::pair<int,int>>)));
-    connect(_model,SIGNAL(identicalColumns(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalColumns(std::set<std::pair<int,int>>)));
+    _view->loadTestPawn(_visualPawns);
 }
 
 

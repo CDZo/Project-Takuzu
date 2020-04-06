@@ -78,6 +78,14 @@ void View::loadUi(Pawn *pawns, const int &size)
     _time->start();
 }
 
+void View::loadTestPawn(Pawn *pawn)
+{
+    QHBoxLayout *mainLayout = new QHBoxLayout;
+    mainLayout->addWidget(pawn);
+    mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    ui->centralWidget->setLayout(mainLayout);
+}
+
 void View::onTimerTimeout()
 {
     _chronometer->setTime(_chronometer->time().addMSecs(_time->restart()));
