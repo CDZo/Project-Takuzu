@@ -8,35 +8,33 @@
 #include <time.h>
 
 Presenter::Presenter()
-{
-    int size = 9;
-    _visualPawns = new Pawn[size];
-    for (int i = 0;i < size;i++) {
-        _visualPawns[i].setMinimumSize(64,64);
-        _visualPawns[i].changeDesignWith(new Pawn::DarkCircle);
+{    
+    _size = 6;
+    _visualPawns = new Pawn[_size*_size];
+    initVisualPawnWithDifficulty(Hard);
+
+    _model = new ModelTakuzu;
+    _model->initGrid(_size,_visualPawns);
+
+
+    for(int i = 0; i < _size*_size;i++) {
+        _visualPawns[i].setMinimumSize(45,45);
+        _visualPawns[i].changeDesignWith(new Pawn::BrightSquare);
+        //_visualPawns[i].setFixedSize(32,32);
+        connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
+        _visualPawns[i].setId(i);
     }
-    _visualPawns[1].setState(White);
-    _visualPawns[2].setState(White);
-    _visualPawns[2].setFalse(true);
-    _visualPawns[3].setState(White);
-    _visualPawns[3].setLock(true);
-    _visualPawns[4].setState(White);
-    _visualPawns[4].setFalse(true);
-    _visualPawns[4].setLock(true);
-
-    _visualPawns[5].setState(Black);
-    _visualPawns[6].setState(Black);
-    _visualPawns[6].setFalse(true);
-    _visualPawns[7].setState(Black);
-    _visualPawns[7].setLock(true);
-    _visualPawns[8].setState(Black);
-    _visualPawns[8].setFalse(true);
-    _visualPawns[8].setLock(true);
-
-
-
     _view = new View;
-    _view->loadTestPawn(_visualPawns,size);
+
+    _view->loadUi(_visualPawns,_size);
+
+    connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));
+    connect(_model,SIGNAL(incorrectPawnsInRow(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInRow(std::set<std::pair<int,int>>)));
+    connect(_model,SIGNAL(incorrectPawnsInColumn(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInColumn(std::set<std::pair<int,int>>)));
+    connect(_model,SIGNAL(unbalancedRows(std::set<int>)),this,SLOT(onUnbalancedRows(std::set<int>)));
+    connect(_model,SIGNAL(unbalancedColumns(std::set<int>)),this,SLOT(onUnbalancedColumns(std::set<int>)));
+    connect(_model,SIGNAL(identicalRows(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalRows(std::set<std::pair<int,int>>)));
+    connect(_model,SIGNAL(identicalColumns(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalColumns(std::set<std::pair<int,int>>)));
 }
 
 
