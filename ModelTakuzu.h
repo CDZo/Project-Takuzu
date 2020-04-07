@@ -40,6 +40,8 @@ public:
     std::set<std::pair<int,int>> findIdenticalRows();
 
     void rulesLoop();
+    bool isGameFinished();
+    void initColoredPawnNumber();
 signals:
     void notify();
     std::set<std::pair<int,int>> incorrectPawnsInRow(std::set<std::pair<int,int>> pawns);
@@ -49,14 +51,19 @@ signals:
     std::set<std::pair<int,int>> identicalRows( std::set<std::pair<int,int>> rows);
     std::set<std::pair<int,int>> identicalColumns( std::set<std::pair<int,int>> columns);
 
+
 public slots:
-    void onPawnChanged(const int & id,const State &state);
+    void onPawnChanged(const int & id,const State &newState);
 
 private:
     void loadGrid();
+    bool gridRespectRules();
+    bool gridIsFull();
 
     int _gridSize = 0;
+    int _coloredPawn = 0;
     Pawn* _pawnGrid;
+
 };
 
 #endif // MODELTAKUZU_H

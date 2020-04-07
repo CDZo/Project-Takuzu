@@ -30,6 +30,7 @@ void ModelTakuzu::initGrid(const int &size, Pawn *pawns)
         _pawnGrid[i].setState(pawns[i].getState());
         _pawnGrid[i].setId(i);
     }
+    initColoredPawnNumber();
 }
 
 bool ModelTakuzu::putInGrid(int row, int column, State state)
@@ -55,11 +56,43 @@ void ModelTakuzu::display()
     std::cout << std::endl;
 }
 
-void ModelTakuzu::onPawnChanged(const int &id, const State &state)
+void ModelTakuzu::onPawnChanged(const int &id, const State &newState)
 {
-    _pawnGrid[id].setState(state);
+    if(_pawnGrid[id].getState() == Empty && newState != Empty) {
+        _coloredPawn++;
+    }
+    if (_pawnGrid[id].getState() != Empty && newState == Empty) {
+        _coloredPawn--;
+    }
+    _pawnGrid[id].setState(newState);
     //std::cout << "row:" << id/_gridSize << " column:" << id%_gridSize << " state:" << state << std::endl;
     rulesLoop();
+}
+
+bool ModelTakuzu::gridRespectRules()
+{
+    std::set<std::pair<int,int>> faultyPawnInRow = checkRowSideBySidePawn();
+    std::set<std::pair<int,int>> faultyPawnInColumn = checkColumnSideBySidePawn();
+    std::set<int> irregularRows = findUnbalancedRows();
+    std::set<int> irregularColumns = findUnbalancedColumns();
+    std::set<std::pair<int,int>> equivalentRows = findIdenticalRows();
+    std::set<std::pair<int,int>> equivalentColumns = findIdenticalColumns();
+    return faultyPawnInRow.empty() && faultyPawnInColumn.empty() && irregularRows.empty() && irregularColumns.empty() && equivalentRows.empty() && equivalentColumns.empty();
+}
+
+bool ModelTakuzu::gridIsFull()
+{
+    return _coloredPawn == (_gridSize*_gridSize);
+}
+
+void ModelTakuzu::initColoredPawnNumber()
+{
+    _coloredPawn = 0;
+    for (int i =0 ;i< _gridSize*_gridSize;i++) {
+        if (_pawnGrid[i].getState()!= Empty) {
+            _coloredPawn++;
+        }
+    }
 }
 
 void updateVariablesWith(const int & state,int * counter,int * firstIncorrectPawn, const int & valueIncorrectPawn)
@@ -234,6 +267,7 @@ std::set<std::pair<int,int>> ModelTakuzu::findIdenticalRows()
 
 void ModelTakuzu::rulesLoop()
 {
+//TODO: tester isgamefinished si non lancer le code dessous si oui lancer le signal gamefinished
     std::set<std::pair<int,int>> faultyPawnInRow = checkRowSideBySidePawn();
     std::set<std::pair<int,int>> faultyPawnInColumn = checkColumnSideBySidePawn();
     std::set<int> irregularRows = findUnbalancedRows();
@@ -261,5 +295,15 @@ void ModelTakuzu::rulesLoop()
         emit identicalColumns(equivalentColumns);
     }
 
+
+}
+
+bool ModelTakuzu::isGameFinished()
+{
+    bool isGameCompleted = gridIsFull() && gridRespectRules();
+    if(isGameCompleted) {
+        emit notify();
+    }
+    return isGameCompleted;
 }
 
