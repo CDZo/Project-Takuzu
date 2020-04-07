@@ -60,7 +60,15 @@ public:
         void displayBlackPawn(Pawn* pawn) override;
         void displayLockPawn(Pawn* pawn) override;
     };
-
+    class DarkCircle: public IDesign{
+       public:
+        DarkCircle();
+        ~DarkCircle();
+        void displayEmptyPawn(Pawn* pawn) override;
+        void displayWhitePawn(Pawn* pawn) override;
+        void displayBlackPawn(Pawn* pawn) override;
+        void displayLockPawn(Pawn* pawn) override;
+    };
 private:
     IDesign* _design;
     State _state = State::Empty;

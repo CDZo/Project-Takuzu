@@ -230,3 +230,75 @@ void Pawn::BrightSquare::displayLockPawn(Pawn *pawn)
         painter.drawEllipse(marginX, marginY, diameterX, diameterY);
     }
 }
+
+Pawn::DarkCircle::DarkCircle()
+{
+
+}
+
+Pawn::DarkCircle::~DarkCircle()
+{
+
+}
+
+void Pawn::DarkCircle::displayEmptyPawn(Pawn *pawn)
+{
+    QPainter painter(pawn);
+    painter.fillRect(pawn->rect(),Qt::black);
+}
+
+void Pawn::DarkCircle::displayWhitePawn(Pawn *pawn)
+{
+    QPainter painter(pawn);
+    QBrush brush(Qt::white);
+    QPen pen(Qt::white);
+    if(pawn->_isFalse) {
+        painter.fillRect(pawn->rect(),Qt::red);
+    } else {
+        painter.fillRect(pawn->rect(),Qt::black);
+    }
+    painter.setBrush(brush);
+    painter.setPen(pen);
+    painter.drawEllipse(pawn->width()*0.05,pawn->height()*0.05,pawn->width()*0.9,pawn->height()*0.9);
+}
+
+void Pawn::DarkCircle::displayBlackPawn(Pawn *pawn)
+{
+    QPainter painter(pawn);
+    QBrush brush(Qt::black);
+    QPen pen(Qt::gray);
+    if(pawn->_isFalse) {
+        painter.fillRect(pawn->rect(),Qt::red);
+    } else {
+        painter.fillRect(pawn->rect(),Qt::black);
+    }
+    painter.setBrush(brush);
+    painter.setPen(pen);
+    painter.drawEllipse(pawn->width()*0.05,pawn->height()*0.05,pawn->width()*0.9,pawn->height()*0.9);
+}
+
+void Pawn::DarkCircle::displayLockPawn(Pawn *pawn)
+{
+    if (pawn->_isLock) {
+        QPainter painter(pawn);
+        QBrush brush(Qt::gray);
+        QPen pen(Qt::gray);
+
+        if(pawn->_isFalse) {
+            pen.setColor(Qt::red);
+            brush.setColor(Qt::red);
+        } else {
+            pen.setColor(Qt::gray);
+            brush.setColor(Qt::gray);
+        }
+        painter.setBrush(brush);
+        painter.setPen(pen);
+
+        int marginX = pawn->width() * 0.45;
+        int marginY = pawn->height() * 0.45;
+        int diameterX = pawn->width()-2*marginX;
+        int diameterY = pawn->height() -2*marginY;
+
+        painter.drawEllipse(marginX, marginY, diameterX, diameterY);
+    }
+}
