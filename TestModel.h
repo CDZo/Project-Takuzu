@@ -35,6 +35,10 @@ private:
     void should_return_empty_set_when_rows_are_correct_but_columns_not();
     void should_return_faulty_row_when_uniqueness_is_not_respected();
 
+    void should_return_true_when_grid_is_correctly_finished();
+    void should_return_false_when_grid_is_uncorrectly_finished();
+    void should_return_false_when_grid_is_not_finished();
+
 
 };
 
