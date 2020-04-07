@@ -78,10 +78,13 @@ void View::loadUi(Pawn *pawns, const int &size)
     _time->start();
 }
 
-void View::loadTestPawn(Pawn *pawn)
+void View::loadTestPawn(Pawn *pawn, const int & size)
 {
+
     QHBoxLayout *mainLayout = new QHBoxLayout;
-    mainLayout->addWidget(pawn);
+    for (int i =0;i< size;i++) {
+        mainLayout->addWidget(&pawn[0]);
+    }
     mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
     ui->centralWidget->setLayout(mainLayout);
 }

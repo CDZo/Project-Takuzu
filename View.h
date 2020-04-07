@@ -21,7 +21,7 @@ public:
     explicit View(QWidget *parent = 0);
     ~View();
     void loadUi(Pawn * pawns, const int & size);
-    void loadTestPawn(Pawn *pawn);
+    void loadTestPawn(Pawn *pawn,const int & size);
 
 public slots:
     void onTimerTimeout();

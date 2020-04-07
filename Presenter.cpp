@@ -9,12 +9,14 @@
 
 Presenter::Presenter()
 {
-    _visualPawns = new Pawn;
-    _visualPawns->setMinimumSize(128,128);
-
+    int size = 4;
+    _visualPawns = new Pawn[size];
+    for (int i = 0;i < size;i++) {
+        _visualPawns[i].setMinimumSize(64,64);
+        _visualPawns[i].changeDesignWith(new Pawn::BrightSquare);
+    }
     _view = new View;
-
-    _view->loadTestPawn(_visualPawns);
+    _view->loadTestPawn(_visualPawns,size);
 }
 
 
