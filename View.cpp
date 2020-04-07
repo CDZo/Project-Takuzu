@@ -81,9 +81,10 @@ void View::loadUi(Pawn *pawns, const int &size)
 void View::loadTestPawn(Pawn *pawn, const int & size)
 {
 
-    QHBoxLayout *mainLayout = new QHBoxLayout;
-    for (int i =0;i< size;i++) {
-        mainLayout->addWidget(&pawn[0]);
+    QGridLayout *mainLayout = new QGridLayout;
+    mainLayout->addWidget(&pawn[0],0,0);
+    for (int i =1;i< size;i++) {
+        mainLayout->addWidget(&pawn[i],1+i/(size/2+1),i%(size/2));
     }
     mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
     ui->centralWidget->setLayout(mainLayout);
