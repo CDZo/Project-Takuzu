@@ -9,15 +9,15 @@
 
 Presenter::Presenter()
 {    
-    _size = 6;
-    _visualPawns = new Pawn[_size*_size];
+    _gridSize = 6;
+    _visualPawns = new Pawn[_gridSize*_gridSize];
     initVisualPawnWithDifficulty(Hard);
 
     _model = new ModelTakuzu;
-    _model->initGrid(_size,_visualPawns);
+    _model->initGrid(_gridSize,_visualPawns);
 
 
-    for(int i = 0; i < _size*_size;i++) {
+    for(int i = 0; i < _gridSize*_gridSize;i++) {
         _visualPawns[i].setMinimumSize(45,45);
         _visualPawns[i].changeDesignWith(new Pawn::BrightSquare);
         //_visualPawns[i].setFixedSize(32,32);
@@ -26,7 +26,7 @@ Presenter::Presenter()
     }
     _view = new View;
 
-    _view->loadUi(_visualPawns,_size);
+    _view->loadUi(_visualPawns,_gridSize);
 
     connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));
     connect(_model,SIGNAL(incorrectPawnsInRow(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInRow(std::set<std::pair<int,int>>)));
@@ -47,7 +47,7 @@ Presenter::~Presenter()
 void Presenter::initVisualPawnWithDifficulty(const Difficulty & difficulty)
 {
     QString filePath = ":/grid/";
-    filePath += QString::number(_size);
+    filePath += QString::number(_gridSize);
     switch (difficulty){
     case Easy:
         filePath += "_easy.txt";
@@ -89,7 +89,7 @@ void Presenter::initVisualPawnWithDifficulty(const Difficulty & difficulty)
             }
 
         }
-        std::cout<<_size<<std::endl<<std::flush;
+        std::cout<<_gridSize<<std::endl<<std::flush;
         std::cout<<grid.toStdString()<<std::endl<<std::flush;
         file.close();
     }
@@ -106,7 +106,7 @@ void Presenter::show()
 
 void Presenter::resetFalsePawns()
 {
-    for(int i = 0; i< _size*_size;i++) {
+    for(int i = 0; i< _gridSize*_gridSize;i++) {
         _visualPawns[i].setFalse(false);
     }
     _view->update();
@@ -122,7 +122,7 @@ void Presenter::onPawnClicked(const int & id, const State & state)
 void Presenter::onIncorrectPawnsInRow(const std::set<std::pair<int, int>> pawns)
 {
     for(std::set<std::pair<int, int>>::iterator it = pawns.begin();it != pawns.end();it++) {
-        _visualPawns[it->first * _size + it->second].setFalse(true);
+        _visualPawns[it->first * _gridSize + it->second].setFalse(true);
         //std::cout << "x: " << it->first << " y : " << it->second <<std::endl;
     }
     _view->update();
@@ -131,7 +131,7 @@ void Presenter::onIncorrectPawnsInRow(const std::set<std::pair<int, int>> pawns)
 void Presenter::onIncorrectPawnsInColumn(const std::set<std::pair<int, int> > pawns)
 {
     for(std::set<std::pair<int, int>>::iterator it = pawns.begin();it != pawns.end();it++) {
-        _visualPawns[it->first * _size + it->second].setFalse(true);
+        _visualPawns[it->first * _gridSize + it->second].setFalse(true);
         //std::cout << "x: " << it->first << " y : " << it->second <<std::endl;
     }
     _view->update();
@@ -166,6 +166,13 @@ void Presenter::onIdenticalColumns(std::set<std::pair<int, int> > columns)
     std::cout<<"Identical columns :"<<std::endl;
     for(std::set<std::pair<int,int>>::iterator it = columns.begin();it != columns.end();it++) {
         std::cout << it->first <<" - " <<it->second <<std::endl;
+    }
+}
+
+void Presenter::onGameFinished()
+{
+    for(int i =0; i< _gridSize*_gridSize;i++) {
+
     }
 }
 

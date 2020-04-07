@@ -16,7 +16,7 @@ private:
     View *_view;
     ModelTakuzu *_model;
     Pawn *_visualPawns;
-    int _size = 0;
+    int _gridSize = 0;
 public slots:
     void onPawnClicked(const int & id, const State & state);
     void onIncorrectPawnsInRow(const std::set<std::pair<int,int>> pawns);
@@ -25,7 +25,7 @@ public slots:
     void onUnbalancedColumns(std::set<int> columns);
     void onIdenticalRows(std::set<std::pair<int,int>> rows);
     void onIdenticalColumns(std::set<std::pair<int,int>> columns);
-
+    void onGameFinished();
 
 signals:
     void pawnChanged(const int & id, const State & state);
