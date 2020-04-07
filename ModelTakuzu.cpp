@@ -267,35 +267,34 @@ std::set<std::pair<int,int>> ModelTakuzu::findIdenticalRows()
 
 void ModelTakuzu::rulesLoop()
 {
-//TODO: tester isgamefinished si non lancer le code dessous si oui lancer le signal gamefinished
-    std::set<std::pair<int,int>> faultyPawnInRow = checkRowSideBySidePawn();
-    std::set<std::pair<int,int>> faultyPawnInColumn = checkColumnSideBySidePawn();
-    std::set<int> irregularRows = findUnbalancedRows();
-    std::set<int> irregularColumns = findUnbalancedColumns();
-    std::set<std::pair<int,int>> equivalentRows = findIdenticalRows();
-    std::set<std::pair<int,int>> equivalentColumns = findIdenticalColumns();
+    if (!isGameFinished()) {
+        std::set<std::pair<int,int>> faultyPawnInRow = checkRowSideBySidePawn();
+        std::set<std::pair<int,int>> faultyPawnInColumn = checkColumnSideBySidePawn();
+        std::set<int> irregularRows = findUnbalancedRows();
+        std::set<int> irregularColumns = findUnbalancedColumns();
+        std::set<std::pair<int,int>> equivalentRows = findIdenticalRows();
+        std::set<std::pair<int,int>> equivalentColumns = findIdenticalColumns();
 
-    //display();
-    if (!faultyPawnInRow.empty()){
-        emit incorrectPawnsInRow(faultyPawnInRow);
+        //display();
+        if (!faultyPawnInRow.empty()){
+            emit incorrectPawnsInRow(faultyPawnInRow);
+        }
+        if(!faultyPawnInColumn.empty()){
+            emit incorrectPawnsInColumn(faultyPawnInColumn);
+        }
+        if(!irregularRows.empty()) {
+            emit unbalancedRows(irregularRows);
+        }
+        if(!irregularColumns.empty()){
+            emit unbalancedColumns(irregularColumns);
+        }
+        if(!equivalentRows.empty()) {
+            emit identicalRows(equivalentRows);
+        }
+        if (!equivalentColumns.empty()) {
+            emit identicalColumns(equivalentColumns);
+        }
     }
-    if(!faultyPawnInColumn.empty()){
-        emit incorrectPawnsInColumn(faultyPawnInColumn);
-    }
-    if(!irregularRows.empty()) {
-        emit unbalancedRows(irregularRows);
-    }
-    if(!irregularColumns.empty()){
-        emit unbalancedColumns(irregularColumns);
-    }
-    if(!equivalentRows.empty()) {
-        emit identicalRows(equivalentRows);
-    }
-    if (!equivalentColumns.empty()) {
-        emit identicalColumns(equivalentColumns);
-    }
-
-
 }
 
 bool ModelTakuzu::isGameFinished()
