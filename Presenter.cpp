@@ -35,6 +35,7 @@ Presenter::Presenter()
     connect(_model,SIGNAL(unbalancedColumns(std::set<int>)),this,SLOT(onUnbalancedColumns(std::set<int>)));
     connect(_model,SIGNAL(identicalRows(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalRows(std::set<std::pair<int,int>>)));
     connect(_model,SIGNAL(identicalColumns(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalColumns(std::set<std::pair<int,int>>)));
+    connect(_model,SIGNAL(notify()),this,SLOT(onGameFinished()));
 }
 
 
@@ -172,7 +173,8 @@ void Presenter::onIdenticalColumns(std::set<std::pair<int, int> > columns)
 void Presenter::onGameFinished()
 {
     for(int i =0; i< _gridSize*_gridSize;i++) {
-
+        _visualPawns[i].setLock(true);
     }
+    _view->update();
 }
 

@@ -37,6 +37,8 @@ TestModel::TestModel()
     should_return_faulty_row_when_uniqueness_is_not_respected();
 
     should_return_true_when_grid_is_correctly_finished();
+    should_return_false_when_grid_is_uncorrectly_finished();
+    should_return_false_when_grid_is_not_finished();
     std::cout << "Tests for model: ok" << std::endl;
 }
 
@@ -343,6 +345,34 @@ void TestModel::should_return_true_when_grid_is_correctly_finished()
 
     model.initColoredPawnNumber();
     assert(model.isGameFinished());
+}
+
+void TestModel::should_return_false_when_grid_is_uncorrectly_finished()
+{
+    ModelTakuzu model(nullptr);
+    int size = 2;
+    model.initGrid(size);
+    assert(model.putInGrid(0,0,State::Black));
+    assert(model.putInGrid(0,1,State::White));
+
+    assert(model.putInGrid(1,0,State::Black));
+    assert(model.putInGrid(1,1,State::White));
+
+    //break uniqueness rule
+
+    model.initColoredPawnNumber();
+    assert(model.isGameFinished() == false);
+}
+
+void TestModel::should_return_false_when_grid_is_not_finished()
+{
+    ModelTakuzu model(nullptr);
+    int size = 2;
+    model.initGrid(size);
+    assert(model.putInGrid(0,0,State::Black));
+
+    model.initColoredPawnNumber();
+    assert(model.isGameFinished() == false);
 }
 
 
