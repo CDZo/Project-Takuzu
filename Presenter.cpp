@@ -9,12 +9,32 @@
 
 Presenter::Presenter()
 {
-    int size = 4;
+    int size = 9;
     _visualPawns = new Pawn[size];
     for (int i = 0;i < size;i++) {
         _visualPawns[i].setMinimumSize(64,64);
-        _visualPawns[i].changeDesignWith(new Pawn::BrightSquare);
+        _visualPawns[i].changeDesignWith(new Pawn::DarkCircle);
     }
+    _visualPawns[1].setState(White);
+    _visualPawns[2].setState(White);
+    _visualPawns[2].setFalse(true);
+    _visualPawns[3].setState(White);
+    _visualPawns[3].setLock(true);
+    _visualPawns[4].setState(White);
+    _visualPawns[4].setFalse(true);
+    _visualPawns[4].setLock(true);
+
+    _visualPawns[5].setState(Black);
+    _visualPawns[6].setState(Black);
+    _visualPawns[6].setFalse(true);
+    _visualPawns[7].setState(Black);
+    _visualPawns[7].setLock(true);
+    _visualPawns[8].setState(Black);
+    _visualPawns[8].setFalse(true);
+    _visualPawns[8].setLock(true);
+
+
+
     _view = new View;
     _view->loadTestPawn(_visualPawns,size);
 }
