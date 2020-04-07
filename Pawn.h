@@ -10,7 +10,10 @@
 class Pawn : public QWidget
 {
     Q_OBJECT
+
 public:
+    ~Pawn();
+    class IDesign;
     explicit Pawn(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
@@ -20,26 +23,17 @@ public:
     void setState(const State &state);
     State getState();
     bool operator==(const Pawn & other);
+    void changeDesignWith(IDesign * newDesign);
 
+
+public slots:
 signals:
     void onClicked(const int id, const State state);
 
-public slots:
-
-private:
-    void displayEmptyPawn();
-    void displayWhitePawn();
-    void displayBlackPawn();
-    void displayLockPawn();
-    State _state = State::Empty;
-    bool _isLock = false;
-    bool _isFalse = false;
-    int _id = -1;
-
-private:
+public:
     class IDesign {
     public:
-        virtual ~IDesign() = 0;
+        virtual ~IDesign();
         virtual void displayEmptyPawn(Pawn* pawn) = 0;
         virtual void displayWhitePawn(Pawn* pawn) = 0;
         virtual void displayBlackPawn(Pawn* pawn) = 0;
@@ -48,7 +42,7 @@ private:
     };
 
     class BrightCircle: public IDesign{
-    public:
+       public:
         BrightCircle();
         ~BrightCircle();
         void displayEmptyPawn(Pawn* pawn) override;
@@ -57,8 +51,22 @@ private:
         void displayLockPawn(Pawn* pawn) override;
     };
 
+    class BrightSquare: public IDesign{
+       public:
+        BrightSquare();
+        ~BrightSquare();
+        void displayEmptyPawn(Pawn* pawn) override;
+        void displayWhitePawn(Pawn* pawn) override;
+        void displayBlackPawn(Pawn* pawn) override;
+        void displayLockPawn(Pawn* pawn) override;
+    };
+
 private:
     IDesign* _design;
+    State _state = State::Empty;
+    bool _isLock = false;
+    bool _isFalse = false;
+    int _id = -1;
 
 };
 
