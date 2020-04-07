@@ -11,7 +11,7 @@ Presenter::Presenter()
 {    
     _gridSize = 6;
     _visualPawns = new Pawn[_gridSize*_gridSize];
-    initVisualPawnWithDifficulty(Hard);
+    initVisualPawnWithDifficulty(Easy);
 
     _model = new ModelTakuzu;
     _model->initGrid(_gridSize,_visualPawns);
@@ -122,18 +122,20 @@ void Presenter::onPawnClicked(const int & id, const State & state)
 
 void Presenter::onIncorrectPawnsInRow(const std::set<std::pair<int, int>> pawns)
 {
+    std::cout<<"Incorrect Pawn in Row :"<<std::endl;
     for(std::set<std::pair<int, int>>::iterator it = pawns.begin();it != pawns.end();it++) {
         _visualPawns[it->first * _gridSize + it->second].setFalse(true);
-        //std::cout << "x: " << it->first << " y : " << it->second <<std::endl;
+        std::cout << "x: " << it->first << " y : " << it->second <<std::endl;
     }
     _view->update();
 }
 
 void Presenter::onIncorrectPawnsInColumn(const std::set<std::pair<int, int> > pawns)
 {
+    std::cout<<"Incorrect Pawn in Column :"<<std::endl;
     for(std::set<std::pair<int, int>>::iterator it = pawns.begin();it != pawns.end();it++) {
         _visualPawns[it->first * _gridSize + it->second].setFalse(true);
-        //std::cout << "x: " << it->first << " y : " << it->second <<std::endl;
+        std::cout << "x: " << it->first << " y : " << it->second <<std::endl;
     }
     _view->update();
 }
@@ -141,7 +143,7 @@ void Presenter::onIncorrectPawnsInColumn(const std::set<std::pair<int, int> > pa
 void Presenter::onUnbalancedRows(std::set<int> rows)
 {
     for(std::set<int>::iterator it = rows.begin();it != rows.end();it++) {
-     //   std::cout << "unbalanced row: " << *it <<std::endl;
+        std::cout << "unbalanced row: " << *it <<std::endl;
     }
     std::cout<<std::endl;
 }
@@ -149,7 +151,7 @@ void Presenter::onUnbalancedRows(std::set<int> rows)
 void Presenter::onUnbalancedColumns(std::set<int> columns)
 {
     for(std::set<int>::iterator it = columns.begin();it != columns.end();it++) {
-       // std::cout << "unbalanced columns: " << *it <<std::endl;
+        std::cout << "unbalanced columns: " << *it <<std::endl;
     }
     std::cout<<std::endl;
 }
