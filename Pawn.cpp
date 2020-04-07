@@ -72,6 +72,30 @@ State Pawn::getState()
     return _state;
 }
 
+QString Pawn::getCompleteState()
+{
+    QString completeState = "";
+    switch (_state){
+    case Empty:
+        completeState+=".";
+        break;
+    case White:
+        completeState+="W";
+        break;
+    case Black:
+        completeState+="B";
+        break;
+    }
+
+    if (_isLock){
+        completeState+="1";
+    }
+    else {
+        completeState+="0";
+    }
+    return (completeState);
+}
+
 bool Pawn::operator==(const Pawn &other)
 {
     return _state == other._state;
