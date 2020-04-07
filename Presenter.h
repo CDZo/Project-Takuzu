@@ -3,6 +3,7 @@
 #include <QObject>
 #include "ModelTakuzu.h"
 #include "View.h"
+#include <QSettings>
 class Presenter: public QObject
 {
     Q_OBJECT
@@ -10,6 +11,8 @@ public:
     Presenter();
     ~Presenter();
     void initVisualPawnWithDifficulty(const Difficulty & difficulty);
+    void saveGrid(QString name);
+    void loadSavedGrid(QString name);
     void show();
 private:
     void resetFalsePawns();
@@ -17,6 +20,8 @@ private:
     ModelTakuzu *_model;
     Pawn *_visualPawns;
     int _gridSize = 0;
+    QSettings _save;
+
 public slots:
     void onPawnClicked(const int & id, const State & state);
     void onIncorrectPawnsInRow(const std::set<std::pair<int,int>> pawns);

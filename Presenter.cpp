@@ -100,6 +100,85 @@ void Presenter::initVisualPawnWithDifficulty(const Difficulty & difficulty)
 
 }
 
+
+
+void Presenter::saveGrid(QString name)
+{
+    QString grid = "";
+    grid+= QString::number(_gridSize);
+    grid += "-";
+    for (int k=0;k<_gridSize;k++){
+        //grid+=complete_state_pawn;
+    }
+    _save.setValue(name,grid);
+}
+
+void Presenter::loadSavedGrid(QString name)
+{
+    QString grid = _save.value(name,0).toString();
+    QString gridSize = "";
+    int k=0;
+    const QChar* data=grid.constData();
+    while(data[k]!="-"){
+        gridSize += data[k];
+        k++;
+    }
+    k++;
+    int _size=gridSize.toInt();
+    int pawnId=0;
+    for (int i=k;i<(_size*_size*3)+k;i+=3){
+
+        if (data[i]=="."){
+            _visualPawns[k].setState(Empty);
+        }
+        else if (data[i]=="B"){
+            _visualPawns[k].setState(Black);
+        }
+        else if (data[i]=="W"){
+            _visualPawns[k].setState(White);
+        }
+
+
+
+        if (data[i+1]=="0"){
+            _visualPawns[k].setLock(false);
+        }
+        else if (data[i+1]=="1"){
+            _visualPawns[k].setLock(true);
+        }
+
+
+
+        if (data[i+2]=="."){
+            _visualPawns[k].setLock(false);
+            _visualPawns[k].setState(Empty);
+        }
+        else if (data[i+2]=="B"){
+            _visualPawns[k].setLock(true);
+            _visualPawns[k].setState(Black);
+        }
+        else if (data[i+2]=="W"){
+            _visualPawns[k].setLock(true);
+            _visualPawns[k].setState(White);
+        }
+
+
+
+
+
+
+
+
+
+        pawnId++;
+    }
+}
+
+
+
+
+
+
 void Presenter::show()
 {
     _view->show();
