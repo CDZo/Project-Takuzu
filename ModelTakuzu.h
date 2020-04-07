@@ -40,6 +40,10 @@ public:
     std::set<std::pair<int,int>> findIdenticalRows();
 
     void rulesLoop();
+    /**
+     * @brief isGameFinished check rules and number of not Empty pawns.
+     * @return true and emit signal notity or false.
+     */
     bool isGameFinished();
     void initColoredPawnNumber();
 signals:
