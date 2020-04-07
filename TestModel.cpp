@@ -374,5 +374,3 @@ void TestModel::should_return_false_when_grid_is_not_finished()
     model.initColoredPawnNumber();
     assert(model.isGameFinished() == false);
 }
-
-
