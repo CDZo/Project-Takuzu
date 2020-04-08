@@ -18,9 +18,6 @@ View::View(QWidget *parent) :
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open"));
     ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
     ui->statusBar->showMessage("status bar here");
-    QPushButton rightButton("button",this);
-    rightButton.setGeometry(10,10,100,100);
-
 }
 
 View::~View()
@@ -184,6 +181,11 @@ void View::startMetronome()
 void View::setChronometerTo(int hour, int min, int s)
 {
     _chronometer->time().setHMS(hour,min,s);
+}
+
+void View::setStatusBarTextWith(const QString &text)
+{
+    ui->statusBar->showMessage(text);
 }
 
 void View::onTimerTimeout()

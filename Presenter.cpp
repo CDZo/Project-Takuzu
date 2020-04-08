@@ -203,6 +203,7 @@ void Presenter::onPawnClicked(const int & id, const State & state)
 {
     //std::cout << "id: "<<id<<" state : "<<state <<std::endl;
     resetFalsePawns();
+    _view->setStatusBarTextWith(tr(""));
     emit pawnChanged(id, state);
 }
 
@@ -229,33 +230,50 @@ void Presenter::onIncorrectPawnsInColumn(const std::set<std::pair<int, int> > pa
 void Presenter::onUnbalancedRows(std::set<int> rows)
 {
     for(std::set<int>::iterator it = rows.begin();it != rows.end();it++) {
-        // std::cout << "unbalanced row: " << *it <<std::endl;
+        for(int column = 0; column < _gridSize; column++) {
+            _visualPawns[*it * _gridSize + column].setFalse(true);
+        }
     }
-    //std::cout<<std::endl;
+    _view->setStatusBarTextWith(tr("unbalanced row"));
+    _view->update();
 }
 
 void Presenter::onUnbalancedColumns(std::set<int> columns)
 {
     for(std::set<int>::iterator it = columns.begin();it != columns.end();it++) {
-        // std::cout << "unbalanced columns: " << *it <<std::endl;
+        for(int row = 0; row < _gridSize; row++) {
+            _visualPawns[row * _gridSize + *it].setFalse(true);
+        }
     }
-    //std::cout<<std::endl;
+    _view->setStatusBarTextWith(tr("unbalanced column"));
+    _view->update();
 }
+
 
 void Presenter::onIdenticalRows(std::set<std::pair<int, int> > rows)
 {
-    //std::cout<<"Identical Rows :"<<std::endl;
+
     for(std::set<std::pair<int,int>>::iterator it = rows.begin();it != rows.end();it++) {
-        // std::cout << it->first <<" - " <<it->second <<std::endl;
+        for(int column = 0; column < _gridSize; column++) {
+            _visualPawns[it->first * _gridSize + column].setFalse(true);
+            _visualPawns[it->second * _gridSize + column].setFalse(true);
+        }
     }
+    _view->setStatusBarTextWith(tr("identical rows"));
+    _view->update();
 }
 
 void Presenter::onIdenticalColumns(std::set<std::pair<int, int> > columns)
 {
-    // std::cout<<"Identical columns :"<<std::endl;
+
     for(std::set<std::pair<int,int>>::iterator it = columns.begin();it != columns.end();it++) {
-        //  std::cout << it->first <<" - " <<it->second <<std::endl;
+        for(int row = 0; row < _gridSize; row++) {
+            _visualPawns[row * _gridSize + it->first].setFalse(true);
+            _visualPawns[row * _gridSize + it->second].setFalse(true);
+        }
     }
+    _view->setStatusBarTextWith(tr("identical column"));
+    _view->update();
 }
 
 void Presenter::onGameFinished()
@@ -263,8 +281,9 @@ void Presenter::onGameFinished()
     for(int i =0; i< _gridSize*_gridSize;i++) {
         _visualPawns[i].setLock(true);
     }
+
     _view->stopMetronome();
     _view->update();
-
+    _view->setStatusBarTextWith(tr("You Won !! (＾▽＾)"));
 }
 
