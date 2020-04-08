@@ -54,7 +54,11 @@ QGridLayout *View::loadPawnsOnGrid(const int &size, Pawn *pawns, Indicator *indi
             gridLayout->addWidget(&pawns[ row * size + column],row,column);
         }
         gridLayout->addWidget(&indicator[row],row,size);
+        gridLayout->addWidget(&indicator[row+size],size,row);
+
         indicator[row].updateData();
+        indicator[row+size].updateData();
+
     }
     gridLayout->setSizeConstraint(QLayout::SetFixedSize);
 

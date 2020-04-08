@@ -9,6 +9,7 @@
 #include <QElapsedTimer>
 #include "Pawn.h"
 #include "Indicator.h"
+
 namespace Ui {
 class View;
 }
