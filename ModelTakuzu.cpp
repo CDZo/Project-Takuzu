@@ -8,9 +8,7 @@ ModelTakuzu::ModelTakuzu(QObject *parent) : QObject(parent)
 ModelTakuzu::~ModelTakuzu()
 {
     delete [] _pawnGrid;
-    for(IObserver* observer: _observers) {
-        removeObserver(observer);
-    }
+    _observers.clear();
 }
 
 void ModelTakuzu::setSize(const int &size)
@@ -76,8 +74,8 @@ void ModelTakuzu::onPawnChanged(const int &id, const State &newState)
         _coloredPawn--;
     }
     _pawnGrid[id].setState(newState);
-    notifyObservers();
     //std::cout << "row:" << id/_gridSize << " column:" << id%_gridSize << " state:" << state << std::endl;
+    notifyObservers();
     rulesLoop();
 }
 
@@ -95,7 +93,6 @@ std::pair<int, int> ModelTakuzu::countPawnInRow(int row)
             break;
         case Empty:
             break;
-
         }
     }
     return std::make_pair(black,white);
@@ -115,7 +112,6 @@ std::pair<int, int> ModelTakuzu::countPawnInColumn(int column)
             break;
         case Empty:
             break;
-
         }
     }
     return std::make_pair(black,white);
@@ -153,7 +149,7 @@ std::pair<int, int> ModelTakuzu::getData(Orientation orientation, int position)
     case Horizontal:
         return countPawnInRow(position);
         break;
-    case Vertical:break;
+    case Vertical:
         return countPawnInColumn(position);
         break; 
     }
@@ -167,7 +163,7 @@ void ModelTakuzu::addObserver(IObserver * observer)
 
 void ModelTakuzu::removeObserver(IObserver * observer)
 {
-    std::cout << "ModelTakuzu::removeObserver with " << observer <<std::endl;
+    _observers.erase(std::remove(_observers.begin(),_observers.end(), observer));
 }
 
 void updateVariablesWith(const int & state,int * counter,int * firstIncorrectPawn, const int & valueIncorrectPawn)
@@ -350,7 +346,6 @@ void ModelTakuzu::rulesLoop()
         std::set<std::pair<int,int>> equivalentRows = findIdenticalRows();
         std::set<std::pair<int,int>> equivalentColumns = findIdenticalColumns();
 
-        //display();
         if (!faultyPawnInRow.empty()){
             emit incorrectPawnsInRow(faultyPawnInRow);
         }
