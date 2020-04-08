@@ -8,6 +8,9 @@ ModelTakuzu::ModelTakuzu(QObject *parent) : QObject(parent)
 ModelTakuzu::~ModelTakuzu()
 {
     delete [] _pawnGrid;
+    for(IObserver* observer: _observers) {
+        removeObserver(observer);
+    }
 }
 
 void ModelTakuzu::setSize(const int &size)
@@ -56,8 +59,16 @@ void ModelTakuzu::display()
     std::cout << std::endl;
 }
 
+void ModelTakuzu::notifyObservers()
+{
+    for(IObserver * observer: _observers) {
+        observer->updateData();
+    }
+}
+
 void ModelTakuzu::onPawnChanged(const int &id, const State &newState)
 {
+
     if(_pawnGrid[id].getState() == Empty && newState != Empty) {
         _coloredPawn++;
     }
@@ -65,8 +76,49 @@ void ModelTakuzu::onPawnChanged(const int &id, const State &newState)
         _coloredPawn--;
     }
     _pawnGrid[id].setState(newState);
+    notifyObservers();
     //std::cout << "row:" << id/_gridSize << " column:" << id%_gridSize << " state:" << state << std::endl;
     rulesLoop();
+}
+
+std::pair<int, int> ModelTakuzu::countPawnInRow(int row)
+{
+    int black = 0;
+    int white = 0;
+    for(int column = 0; column < _gridSize; column++) {
+        switch(_pawnGrid[row * _gridSize + column].getState()) {
+        case Black:
+            black++;
+            break;
+        case White:
+            white++;
+            break;
+        case Empty:
+            break;
+
+        }
+    }
+    return std::make_pair(black,white);
+}
+
+std::pair<int, int> ModelTakuzu::countPawnInColumn(int column)
+{
+    int black = 0;
+    int white = 0;
+    for(int row = 0; row < _gridSize; row++) {
+        switch(_pawnGrid[row * _gridSize + column].getState()) {
+        case Black:
+            black++;
+            break;
+        case White:
+            white++;
+            break;
+        case Empty:
+            break;
+
+        }
+    }
+    return std::make_pair(black,white);
 }
 
 bool ModelTakuzu::gridRespectRules()
@@ -93,6 +145,29 @@ void ModelTakuzu::initColoredPawnNumber()
             _coloredPawn++;
         }
     }
+}
+
+std::pair<int, int> ModelTakuzu::getData(Orientation orientation, int position)
+{
+    switch(orientation) {
+    case Horizontal:
+        return countPawnInRow(position);
+        break;
+    case Vertical:break;
+        return countPawnInColumn(position);
+        break; 
+    }
+    return std::make_pair(-1,-1);
+}
+
+void ModelTakuzu::addObserver(IObserver * observer)
+{
+    _observers.push_back(observer);
+}
+
+void ModelTakuzu::removeObserver(IObserver * observer)
+{
+    std::cout << "ModelTakuzu::removeObserver with " << observer <<std::endl;
 }
 
 void updateVariablesWith(const int & state,int * counter,int * firstIncorrectPawn, const int & valueIncorrectPawn)
