@@ -175,9 +175,6 @@ void Presenter::loadSavedGrid(QString name)
 
 
 
-
-
-
 void Presenter::show()
 {
     _view->show();
