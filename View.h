@@ -8,6 +8,7 @@
 #include <QTimeEdit>
 #include <QElapsedTimer>
 #include "Pawn.h"
+#include "Indicator.h"
 
 namespace Ui {
 class View;
@@ -21,16 +22,21 @@ public:
     explicit View(QWidget *parent = 0);
     ~View();
     void loadUi(const int & size, Pawn * pawns);
-    void loadTestPawn(const int & size, Pawn *pawn);
-
+    void loadUi(const int & size, Pawn * pawns, Indicator * indicator);
+    void loadTestPawn();
+    void stopMetronome();
+    void startMetronome();
+    void setChronometerTo(int hour, int min, int s);
 public slots:
     void onTimerTimeout();
 
 private:
 
     QGridLayout* loadPawnsOnGrid(const int & size, Pawn * pawns);
+    QGridLayout* loadPawnsOnGrid(const int & size, Pawn * pawns, Indicator * indicator);
     Ui::View *ui;
     QTimeEdit *_chronometer;
+    QTimer * _metronome;
     QElapsedTimer *_time;
 };
 

@@ -24,7 +24,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    Indicator.cpp \
     ModelTakuzu.cpp \
+    NewGame.cpp \
     Presenter.cpp \
     TestModel.cpp \
     TestPawn.cpp \
@@ -34,7 +36,11 @@ SOURCES += \
 
 HEADERS += \
     Constant.h \
+    IObserver.h \
+    ISubject.h \
+    Indicator.h \
     ModelTakuzu.h \
+    NewGame.h \
     Presenter.h \
     TestModel.h \
     TestPawn.h \
@@ -42,6 +48,7 @@ HEADERS += \
     Pawn.h
 
 FORMS += \
+        NewGame.ui \
         vue.ui
 
 TRANSLATIONS = takuzu_fr.ts \
