@@ -95,7 +95,6 @@ void View::loadUi(const int &size, Pawn *pawns)
 
     connect(timerChronometer,SIGNAL(timeout()),this,SLOT(onTimerTimeout()));
 
-
     timerChronometer->start();
     _time->start();
 }
