@@ -52,7 +52,7 @@ public:
     void notifyObservers() override;
     void addObserver(IObserver * observer) override;
     //TODO to test
-    //void removeObserver(IObserver * observer) override;
+    void removeObserver(IObserver * observer) override;
     std::pair<int, int> getData(Orientation orientation, int position) override;
     void initColoredPawnNumber();
 
