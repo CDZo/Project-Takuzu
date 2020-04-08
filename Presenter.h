@@ -4,6 +4,7 @@
 #include "ModelTakuzu.h"
 #include "View.h"
 #include <QSettings>
+
 class Presenter: public QObject
 {
     Q_OBJECT
@@ -22,6 +23,7 @@ private:
     Indicator * _indicators;
 
     int _gridSize = 0;
+    int _indicatorSize = 0;
     QSettings _save;
 
 public slots:
