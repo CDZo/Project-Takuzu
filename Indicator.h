@@ -23,6 +23,8 @@ public:
     bool operator==(const Indicator & other);
 signals:
 private:
+    void drawHorizontally();
+    void drawVertically();
     int _blackPawn = 0;
     int _whitePawn = 0;
     int _position = 0;
