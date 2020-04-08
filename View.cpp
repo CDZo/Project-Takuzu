@@ -124,13 +124,13 @@ void View::loadUi(const int &size, Pawn *pawns, Indicator *indicator)
 
     _time = new QElapsedTimer;
 
-    QTimer * timerChronometer = new QTimer(this);
-    timerChronometer->setInterval(1000);
+    _metronome = new QTimer(this);
+    _metronome->setInterval(1000);
 
-    connect(timerChronometer,SIGNAL(timeout()),this,SLOT(onTimerTimeout()));
+    connect(_metronome,SIGNAL(timeout()),this,SLOT(onTimerTimeout()));
 
 
-    timerChronometer->start();
+    _metronome->start();
     _time->start();
 }
 
@@ -170,6 +170,11 @@ void View::loadTestPawn()
     mainLayout->addWidget(indicator,3,0);
     mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
     ui->centralWidget->setLayout(mainLayout);
+}
+
+void View::stopMetronome()
+{
+    _metronome->setInterval(0);
 }
 
 void View::onTimerTimeout()

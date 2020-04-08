@@ -263,6 +263,8 @@ void Presenter::onGameFinished()
     for(int i =0; i< _gridSize*_gridSize;i++) {
         _visualPawns[i].setLock(true);
     }
+    _view->stopMetronome();
     _view->update();
+
 }
 

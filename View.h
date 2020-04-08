@@ -24,6 +24,7 @@ public:
     void loadUi(const int & size, Pawn * pawns);
     void loadUi(const int & size, Pawn * pawns, Indicator * indicator);
     void loadTestPawn();
+    void stopMetronome();
 
 public slots:
     void onTimerTimeout();
@@ -34,6 +35,7 @@ private:
     QGridLayout* loadPawnsOnGrid(const int & size, Pawn * pawns, Indicator * indicator);
     Ui::View *ui;
     QTimeEdit *_chronometer;
+    QTimer * _metronome;
     QElapsedTimer *_time;
 };
 
