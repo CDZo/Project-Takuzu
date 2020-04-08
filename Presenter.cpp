@@ -8,13 +8,22 @@
 #include <time.h>
 
 Presenter::Presenter()
-{    
-    _gridSize = 10;
+{     
+    _gridSize = 6;
     _visualPawns = new Pawn[_gridSize*_gridSize];
+    _indicators = new Indicator[_gridSize];
+
     initVisualPawnWithDifficulty(Easy);
 
-    _model = new ModelTakuzu;
+    _model = new ModelTakuzu(this);
     _model->initGrid(_gridSize,_visualPawns);
+
+    for(int i = 0; i < _gridSize;i++) {
+        _indicators[i].setSubject(_model);
+        _indicators[i].setPosition(i);
+        _model->addObserver(&_indicators[i]);
+        _indicators[i].setMinimumSize(45,45);
+    }
 
     for(int i = 0; i < _gridSize*_gridSize;i++) {
         _visualPawns[i].setMinimumSize(45,45);
@@ -23,9 +32,12 @@ Presenter::Presenter()
         connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
         _visualPawns[i].setId(i);
     }
+
+
+
     _view = new View;
 
-    _view->loadUi(_gridSize,_visualPawns);
+    _view->loadUi(_gridSize,_visualPawns,_indicators);
 
     connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));
     connect(_model,SIGNAL(incorrectPawnsInRow(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInRow(std::set<std::pair<int,int>>)));
@@ -35,12 +47,15 @@ Presenter::Presenter()
     connect(_model,SIGNAL(identicalRows(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalRows(std::set<std::pair<int,int>>)));
     connect(_model,SIGNAL(identicalColumns(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalColumns(std::set<std::pair<int,int>>)));
     connect(_model,SIGNAL(notify()),this,SLOT(onGameFinished()));
+
 }
 
 
 Presenter::~Presenter()
 {
     delete[] _visualPawns;
+    delete _model;
+    delete [] _indicators;
     delete _view;
 }
 
@@ -90,7 +105,7 @@ void Presenter::initVisualPawnWithDifficulty(const Difficulty & difficulty)
 
         }
         //std::cout<<_gridSize<<std::endl<<std::flush;
-       //std::cout<<grid.toStdString()<<std::endl<<std::flush;
+        //std::cout<<grid.toStdString()<<std::endl<<std::flush;
         file.close();
     }
     else {
@@ -134,7 +149,7 @@ void Presenter::loadSavedGrid(QString name)
             _visualPawns[pawnId].setState(Black);
         }
         else if (data[i]=="W"){
-           _visualPawns[pawnId].setState(White);
+            _visualPawns[pawnId].setState(White);
         }
 
 
@@ -206,7 +221,7 @@ void Presenter::onIncorrectPawnsInColumn(const std::set<std::pair<int, int> > pa
 void Presenter::onUnbalancedRows(std::set<int> rows)
 {
     for(std::set<int>::iterator it = rows.begin();it != rows.end();it++) {
-       // std::cout << "unbalanced row: " << *it <<std::endl;
+        // std::cout << "unbalanced row: " << *it <<std::endl;
     }
     //std::cout<<std::endl;
 }
@@ -214,7 +229,7 @@ void Presenter::onUnbalancedRows(std::set<int> rows)
 void Presenter::onUnbalancedColumns(std::set<int> columns)
 {
     for(std::set<int>::iterator it = columns.begin();it != columns.end();it++) {
-       // std::cout << "unbalanced columns: " << *it <<std::endl;
+        // std::cout << "unbalanced columns: " << *it <<std::endl;
     }
     //std::cout<<std::endl;
 }
@@ -223,15 +238,15 @@ void Presenter::onIdenticalRows(std::set<std::pair<int, int> > rows)
 {
     //std::cout<<"Identical Rows :"<<std::endl;
     for(std::set<std::pair<int,int>>::iterator it = rows.begin();it != rows.end();it++) {
-       // std::cout << it->first <<" - " <<it->second <<std::endl;
+        // std::cout << it->first <<" - " <<it->second <<std::endl;
     }
 }
 
 void Presenter::onIdenticalColumns(std::set<std::pair<int, int> > columns)
 {
-   // std::cout<<"Identical columns :"<<std::endl;
+    // std::cout<<"Identical columns :"<<std::endl;
     for(std::set<std::pair<int,int>>::iterator it = columns.begin();it != columns.end();it++) {
-      //  std::cout << it->first <<" - " <<it->second <<std::endl;
+        //  std::cout << it->first <<" - " <<it->second <<std::endl;
     }
 }
 

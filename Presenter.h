@@ -19,6 +19,8 @@ private:
     View *_view;
     ModelTakuzu *_model;
     Pawn *_visualPawns;
+    Indicator * _indicators;
+
     int _gridSize = 0;
     QSettings _save;
 
