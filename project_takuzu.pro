@@ -24,6 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    Indicator.cpp \
     ModelTakuzu.cpp \
     Presenter.cpp \
     TestModel.cpp \
@@ -34,6 +35,9 @@ SOURCES += \
 
 HEADERS += \
     Constant.h \
+    IObserver.h \
+    ISubject.h \
+    Indicator.h \
     ModelTakuzu.h \
     Presenter.h \
     TestModel.h \
