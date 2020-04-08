@@ -177,6 +177,16 @@ void View::stopMetronome()
     _metronome->setInterval(0);
 }
 
+void View::startMetronome()
+{
+    _metronome->setInterval(1000);
+}
+
+void View::setChronometerTo(int hour, int min, int s)
+{
+    _chronometer->time().setHMS(hour,min,s);
+}
+
 void View::onTimerTimeout()
 {
     _chronometer->setTime(_chronometer->time().addMSecs(_time->restart()));

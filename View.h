@@ -25,7 +25,8 @@ public:
     void loadUi(const int & size, Pawn * pawns, Indicator * indicator);
     void loadTestPawn();
     void stopMetronome();
-
+    void startMetronome();
+    void setChronometerTo(int hour, int min, int s);
 public slots:
     void onTimerTimeout();
 
