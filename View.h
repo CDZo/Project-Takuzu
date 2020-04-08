@@ -20,15 +20,15 @@ class View : public QMainWindow
 public:
     explicit View(QWidget *parent = 0);
     ~View();
-    void loadUi(Pawn * pawns, const int & size);
-    void loadTestPawn(Pawn *pawn,const int & size);
+    void loadUi(const int & size, Pawn * pawns);
+    void loadTestPawn(const int & size, Pawn *pawn);
 
 public slots:
     void onTimerTimeout();
 
 private:
 
-    QGridLayout* loadPawnsOnGrid(Pawn * pawns, const int & size);
+    QGridLayout* loadPawnsOnGrid(const int & size, Pawn * pawns);
     Ui::View *ui;
     QTimeEdit *_chronometer;
     QElapsedTimer *_time;

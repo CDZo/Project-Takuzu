@@ -26,7 +26,7 @@ Presenter::Presenter()
     }
     _view = new View;
 
-    _view->loadUi(_visualPawns,_gridSize);
+    _view->loadUi(_gridSize,_visualPawns);
 
     connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));
     connect(_model,SIGNAL(incorrectPawnsInRow(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInRow(std::set<std::pair<int,int>>)));

@@ -28,7 +28,7 @@ View::~View()
     delete ui;
 }
 
-QGridLayout* View::loadPawnsOnGrid(Pawn * pawns, const int & size)
+QGridLayout* View::loadPawnsOnGrid(const int & size,Pawn * pawns)
 {
 
     QGridLayout *gridLayout = new QGridLayout;
@@ -43,11 +43,11 @@ QGridLayout* View::loadPawnsOnGrid(Pawn * pawns, const int & size)
     return gridLayout;
 }
 
-void View::loadUi(Pawn *pawns, const int &size)
+void View::loadUi(const int &size, Pawn *pawns)
 {
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
-    QGridLayout *leftLayout = loadPawnsOnGrid(pawns,size);
+    QGridLayout *leftLayout = loadPawnsOnGrid(size,pawns);
     //leftLayout->setSizeConstraint(QLayout::SetMinimumSize);
     mainLayout->addLayout(leftLayout);
 
@@ -78,7 +78,7 @@ void View::loadUi(Pawn *pawns, const int &size)
     _time->start();
 }
 
-void View::loadTestPawn(Pawn *pawn, const int & size)
+void View::loadTestPawn(const int & size,Pawn *pawn)
 {
 
     QGridLayout *mainLayout = new QGridLayout;
