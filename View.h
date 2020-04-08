@@ -27,6 +27,8 @@ public:
     void stopMetronome();
     void startMetronome();
     void setChronometerTo(int hour, int min, int s);
+    void setStatusBarTextWith(const QString & text);
+
 public slots:
     void onTimerTimeout();
 
