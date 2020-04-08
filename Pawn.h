@@ -22,6 +22,7 @@ public:
     void setLock(bool isLock);
     void setState(const State &state);
     State getState();
+    QString getCompleteState();
     bool operator==(const Pawn & other);
     void changeDesignWith(IDesign * newDesign);
 
@@ -69,6 +70,7 @@ public:
         void displayBlackPawn(Pawn* pawn) override;
         void displayLockPawn(Pawn* pawn) override;
     };
+
 private:
     IDesign* _design;
     State _state = State::Empty;

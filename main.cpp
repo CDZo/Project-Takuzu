@@ -9,6 +9,12 @@
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication::setOrganizationName("Ensicaen");
+    QCoreApplication::setOrganizationDomain("ensicaen.fr");
+    QCoreApplication::setApplicationName("Binairo");
+
+
+
     if (argc != 2) {
         std::cout << "Usage : programm id_programme (0 takuzu, 1 test)" <<std::endl;
         return 0;

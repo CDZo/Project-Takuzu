@@ -9,13 +9,24 @@
 
 Presenter::Presenter()
 {    
-    _gridSize = 6;
+    _gridSize = 10;
     _visualPawns = new Pawn[_gridSize*_gridSize];
     initVisualPawnWithDifficulty(Easy);
 
     _model = new ModelTakuzu;
     _model->initGrid(_gridSize,_visualPawns);
+    //saveGrid("Test3");
 
+    /*std::cout<<"----------Par ici !---------"<<std::endl<<std::endl<<_save.value("Test",0).toString().toStdString()<<std::endl<<std::endl<<std::flush;
+    std::cout<<"----------Par ici !---------"<<std::endl<<std::endl<<_save.value("Test2",0).toString().toStdString()<<std::endl<<std::endl<<std::flush;
+    std::cout<<"----------Par ici !---------"<<std::endl<<std::endl<<_save.value("Test3",0).toString().toStdString()<<std::endl<<std::endl<<std::flush;
+    std::cout<<"----------Par ici !---------"<<std::endl<<std::endl<<_save.value("Test4",0).toString().toStdString()<<std::endl<<std::endl<<std::flush;
+
+    loadSavedGrid("Test");
+    loadSavedGrid("Test2");
+    loadSavedGrid("Test3");
+    loadSavedGrid("Test4");
+*/
 
     for(int i = 0; i < _gridSize*_gridSize;i++) {
         _visualPawns[i].setMinimumSize(45,45);
@@ -99,6 +110,70 @@ void Presenter::initVisualPawnWithDifficulty(const Difficulty & difficulty)
     }
 
 }
+
+
+
+void Presenter::saveGrid(QString name)
+{
+    QString grid = "";
+    grid+= QString::number(_gridSize);
+    grid += "-";
+    for (int k=0;k<_gridSize*_gridSize;k++){
+        grid+=_visualPawns[k].getCompleteState();
+    }
+    _save.setValue(name,grid);
+}
+
+void Presenter::loadSavedGrid(QString name)
+{
+    QString grid = _save.value(name,0).toString();
+    QString gridSize = "";
+    int k=0;
+    const QChar* data=grid.constData();
+    while(data[k]!="-"){
+        gridSize += data[k];
+        k++;
+    }
+    k++;
+    _gridSize=gridSize.toInt();
+    int pawnId=0;
+    for (int i=k;i<(_gridSize*_gridSize*2)+k;i+=2){
+
+        if (data[i]=="."){
+            _visualPawns[pawnId].setState(Empty);
+        }
+        else if (data[i]=="B"){
+            _visualPawns[pawnId].setState(Black);
+        }
+        else if (data[i]=="W"){
+           _visualPawns[pawnId].setState(White);
+        }
+
+
+
+        if (data[i+1]=="0"){
+            _visualPawns[pawnId].setLock(false);
+        }
+        else if (data[i+1]=="1"){
+            _visualPawns[pawnId].setLock(true);
+        }
+        _visualPawns[pawnId].setId(pawnId);
+        pawnId++;
+    }
+
+
+    grid = "";
+    for (int k=0;k<_gridSize*_gridSize;k++){
+        grid+=_visualPawns[k].getCompleteState();
+    }
+    std::cout<<"----------HEHO---------"<<std::endl<<std::endl<<grid.toStdString()<<std::endl<<std::endl<<std::flush;
+
+}
+
+
+
+
+
 
 void Presenter::show()
 {
