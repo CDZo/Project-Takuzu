@@ -10,8 +10,9 @@
 Presenter::Presenter()
 {     
     _gridSize = 6;
+    _indicatorSize = _gridSize*2;
     _visualPawns = new Pawn[_gridSize*_gridSize];
-    _indicators = new Indicator[_gridSize];
+    _indicators = new Indicator[_indicatorSize];
 
     initVisualPawnWithDifficulty(Easy);
 
@@ -21,9 +22,20 @@ Presenter::Presenter()
     for(int i = 0; i < _gridSize;i++) {
         _indicators[i].setSubject(_model);
         _indicators[i].setPosition(i);
+
+        _indicators[i+_gridSize].setSubject(_model);
+        _indicators[i+_gridSize].setPosition(i);
+        _indicators[i+_gridSize].setOrientation(Vertical);
+
+    }
+    for(int i = 0; i < _indicatorSize;i++) {
         _model->addObserver(&_indicators[i]);
         _indicators[i].setMinimumSize(45,45);
     }
+
+
+
+
 
     for(int i = 0; i < _gridSize*_gridSize;i++) {
         _visualPawns[i].setMinimumSize(45,45);
@@ -170,7 +182,6 @@ void Presenter::loadSavedGrid(QString name)
         grid+=_visualPawns[k].getCompleteState();
     }
     //std::cout<<"----------HEHO---------"<<std::endl<<std::endl<<grid.toStdString()<<std::endl<<std::endl<<std::flush;
-
 }
 
 
