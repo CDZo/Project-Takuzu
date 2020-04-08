@@ -19,8 +19,8 @@ public:
     void setSubject(ISubject * model);
     void updateData() override;
     void setPosition(const int & position);
-
-
+    void setOrientation(const Orientation & orientation);
+    bool operator==(const Indicator & other);
 signals:
 private:
     int _blackPawn = 0;

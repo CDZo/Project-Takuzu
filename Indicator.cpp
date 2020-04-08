@@ -21,7 +21,7 @@ void Indicator::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     QFont font = painter.font();
-    font.setPixelSize(36);
+    font.setPixelSize(20);
     painter.setFont(font);
     //painter.fillRect(rect(),Qt::green);
     switch(_orientation) {
@@ -51,4 +51,14 @@ void Indicator::updateData()
 void Indicator::setPosition(const int &position)
 {
     _position = position;
+}
+
+void Indicator::setOrientation(const Orientation & orientation)
+{
+    _orientation = orientation;
+}
+
+bool Indicator::operator==(const Indicator &other)
+{
+    return _orientation == other._orientation && _position == other._position;
 }
