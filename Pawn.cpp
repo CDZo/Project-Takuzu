@@ -64,7 +64,7 @@ void Pawn::setLock(bool isLock)
 
 void Pawn::setState(const State &state)
 {
-    _state = State(state);
+    _state = state;
 }
 
 State Pawn::getState()
