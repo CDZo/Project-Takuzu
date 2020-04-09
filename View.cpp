@@ -122,6 +122,7 @@ void View::loadUi(const int &size, Pawn *pawns, Indicator *indicator)
     mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
     //mainLayout->setSizeConstraint(QLayout::SetFixedSize);
     mainLayout->setStretch(0,1);
+    delete ui->centralWidget->layout();
     ui->centralWidget->setLayout(mainLayout);
 
     _time = new QElapsedTimer;
