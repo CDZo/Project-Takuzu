@@ -14,6 +14,8 @@ Presenter::Presenter()
 
     initConnectionWithModel();
 
+    _save = new QSettings;
+
     _newGame = new NewGame;
 
     _saveDialog = new Save;
@@ -115,16 +117,16 @@ void Presenter::saveGrid(QString name)
     for (int k=0;k<_gridSize*_gridSize;k++){
         grid+=_visualPawns[k].getCompleteState();
     }
-    _save.setValue(name,grid);
-    _save.setValue(name+"_timer",_view->getChronometerTime());
+    _save->setValue(name,grid);
+    _save->setValue(name+"_timer",_view->getChronometerTime());
 }
 
 void Presenter::loadSavedGrid(QString name)
 {
-    if (_save.value(name,0)!=0){
-        QString grid = _save.value(name,0).toString();
+    if (_save->value(name,0)!=0){
+        QString grid = _save->value(name,0).toString();
 
-        QString time = _save.value(name+"_timer",0).toString();
+        QString time = _save->value(name+"_timer",0).toString();
         QString gridSize = "";
         int k=0;
         const QChar* data=grid.constData();

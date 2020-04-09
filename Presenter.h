@@ -47,7 +47,7 @@ private:
 
     int _gridSize = 0;
     int _indicatorSize = 0;
-    QSettings _save;
+    QSettings * _save;
 
 public slots:
     void onPawnClicked(const int & id, const State & state);
