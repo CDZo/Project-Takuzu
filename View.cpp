@@ -18,7 +18,7 @@ View::View(QWidget *parent) :
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open"));
     ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
     ui->statusBar->showMessage("status bar here");
-    connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(pressedNew(bool)));
+    connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(pressedNew()));
 
 }
 
@@ -102,7 +102,7 @@ void View::loadUi(const int &size, Pawn *pawns, Indicator *indicator)
 {
     QHBoxLayout *mainLayout = new QHBoxLayout;
     QGridLayout *leftLayout = loadPawnsOnGrid(size,pawns,indicator);
-    //leftLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    leftLayout->setSizeConstraint(QLayout::SetMinimumSize);
     mainLayout->addLayout(leftLayout);
 
     QVBoxLayout *rightLayout = new QVBoxLayout;
@@ -115,12 +115,9 @@ void View::loadUi(const int &size, Pawn *pawns, Indicator *indicator)
     rightLayout->addWidget(_chronometer);
     rightLayout->setSizeConstraint(QLayout::SetMinimumSize);
 
-    mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
-    //mainLayout->setSizeConstraint(QLayout::SetFixedSize);
     mainLayout->setStretch(0,1);
-    delete ui->centralWidget->layout();
+    mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
     ui->centralWidget->setLayout(mainLayout);
-
     _time = new QElapsedTimer;
 
     _metronome = new QTimer(this);
@@ -199,12 +196,21 @@ void View::setStatusBarTextWith(const QString &text)
     ui->statusBar->showMessage(text);
 }
 
+void View::reloadUi(const int &size, Pawn *pawns, Indicator *indicator)
+{
+    delete _chronometer;
+    delete _time;
+    delete _metronome;
+    delete ui->centralWidget->layout();
+    loadUi(size,pawns,indicator);
+}
+
 void View::onTimerTimeout()
 {
     _chronometer->setTime(_chronometer->time().addMSecs(_time->restart()));
 }
 
-void View::pressedNew (bool check)
+void View::pressedNew ()
 {
     emit sendPressedNew();
 }
