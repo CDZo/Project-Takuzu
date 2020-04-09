@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Nouvelle grille</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
