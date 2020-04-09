@@ -20,6 +20,8 @@ View::View(QWidget *parent) :
     ui->actionOption->setIcon(QIcon::fromTheme("document-properties"));
     setStatusBarTextWith("");
     connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(pressedNew()));
+    connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(pressedSave(bool)));
+    connect(ui->actionOpen,SIGNAL(triggered(bool)),this,SLOT(pressedLoad(bool)));
 }
 
 View::~View()
@@ -210,4 +212,14 @@ void View::onTimerTimeout()
 void View::pressedNew ()
 {
     emit sendPressedNew();
+}
+
+void View::pressedSave (bool check)
+{
+    emit sendPressedSave();
+}
+
+void View::pressedLoad (bool check)
+{
+    emit sendPressedLoad();
 }

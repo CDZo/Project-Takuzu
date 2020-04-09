@@ -33,6 +33,8 @@ public:
 public slots:
     void onTimerTimeout();
     void pressedNew ();
+    void pressedSave (bool check);
+    void pressedLoad (bool check);
 
 private:
     QGridLayout* loadPawnsOnGrid(const int & size, Pawn * pawns);
@@ -44,6 +46,8 @@ private:
 
 signals:
     void sendPressedNew();
+    void sendPressedSave();
+    void sendPressedLoad();
 };
 
 #endif

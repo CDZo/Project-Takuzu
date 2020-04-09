@@ -14,12 +14,27 @@ Presenter::Presenter()
 
     initConnectionWithModel();
 
+    _save = new QSettings;
+
     _newGame = new NewGame;
+
+    _saveDialog = new Save;
+
+    _loadDialog = new Load;
+
+    _error = new Error;
 
     connect(_newGame,SIGNAL(sendSizeIndex(int)),this,SLOT(onReceivingNewSize(int)));
     connect(_newGame,SIGNAL(sendDifficultyIndex(int)),this,SLOT(onReceivingNewDifficulty(int)));
 
+    connect(_saveDialog,SIGNAL(sendText(QString)),this,SLOT(onReceivingSaveName(QString)));
+
+    connect(_loadDialog,SIGNAL(sendText(QString)),this,SLOT(onReceivingLoadName(QString)));
+
     connect(_view,SIGNAL(sendPressedNew()),this,SLOT(onPressedNew()));
+    connect(_view,SIGNAL(sendPressedSave()),this,SLOT(onPressedSave()));
+    connect(_view,SIGNAL(sendPressedLoad()),this,SLOT(onPressedLoad()));
+
 
 
 
@@ -102,79 +117,85 @@ void Presenter::saveGrid(QString name)
     for (int k=0;k<_gridSize*_gridSize;k++){
         grid+=_visualPawns[k].getCompleteState();
     }
-    _save.setValue(name,grid);
-    _save.setValue(name+"_timer",_view->getChronometerTime());
+    _save->setValue(name,grid);
+    _save->setValue(name+"_timer",_view->getChronometerTime());
 }
 
 void Presenter::loadSavedGrid(QString name)
 {
-    QString grid = _save.value(name,0).toString();
-    QString time = _save.value(name+"_timer",0).toString();
-    QString gridSize = "";
-    int k=0;
-    const QChar* data=grid.constData();
-    while(data[k]!="-"){
-        gridSize += data[k];
+    if (_save->value(name,0)!=0){
+        QString grid = _save->value(name,0).toString();
+
+        QString time = _save->value(name+"_timer",0).toString();
+        QString gridSize = "";
+        int k=0;
+        const QChar* data=grid.constData();
+        while(data[k]!="-"){
+            gridSize += data[k];
+            k++;
+        }
         k++;
-    }
-    k++;
-    _gridSize=gridSize.toInt();
-    int pawnId=0;
-    for (int i=k;i<(_gridSize*_gridSize*2)+k;i+=2){
+        _gridSize=gridSize.toInt();
+        int pawnId=0;
+        for (int i=k;i<(_gridSize*_gridSize*2)+k;i+=2){
 
-        if (data[i]=="."){
-            _visualPawns[pawnId].setState(Empty);
+            if (data[i]=="."){
+                _visualPawns[pawnId].setState(Empty);
+            }
+            else if (data[i]=="B"){
+                _visualPawns[pawnId].setState(Black);
+            }
+            else if (data[i]=="W"){
+                _visualPawns[pawnId].setState(White);
+            }
+
+
+
+            if (data[i+1]=="0"){
+                _visualPawns[pawnId].setLock(false);
+            }
+            else if (data[i+1]=="1"){
+                _visualPawns[pawnId].setLock(true);
+            }
+            _visualPawns[pawnId].setId(pawnId);
+            pawnId++;
         }
-        else if (data[i]=="B"){
-            _visualPawns[pawnId].setState(Black);
+
+        int hour,min,sec;
+
+        const QChar* timer_data=time.constData();
+
+        k=0;
+
+        QString timer = "";
+        while(timer_data[k]!="-"){
+            timer += timer_data[k];
+            k++;
         }
-        else if (data[i]=="W"){
-            _visualPawns[pawnId].setState(White);
-        }
-
-
-
-        if (data[i+1]=="0"){
-            _visualPawns[pawnId].setLock(false);
-        }
-        else if (data[i+1]=="1"){
-            _visualPawns[pawnId].setLock(true);
-        }
-        _visualPawns[pawnId].setId(pawnId);
-        pawnId++;
-    }
-
-    int hour,min,sec;
-
-    const QChar* timer_data=time.constData();
-
-    k=0;
-
-    QString timer = "";
-    while(timer_data[k]!="-"){
-        timer += timer_data[k];
         k++;
-    }
-    k++;
-    hour=timer.toInt();
+        hour=timer.toInt();
 
-    timer = "";
-    while(timer_data[k]!="-"){
-        timer += timer_data[k];
+        timer = "";
+        while(timer_data[k]!="-"){
+            timer += timer_data[k];
+            k++;
+        }
         k++;
-    }
-    k++;
-    min=timer.toInt();
+        min=timer.toInt();
 
-    timer = "";
-    while(timer_data[k]!="-"){
-        timer += timer_data[k];
+        timer = "";
+        while(timer_data[k]!="-"){
+            timer += timer_data[k];
+            k++;
+        }
         k++;
-    }
-    k++;
-    sec=timer.toInt();
+        sec=timer.toInt();
 
-    _view->setChronometerTo(hour,min,sec);
+        _view->setChronometerTo(hour,min,sec);
+    }
+    else {
+        _error->exec();
+    }
 }
 
 void Presenter::show()
@@ -394,4 +415,31 @@ void Presenter::onPressedNew() {
         _view->setStatusBarTextWith("");
     }
    // std::cout<<"code retrieve after execution :"<< playerNeedNewGrid<<std::endl<<std::flush;
+}
+
+
+void Presenter::onPressedSave() {
+    int playerNeedSave = _saveDialog->exec();
+    if(playerNeedSave) {
+        saveGrid(_saveName);
+    }
+    std::cout<<"code retrieve after execution :"<< playerNeedSave<<std::endl<<std::flush;
+}
+
+void Presenter::onPressedLoad() {
+    int playerNeedLoad = _loadDialog->exec();
+    if(playerNeedLoad) {
+        loadSavedGrid(_loadName);
+    }
+    std::cout<<"code retrieve after execution :"<< playerNeedLoad<<std::endl<<std::flush;
+}
+
+void Presenter::onReceivingSaveName(QString text){
+    _saveName=text;
+    std::cout<<std::endl<<std::endl<<"Save "+text.toStdString()<<std::endl<<std::endl<<std::flush;
+}
+
+void Presenter::onReceivingLoadName(QString text){
+    _loadName=text;
+    std::cout<<std::endl<<std::endl<<"Load "+text.toStdString()<<std::endl<<std::endl<<std::flush;
 }
