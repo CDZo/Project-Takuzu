@@ -362,7 +362,7 @@ void Presenter::onGameFinished()
 
 
 void Presenter::onReceivingNewSize(int index){
-    std::cout<<"size"<<std::flush;
+   // std::cout<<"size"<<std::flush;
     switch (index){
     case 0:
         _newSize=6;
@@ -376,7 +376,7 @@ void Presenter::onReceivingNewSize(int index){
     }
 }
 void Presenter::onReceivingNewDifficulty(int index){
-    std::cout<<"diff"<<std::flush;
+   // std::cout<<"diff"<<std::flush;
     switch (index){
     case 0:
         _newDifficulty=Easy;
@@ -393,5 +393,5 @@ void Presenter::onPressedNew() {
         replaceGrid(_newSize,_newDifficulty);
         _view->setStatusBarTextWith("");
     }
-    std::cout<<"code retrieve after execution :"<< playerNeedNewGrid<<std::endl<<std::flush;
+   // std::cout<<"code retrieve after execution :"<< playerNeedNewGrid<<std::endl<<std::flush;
 }
