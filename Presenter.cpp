@@ -16,10 +16,22 @@ Presenter::Presenter()
 
     _newGame = new NewGame;
 
+    _saveDialog = new Save;
+
+    _loadDialog = new Load;
+
+
     connect(_newGame,SIGNAL(sendSizeIndex(int)),this,SLOT(onReceivingNewSize(int)));
     connect(_newGame,SIGNAL(sendDifficultyIndex(int)),this,SLOT(onReceivingNewDifficulty(int)));
 
+    connect(_saveDialog,SIGNAL(sendText(QString)),this,SLOT(onReceivingSaveName(QString)));
+
+    connect(_loadDialog,SIGNAL(sendText(QString)),this,SLOT(onReceivingLoadName(QString)));
+
     connect(_view,SIGNAL(sendPressedNew()),this,SLOT(onPressedNew()));
+    connect(_view,SIGNAL(sendPressedSave()),this,SLOT(onPressedSave()));
+    connect(_view,SIGNAL(sendPressedLoad()),this,SLOT(onPressedLoad()));
+
 
 
 
@@ -358,4 +370,31 @@ void Presenter::onPressedNew() {
         initNewGrid(_newSize,_newDifficulty);
     }
     std::cout<<"code retrieve after execution :"<< playerNeedNewGrid<<std::endl<<std::flush;
+}
+
+
+void Presenter::onPressedSave() {
+    int playerNeedSave = _saveDialog->exec();
+    if(playerNeedSave) {
+        saveGrid(_saveName);
+    }
+    std::cout<<"code retrieve after execution :"<< playerNeedSave<<std::endl<<std::flush;
+}
+
+void Presenter::onPressedLoad() {
+    int playerNeedLoad = _loadDialog->exec();
+    if(playerNeedLoad) {
+        loadSavedGrid(_loadName);
+    }
+    std::cout<<"code retrieve after execution :"<< playerNeedLoad<<std::endl<<std::flush;
+}
+
+void Presenter::onReceivingSaveName(QString text){
+    _saveName=text;
+    std::cout<<std::endl<<std::endl<<"Save "+text.toStdString()<<std::endl<<std::endl<<std::flush;
+}
+
+void Presenter::onReceivingLoadName(QString text){
+    _loadName=text;
+    std::cout<<std::endl<<std::endl<<"Load "+text.toStdString()<<std::endl<<std::endl<<std::flush;
 }

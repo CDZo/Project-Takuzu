@@ -32,6 +32,8 @@ public:
 public slots:
     void onTimerTimeout();
     void pressedNew (bool check);
+    void pressedSave (bool check);
+    void pressedLoad (bool check);
 
 private:
 
@@ -44,6 +46,8 @@ private:
 
 signals:
     void sendPressedNew();
+    void sendPressedSave();
+    void sendPressedLoad();
 };
 
 #endif

@@ -22,6 +22,8 @@ View::View(QWidget *parent) :
     rightButton.setGeometry(10,10,100,100);
 
     connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(pressedNew(bool)));
+    connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(pressedSave(bool)));
+    connect(ui->actionOpen,SIGNAL(triggered(bool)),this,SLOT(pressedLoad(bool)));
 
 }
 
@@ -205,4 +207,14 @@ void View::onTimerTimeout()
 void View::pressedNew (bool check)
 {
     emit sendPressedNew();
+}
+
+void View::pressedSave (bool check)
+{
+    emit sendPressedSave();
+}
+
+void View::pressedLoad (bool check)
+{
+    emit sendPressedLoad();
 }

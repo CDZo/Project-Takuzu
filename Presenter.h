@@ -4,6 +4,8 @@
 #include "ModelTakuzu.h"
 #include "View.h"
 #include "NewGame.h"
+#include "Load.h"
+#include "Save.h"
 #include <QSettings>
 
 class Presenter: public QObject
@@ -33,6 +35,12 @@ private:
     Difficulty _newDifficulty = Easy;
     int _newSize = 6;
 
+    Save * _saveDialog;
+    QString _saveName;
+
+    Load * _loadDialog;
+    QString _loadName;
+
 
     int _gridSize = 0;
     int _indicatorSize = 0;
@@ -52,6 +60,12 @@ public slots:
     void onReceivingNewSize(int index);
     void onReceivingNewDifficulty(int index);
 
+    void onReceivingSaveName(QString text);
+
+    void onReceivingLoadName(QString text);
+
+    void onPressedSave();
+    void onPressedLoad();
     void onPressedNew();
 
 signals:
