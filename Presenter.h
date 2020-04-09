@@ -22,7 +22,10 @@ private:
     ModelTakuzu *_model;
     Pawn *_visualPawns;
     Indicator * _indicators;
+
     NewGame * _newGame;
+    Difficulty _newDifficulty;
+    int _newSize;
 
 
     int _gridSize = 0;
@@ -39,7 +42,9 @@ public slots:
     void onIdenticalColumns(std::set<std::pair<int,int>> columns);
     void onGameFinished();
 
-    void onNewGame(int size, Difficulty difficulty);
+    void onNewGame(int size);
+    void onReceivingNewSize(int index);
+    void onReceivingNewDifficulty(int index);
 
 signals:
     void pawnChanged(const int & id, const State & state);

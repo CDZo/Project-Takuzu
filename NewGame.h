@@ -22,8 +22,13 @@ private:
     Ui::NewGame *ui;
 
 public slots:
+    void onSizeIndex(int index);
+    void onDifficultyIndex(int index);
 
 signals:
+    void sendSizeIndex(int index);
+    void sendDifficultyIndex(int index);
+
 
 };
 

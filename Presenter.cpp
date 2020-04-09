@@ -52,8 +52,8 @@ Presenter::Presenter()
     _view = new View;
 
     _view->loadUi(_gridSize,_visualPawns,_indicators);
+    //_newGame->setModal(true);
 
-    int result = _newGame->exec();
 
     connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));
     connect(_model,SIGNAL(incorrectPawnsInRow(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInRow(std::set<std::pair<int,int>>)));
@@ -63,6 +63,15 @@ Presenter::Presenter()
     connect(_model,SIGNAL(identicalRows(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalRows(std::set<std::pair<int,int>>)));
     connect(_model,SIGNAL(identicalColumns(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalColumns(std::set<std::pair<int,int>>)));
     connect(_model,SIGNAL(notify()),this,SLOT(onGameFinished()));
+
+    connect(_newGame,SIGNAL(finished(int)),this,SLOT(onNewGame(int)));
+    connect(_newGame,SIGNAL(sendSizeIndex(int)),this,SLOT(onReceivingNewSize(int)));
+    connect(_newGame,SIGNAL(sendDifficultyIndex(int)),this,SLOT(onReceivingNewDifficulty(int)));
+
+
+    int result = _newGame->exec();
+
+    std::cout<<"------------------"<<result<<"--------------------------"<<std::flush;
 
 }
 
@@ -300,8 +309,41 @@ void Presenter::onGameFinished()
 
 }
 
-void Presenter::onNewGame(int size, Difficulty difficulty){
-    _gridSize = size;
+void Presenter::onNewGame(int code){
+    /*_gridSize = size;
     initVisualPawnWithDifficulty(difficulty);
-    show();
+    show();*/
+    std::cout<<"HYAHAHAHHAHA ENFIN"<<std::flush;
+}
+
+
+
+void Presenter::onReceivingNewSize(int index){
+    std::cout<<"size"<<std::flush;
+    switch (index){
+    case 0:
+        _newSize=6;
+        break;
+    case 1:
+        _newSize=8;
+        break;
+    case 2:
+        _newSize=10;
+        break;
+    }
+
+}
+void Presenter::onReceivingNewDifficulty(int index){
+    std::cout<<"diff"<<std::flush;
+    switch (index){
+    case 0:
+        _newDifficulty=Easy;
+        break;
+    case 1:
+        _newDifficulty=Hard;
+        break;
+    }
+
+
+
 }
