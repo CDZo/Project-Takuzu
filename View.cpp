@@ -19,7 +19,6 @@ View::View(QWidget *parent) :
     ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
     ui->statusBar->showMessage("status bar here");
     connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(pressedNew()));
-
 }
 
 View::~View()
