@@ -21,6 +21,8 @@ View::View(QWidget *parent) :
     QPushButton rightButton("button",this);
     rightButton.setGeometry(10,10,100,100);
 
+    connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(pressedNew(bool)));
+
 }
 
 View::~View()
@@ -198,4 +200,9 @@ void View::setChronometerTo(int hour, int min, int s)
 void View::onTimerTimeout()
 {
     _chronometer->setTime(_chronometer->time().addMSecs(_time->restart()));
+}
+
+void View::pressedNew (bool check)
+{
+    emit sendPressedNew();
 }

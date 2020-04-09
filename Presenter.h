@@ -46,6 +46,8 @@ public slots:
     void onReceivingNewSize(int index);
     void onReceivingNewDifficulty(int index);
 
+    void receivingPressedNew();
+
 signals:
     void pawnChanged(const int & id, const State & state);
 };

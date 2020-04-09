@@ -68,10 +68,10 @@ Presenter::Presenter()
     connect(_newGame,SIGNAL(sendSizeIndex(int)),this,SLOT(onReceivingNewSize(int)));
     connect(_newGame,SIGNAL(sendDifficultyIndex(int)),this,SLOT(onReceivingNewDifficulty(int)));
 
+    connect(_view,SIGNAL(sendPressedNew()),this,SLOT(receivingPressedNew()));
 
-    int result = _newGame->exec();
 
-    std::cout<<"------------------"<<result<<"--------------------------"<<std::flush;
+
 
 }
 
@@ -344,6 +344,8 @@ void Presenter::onReceivingNewDifficulty(int index){
         break;
     }
 
+}
 
-
+void Presenter::receivingPressedNew() {
+    int result = _newGame->exec();
 }

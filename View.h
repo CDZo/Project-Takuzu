@@ -28,8 +28,10 @@ public:
     void startMetronome();
     QString getChronometerTime();
     void setChronometerTo(int hour, int min, int s);
+
 public slots:
     void onTimerTimeout();
+    void pressedNew (bool check);
 
 private:
 
@@ -39,6 +41,9 @@ private:
     QTimeEdit *_chronometer;
     QTimer * _metronome;
     QElapsedTimer *_time;
+
+signals:
+    void sendPressedNew();
 };
 
 #endif
