@@ -29,10 +29,10 @@ public:
     QString getChronometerTime();
     void setChronometerTo(int hour, int min, int s);
     void setStatusBarTextWith(const QString & text);
-
+    void reloadUi(const int & size, Pawn * pawns, Indicator * indicator);
 public slots:
     void onTimerTimeout();
-    void pressedNew (bool check);
+    void pressedNew ();
 
 private:
     QGridLayout* loadPawnsOnGrid(const int & size, Pawn * pawns);
