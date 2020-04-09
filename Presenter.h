@@ -6,6 +6,7 @@
 #include "NewGame.h"
 #include "Load.h"
 #include "Save.h"
+#include "Error.h"
 #include <QSettings>
 
 class Presenter: public QObject
@@ -30,6 +31,8 @@ private:
     ModelTakuzu *_model;
     Pawn *_visualPawns;
     Indicator * _indicators;
+
+    Error * _error;
 
     NewGame * _newGame;
     Difficulty _newDifficulty = Easy;

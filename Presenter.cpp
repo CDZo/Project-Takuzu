@@ -20,6 +20,7 @@ Presenter::Presenter()
 
     _loadDialog = new Load;
 
+    _error = new Error;
 
     connect(_newGame,SIGNAL(sendSizeIndex(int)),this,SLOT(onReceivingNewSize(int)));
     connect(_newGame,SIGNAL(sendDifficultyIndex(int)),this,SLOT(onReceivingNewDifficulty(int)));
@@ -120,73 +121,79 @@ void Presenter::saveGrid(QString name)
 
 void Presenter::loadSavedGrid(QString name)
 {
-    QString grid = _save.value(name,0).toString();
-    QString time = _save.value(name+"_timer",0).toString();
-    QString gridSize = "";
-    int k=0;
-    const QChar* data=grid.constData();
-    while(data[k]!="-"){
-        gridSize += data[k];
+    if (_save.value(name,0)!=0){
+        QString grid = _save.value(name,0).toString();
+
+        QString time = _save.value(name+"_timer",0).toString();
+        QString gridSize = "";
+        int k=0;
+        const QChar* data=grid.constData();
+        while(data[k]!="-"){
+            gridSize += data[k];
+            k++;
+        }
         k++;
-    }
-    k++;
-    _gridSize=gridSize.toInt();
-    int pawnId=0;
-    for (int i=k;i<(_gridSize*_gridSize*2)+k;i+=2){
+        _gridSize=gridSize.toInt();
+        int pawnId=0;
+        for (int i=k;i<(_gridSize*_gridSize*2)+k;i+=2){
 
-        if (data[i]=="."){
-            _visualPawns[pawnId].setState(Empty);
+            if (data[i]=="."){
+                _visualPawns[pawnId].setState(Empty);
+            }
+            else if (data[i]=="B"){
+                _visualPawns[pawnId].setState(Black);
+            }
+            else if (data[i]=="W"){
+                _visualPawns[pawnId].setState(White);
+            }
+
+
+
+            if (data[i+1]=="0"){
+                _visualPawns[pawnId].setLock(false);
+            }
+            else if (data[i+1]=="1"){
+                _visualPawns[pawnId].setLock(true);
+            }
+            _visualPawns[pawnId].setId(pawnId);
+            pawnId++;
         }
-        else if (data[i]=="B"){
-            _visualPawns[pawnId].setState(Black);
+
+        int hour,min,sec;
+
+        const QChar* timer_data=time.constData();
+
+        k=0;
+
+        QString timer = "";
+        while(timer_data[k]!="-"){
+            timer += timer_data[k];
+            k++;
         }
-        else if (data[i]=="W"){
-            _visualPawns[pawnId].setState(White);
-        }
-
-
-
-        if (data[i+1]=="0"){
-            _visualPawns[pawnId].setLock(false);
-        }
-        else if (data[i+1]=="1"){
-            _visualPawns[pawnId].setLock(true);
-        }
-        _visualPawns[pawnId].setId(pawnId);
-        pawnId++;
-    }
-
-    int hour,min,sec;
-
-    const QChar* timer_data=time.constData();
-
-    k=0;
-
-    QString timer = "";
-    while(timer_data[k]!="-"){
-        timer += timer_data[k];
         k++;
-    }
-    k++;
-    hour=timer.toInt();
+        hour=timer.toInt();
 
-    timer = "";
-    while(timer_data[k]!="-"){
-        timer += timer_data[k];
+        timer = "";
+        while(timer_data[k]!="-"){
+            timer += timer_data[k];
+            k++;
+        }
         k++;
-    }
-    k++;
-    min=timer.toInt();
+        min=timer.toInt();
 
-    timer = "";
-    while(timer_data[k]!="-"){
-        timer += timer_data[k];
+        timer = "";
+        while(timer_data[k]!="-"){
+            timer += timer_data[k];
+            k++;
+        }
         k++;
-    }
-    k++;
-    sec=timer.toInt();
+        sec=timer.toInt();
 
-    _view->setChronometerTo(hour,min,sec);
+        _view->setChronometerTo(hour,min,sec);
+    }
+    else {
+        _error->exec();
+    }
 }
 
 void Presenter::show()

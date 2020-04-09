@@ -24,6 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    Error.cpp \
     Indicator.cpp \
     Load.cpp \
     ModelTakuzu.cpp \
@@ -38,6 +39,7 @@ SOURCES += \
 
 HEADERS += \
     Constant.h \
+    Error.h \
     IObserver.h \
     ISubject.h \
     Indicator.h \
@@ -52,6 +54,7 @@ HEADERS += \
     Pawn.h
 
 FORMS += \
+        Error.ui \
         Load.ui \
         NewGame.ui \
         Save.ui \
