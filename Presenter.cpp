@@ -54,21 +54,14 @@ Presenter::Presenter()
     _view->loadUi(_gridSize,_visualPawns,_indicators);
     //_newGame->setModal(true);
 
+    initConnectionWithModel();
 
-    connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));
-    connect(_model,SIGNAL(incorrectPawnsInRow(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInRow(std::set<std::pair<int,int>>)));
-    connect(_model,SIGNAL(incorrectPawnsInColumn(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInColumn(std::set<std::pair<int,int>>)));
-    connect(_model,SIGNAL(unbalancedRows(std::set<int>)),this,SLOT(onUnbalancedRows(std::set<int>)));
-    connect(_model,SIGNAL(unbalancedColumns(std::set<int>)),this,SLOT(onUnbalancedColumns(std::set<int>)));
-    connect(_model,SIGNAL(identicalRows(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalRows(std::set<std::pair<int,int>>)));
-    connect(_model,SIGNAL(identicalColumns(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalColumns(std::set<std::pair<int,int>>)));
-    connect(_model,SIGNAL(notify()),this,SLOT(onGameFinished()));
 
     connect(_newGame,SIGNAL(finished(int)),this,SLOT(onNewGame(int)));
     connect(_newGame,SIGNAL(sendSizeIndex(int)),this,SLOT(onReceivingNewSize(int)));
     connect(_newGame,SIGNAL(sendDifficultyIndex(int)),this,SLOT(onReceivingNewDifficulty(int)));
 
-    connect(_view,SIGNAL(sendPressedNew()),this,SLOT(receivingPressedNew()));
+    connect(_view,SIGNAL(sendPressedNew()),this,SLOT(onPressedNew()));
 
 
 
@@ -240,6 +233,18 @@ void Presenter::resetFalsePawns()
     _view->update();
 }
 
+void Presenter::initConnectionWithModel()
+{
+    connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));
+    connect(_model,SIGNAL(incorrectPawnsInRow(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInRow(std::set<std::pair<int,int>>)));
+    connect(_model,SIGNAL(incorrectPawnsInColumn(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInColumn(std::set<std::pair<int,int>>)));
+    connect(_model,SIGNAL(unbalancedRows(std::set<int>)),this,SLOT(onUnbalancedRows(std::set<int>)));
+    connect(_model,SIGNAL(unbalancedColumns(std::set<int>)),this,SLOT(onUnbalancedColumns(std::set<int>)));
+    connect(_model,SIGNAL(identicalRows(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalRows(std::set<std::pair<int,int>>)));
+    connect(_model,SIGNAL(identicalColumns(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalColumns(std::set<std::pair<int,int>>)));
+    connect(_model,SIGNAL(notify()),this,SLOT(onGameFinished()));
+}
+
 void Presenter::onPawnClicked(const int & id, const State & state)
 {
     //std::cout << "id: "<<id<<" state : "<<state <<std::endl;
@@ -306,6 +311,7 @@ void Presenter::onGameFinished()
     }
     _view->stopMetronome();
     _view->update();
+    std::cout<<"You Won !!"<<std::endl;
 
 }
 
@@ -346,6 +352,8 @@ void Presenter::onReceivingNewDifficulty(int index){
 
 }
 
-void Presenter::receivingPressedNew() {
+void Presenter::onPressedNew() {
     int result = _newGame->exec();
+
+
 }
