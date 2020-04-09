@@ -264,7 +264,7 @@ void Presenter::replaceGrid(const int &size, const Difficulty &difficulty)
         connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
         _visualPawns[i].setId(i);
     }
-    _view->loadUi(_gridSize,_visualPawns,_indicators);
+    _view->reloadUi(_gridSize,_visualPawns,_indicators);
 }
 
 
@@ -391,6 +391,7 @@ void Presenter::onPressedNew() {
     int playerNeedNewGrid = _newGame->exec();
     if(playerNeedNewGrid) {
         replaceGrid(_newSize,_newDifficulty);
+        _view->setStatusBarTextWith("");
     }
     std::cout<<"code retrieve after execution :"<< playerNeedNewGrid<<std::endl<<std::flush;
 }
