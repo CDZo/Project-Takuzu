@@ -17,15 +17,20 @@ public:
     ~Presenter();
     Pawn * initVisualPawnWith(const int & gridSize,const Difficulty & difficulty);
     void saveGrid(QString name);
-    void loadSavedGrid(QString name);
+    void loadSavedGame(QString name);
     void show();
+
 private:
     void resetFalsePawns();
     void initConnectionWithModel();
 
     void initNewGrid(const int & size, const Difficulty & difficulty);
     Indicator * initNewIndicator(const int & gridSize);
-    void replaceGrid(const int & size, const Difficulty & difficulty);
+    void replaceWithNewGrid(const int & size, const Difficulty & difficulty);
+    void replaceGrid(const int & size, Pawn* pawns);
+    Pawn * loadSavedGrid(QString name);
+    void changeTimerWithSavedTimer(QString name);
+
 
     View *_view;
     ModelTakuzu *_model;

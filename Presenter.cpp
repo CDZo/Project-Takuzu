@@ -121,77 +121,14 @@ void Presenter::saveGrid(QString name)
     _save->setValue(name+"_timer",_view->getChronometerTime());
 }
 
-void Presenter::loadSavedGrid(QString name)
+void Presenter::loadSavedGame(QString name)
 {
     if (_save->value(name,0)!=0){
-        QString grid = _save->value(name,0).toString();
-
-        QString time = _save->value(name+"_timer",0).toString();
-        QString gridSize = "";
-        int k=0;
-        const QChar* data=grid.constData();
-        while(data[k]!="-"){
-            gridSize += data[k];
-            k++;
-        }
-        k++;
-        _gridSize=gridSize.toInt();
-        int pawnId=0;
-        for (int i=k;i<(_gridSize*_gridSize*2)+k;i+=2){
-
-            if (data[i]=="."){
-                _visualPawns[pawnId].setState(Empty);
-            }
-            else if (data[i]=="B"){
-                _visualPawns[pawnId].setState(Black);
-            }
-            else if (data[i]=="W"){
-                _visualPawns[pawnId].setState(White);
-            }
-
-
-
-            if (data[i+1]=="0"){
-                _visualPawns[pawnId].setLock(false);
-            }
-            else if (data[i+1]=="1"){
-                _visualPawns[pawnId].setLock(true);
-            }
-            _visualPawns[pawnId].setId(pawnId);
-            pawnId++;
-        }
-
-        int hour,min,sec;
-
-        const QChar* timer_data=time.constData();
-
-        k=0;
-
-        QString timer = "";
-        while(timer_data[k]!="-"){
-            timer += timer_data[k];
-            k++;
-        }
-        k++;
-        hour=timer.toInt();
-
-        timer = "";
-        while(timer_data[k]!="-"){
-            timer += timer_data[k];
-            k++;
-        }
-        k++;
-        min=timer.toInt();
-
-        timer = "";
-        while(timer_data[k]!="-"){
-            timer += timer_data[k];
-            k++;
-        }
-        k++;
-        sec=timer.toInt();
-
-        _view->setChronometerTo(hour,min,sec);
+        std::cout << "old gridSize :"<< _gridSize<< std::endl <<std::flush;
+        Pawn * pawns = loadSavedGrid(name);
+        std::cout << "new gridSize :"<< _gridSize<< std::endl <<std::flush;
+        replaceGrid(_gridSize,pawns);
+        changeTimerWithSavedTimer(name);
     }
     else {
         _error->exec();
@@ -262,7 +199,7 @@ Indicator * Presenter::initNewIndicator(const int &gridSize)
 }
 
 
-void Presenter::replaceGrid(const int &size, const Difficulty &difficulty)
+void Presenter::replaceWithNewGrid(const int &size, const Difficulty &difficulty)
 {
     _gridSize = size;
     _indicatorSize = 2* _gridSize;
@@ -286,6 +223,107 @@ void Presenter::replaceGrid(const int &size, const Difficulty &difficulty)
         _visualPawns[i].setId(i);
     }
     _view->reloadUi(_gridSize,_visualPawns,_indicators);
+}
+
+void Presenter::replaceGrid(const int &size, Pawn *pawns)
+{
+    _gridSize = size;
+    _indicatorSize = 2* _gridSize;
+    /*TODO check memory leak*/
+    delete [] _visualPawns;
+    delete [] _indicators;
+    _visualPawns = pawns;
+    _indicators = initNewIndicator(_gridSize);
+    _model->replaceGrid(_gridSize,_visualPawns);
+
+    for(int i = 0; i < _indicatorSize;i++) {
+        _indicators[i].setSubject(_model);
+        _model->addObserver(&_indicators[i]);
+        _indicators[i].setMinimumSize(45,45);
+    }
+    for(int i = 0; i < _gridSize*_gridSize;i++) {
+        _visualPawns[i].setMinimumSize(45,45);
+        _visualPawns[i].changeDesignWith(new Pawn::BrightSquare);
+        //_visualPawns[i].setFixedSize(32,32);
+        connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
+        _visualPawns[i].setId(i);
+    }
+    _view->reloadUi(_gridSize,_visualPawns,_indicators);
+}
+
+
+
+Pawn *Presenter::loadSavedGrid(QString name)
+{
+    QString grid = _save->value(name,0).toString();
+    QString gridSize = "";
+    int k=0;
+    const QChar* data=grid.constData();
+    while(data[k]!="-"){
+        gridSize += data[k];
+        k++;
+    }
+    k++;
+    _gridSize=gridSize.toInt();
+    Pawn * pawnGrid = new Pawn[_gridSize*_gridSize];
+    int pawnId=0;
+    for (int i=k;i<(_gridSize*_gridSize*2)+k;i+=2){
+
+        if (data[i]=="."){
+            pawnGrid[pawnId].setState(Empty);
+        }
+        else if (data[i]=="B"){
+            pawnGrid[pawnId].setState(Black);
+        }
+        else if (data[i]=="W"){
+            pawnGrid[pawnId].setState(White);
+        }
+
+        if (data[i+1]=="0"){
+            pawnGrid[pawnId].setLock(false);
+        }
+        else if (data[i+1]=="1"){
+            pawnGrid[pawnId].setLock(true);
+        }
+        pawnGrid[pawnId].setId(pawnId);
+        pawnId++;
+    }
+    return pawnGrid;
+}
+
+void Presenter::changeTimerWithSavedTimer(QString name)
+{
+    int hour,min,sec;
+    QString time = _save->value(name+"_timer",0).toString();
+
+    const QChar* timer_data=time.constData();
+
+    int k=0;
+
+    QString timer = "";
+    while(timer_data[k]!="-"){
+        timer += timer_data[k];
+        k++;
+    }
+    k++;
+    hour=timer.toInt();
+
+    timer = "";
+    while(timer_data[k]!="-"){
+        timer += timer_data[k];
+        k++;
+    }
+    k++;
+    min=timer.toInt();
+
+    timer = "";
+    while(timer_data[k]!="-"){
+        timer += timer_data[k];
+        k++;
+    }
+    k++;
+    sec=timer.toInt();
+    _view->setChronometerTo(hour,min,sec);
 }
 
 
@@ -383,7 +421,7 @@ void Presenter::onGameFinished()
 
 
 void Presenter::onReceivingNewSize(int index){
-   // std::cout<<"size"<<std::flush;
+    // std::cout<<"size"<<std::flush;
     switch (index){
     case 0:
         _newSize=6;
@@ -397,7 +435,7 @@ void Presenter::onReceivingNewSize(int index){
     }
 }
 void Presenter::onReceivingNewDifficulty(int index){
-   // std::cout<<"diff"<<std::flush;
+    // std::cout<<"diff"<<std::flush;
     switch (index){
     case 0:
         _newDifficulty=Easy;
@@ -411,10 +449,10 @@ void Presenter::onReceivingNewDifficulty(int index){
 void Presenter::onPressedNew() {
     int playerNeedNewGrid = _newGame->exec();
     if(playerNeedNewGrid) {
-        replaceGrid(_newSize,_newDifficulty);
+        replaceWithNewGrid(_newSize,_newDifficulty);
         _view->setStatusBarTextWith("");
     }
-   // std::cout<<"code retrieve after execution :"<< playerNeedNewGrid<<std::endl<<std::flush;
+    // std::cout<<"code retrieve after execution :"<< playerNeedNewGrid<<std::endl<<std::flush;
 }
 
 
@@ -429,17 +467,17 @@ void Presenter::onPressedSave() {
 void Presenter::onPressedLoad() {
     int playerNeedLoad = _loadDialog->exec();
     if(playerNeedLoad) {
-        loadSavedGrid(_loadName);
+        loadSavedGame(_loadName);
     }
     std::cout<<"code retrieve after execution :"<< playerNeedLoad<<std::endl<<std::flush;
 }
 
 void Presenter::onReceivingSaveName(QString text){
     _saveName=text;
-    std::cout<<std::endl<<std::endl<<"Save "+text.toStdString()<<std::endl<<std::endl<<std::flush;
+    std::cout<<std::endl<<std::endl<<"Save >>"+text.toStdString()<<"<<"<<std::endl<<std::endl<<std::flush;
 }
 
 void Presenter::onReceivingLoadName(QString text){
     _loadName=text;
-    std::cout<<std::endl<<std::endl<<"Load "+text.toStdString()<<std::endl<<std::endl<<std::flush;
+    std::cout<<std::endl<<std::endl<<"Load >>"+text.toStdString()<<"<<"<<std::endl<<std::endl<<std::flush;
 }
