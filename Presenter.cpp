@@ -9,55 +9,13 @@
 
 Presenter::Presenter()
 {     
-    _gridSize = 6;
-    _indicatorSize = _gridSize*2;
-    _visualPawns = new Pawn[_gridSize*_gridSize];
-    _indicators = new Indicator[_indicatorSize];
-
-    _newGame = new NewGame();
-
-    initVisualPawnWithDifficulty(Easy);
-
-    _model = new ModelTakuzu(this);
-    _model->initGrid(_gridSize,_visualPawns);
-
-    for(int i = 0; i < _gridSize;i++) {
-        _indicators[i].setSubject(_model);
-        _indicators[i].setPosition(i);
-
-        _indicators[i+_gridSize].setSubject(_model);
-        _indicators[i+_gridSize].setPosition(i);
-        _indicators[i+_gridSize].setOrientation(Vertical);
-
-    }
-    for(int i = 0; i < _indicatorSize;i++) {
-        _model->addObserver(&_indicators[i]);
-        _indicators[i].setMinimumSize(45,45);
-    }
-
-
-
-
-
-    for(int i = 0; i < _gridSize*_gridSize;i++) {
-        _visualPawns[i].setMinimumSize(45,45);
-        _visualPawns[i].changeDesignWith(new Pawn::BrightSquare);
-        //_visualPawns[i].setFixedSize(32,32);
-        connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
-        _visualPawns[i].setId(i);
-    }
-
-
-
-    _view = new View;
-
-    _view->loadUi(_gridSize,_visualPawns,_indicators);
+    initNewGrid(6,Easy);
     //_newGame->setModal(true);
 
     initConnectionWithModel();
 
+    _newGame = new NewGame;
 
-    connect(_newGame,SIGNAL(finished(int)),this,SLOT(onNewGame(int)));
     connect(_newGame,SIGNAL(sendSizeIndex(int)),this,SLOT(onReceivingNewSize(int)));
     connect(_newGame,SIGNAL(sendDifficultyIndex(int)),this,SLOT(onReceivingNewDifficulty(int)));
 
@@ -78,10 +36,11 @@ Presenter::~Presenter()
     delete _newGame;
 }
 
-void Presenter::initVisualPawnWithDifficulty(const Difficulty & difficulty)
+Pawn * Presenter::initVisualPawnWith(const int & gridSize,const Difficulty & difficulty)
 {
+    Pawn * pawnGrid = new Pawn[gridSize * gridSize];
     QString filePath = ":/grid/";
-    filePath += QString::number(_gridSize);
+    filePath += QString::number(gridSize);
     switch (difficulty){
     case Easy:
         filePath += "_easy.txt";
@@ -90,7 +49,7 @@ void Presenter::initVisualPawnWithDifficulty(const Difficulty & difficulty)
         filePath += "_hard.txt";
         break;
     }
-    std::cout<<filePath.toStdString()<<std::endl<<std::flush;
+    //std::cout<<filePath.toStdString()<<std::endl<<std::flush;
 
     QString grid = "";
 
@@ -110,30 +69,30 @@ void Presenter::initVisualPawnWithDifficulty(const Difficulty & difficulty)
 
         for(int k = 0; k < grid.length();k++){
             if (data[k] == "."){
-                _visualPawns[k].setLock(false);
-                _visualPawns[k].setState(Empty);
+                pawnGrid[k].setLock(false);
+                pawnGrid[k].setState(Empty);
             }
             else if (data[k] == "B"){
-                _visualPawns[k].setLock(true);
-                _visualPawns[k].setState(Black);
+                pawnGrid[k].setLock(true);
+                pawnGrid[k].setState(Black);
             }
             else if (data[k] == "W"){
-                _visualPawns[k].setLock(true);
-                _visualPawns[k].setState(White);
+                pawnGrid[k].setLock(true);
+                pawnGrid[k].setState(White);
             }
 
         }
         //std::cout<<_gridSize<<std::endl<<std::flush;
         //std::cout<<grid.toStdString()<<std::endl<<std::flush;
         file.close();
+        return pawnGrid;
     }
     else {
         std::cout<<"Error opening file"<<std::endl<<std::flush;
+        return pawnGrid;
     }
 
 }
-
-
 
 void Presenter::saveGrid(QString name)
 {
@@ -218,8 +177,6 @@ void Presenter::loadSavedGrid(QString name)
     _view->setChronometerTo(hour,min,sec);
 }
 
-
-
 void Presenter::show()
 {
     _view->show();
@@ -244,6 +201,56 @@ void Presenter::initConnectionWithModel()
     connect(_model,SIGNAL(identicalColumns(std::set<std::pair<int,int>>)),this,SLOT(onIdenticalColumns(std::set<std::pair<int,int>>)));
     connect(_model,SIGNAL(notify()),this,SLOT(onGameFinished()));
 }
+
+void Presenter::initNewGrid(const int &size, const Difficulty &difficulty)
+{
+    _gridSize = size;
+    _indicatorSize = 2* _gridSize;
+    _visualPawns = initVisualPawnWith(_gridSize,difficulty);
+    _indicators = initNewIndicator(_gridSize);
+
+    _model = new ModelTakuzu(this);
+    _model->initGrid(_gridSize,_visualPawns);
+
+    for(int i = 0; i < _indicatorSize;i++) {
+        _indicators[i].setSubject(_model);
+        _model->addObserver(&_indicators[i]);
+        _indicators[i].setMinimumSize(45,45);
+    }
+
+    for(int i = 0; i < _gridSize*_gridSize;i++) {
+        _visualPawns[i].setMinimumSize(45,45);
+        _visualPawns[i].changeDesignWith(new Pawn::BrightSquare);
+        //_visualPawns[i].setFixedSize(32,32);
+        connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
+        _visualPawns[i].setId(i);
+    }
+    _view = new View;
+    _view->loadUi(_gridSize,_visualPawns,_indicators);
+}
+
+Indicator * Presenter::initNewIndicator(const int &gridSize)
+{
+    Indicator * indicators = new Indicator[gridSize*gridSize];
+    for(int i = 0; i < _gridSize;i++) {
+        indicators[i].setPosition(i);
+        indicators[i+_gridSize].setOrientation(Vertical);
+        indicators[i+_gridSize].setPosition(i);
+    }
+    return indicators;
+}
+
+void Presenter::replaceGrid(const int &size, const Difficulty &difficulty)
+{
+    _gridSize = size;
+    _indicatorSize = 2* _gridSize;
+    _visualPawns = initVisualPawnWith(_gridSize,difficulty);
+    _indicators = initNewIndicator(_gridSize);
+
+
+}
+
+
 
 void Presenter::onPawnClicked(const int & id, const State & state)
 {
@@ -315,12 +322,6 @@ void Presenter::onGameFinished()
 
 }
 
-void Presenter::onNewGame(int code){
-    /*_gridSize = size;
-    initVisualPawnWithDifficulty(difficulty);
-    show();*/
-    std::cout<<"HYAHAHAHHAHA ENFIN"<<std::flush;
-}
 
 
 
@@ -349,11 +350,12 @@ void Presenter::onReceivingNewDifficulty(int index){
         _newDifficulty=Hard;
         break;
     }
-
 }
 
 void Presenter::onPressedNew() {
-    int result = _newGame->exec();
-
-
+    int playerNeedNewGrid = _newGame->exec();
+    if(playerNeedNewGrid) {
+        initNewGrid(_newSize,_newDifficulty);
+    }
+    std::cout<<"code retrieve after execution :"<< playerNeedNewGrid<<std::endl<<std::flush;
 }
