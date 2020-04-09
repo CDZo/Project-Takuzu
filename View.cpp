@@ -182,6 +182,14 @@ void View::startMetronome()
     _metronome->setInterval(1000);
 }
 
+QString View::getChronometerTime(){
+    QString timer = "";
+    timer += QString::number(_chronometer->time().hour())+"-";
+    timer += QString::number(_chronometer->time().minute())+"-";
+    timer += QString::number(_chronometer->time().second())+"-";
+    return timer;
+}
+
 void View::setChronometerTo(int hour, int min, int s)
 {
     _chronometer->time().setHMS(hour,min,s);

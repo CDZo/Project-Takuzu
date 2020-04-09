@@ -6,9 +6,17 @@ NewGame::NewGame(QWidget *parent) :
     ui(new Ui::NewGame)
 {
     ui->setupUi(this);
+
 }
 
 NewGame::~NewGame()
 {
     delete ui;
 }
+
+
+
+//QComboBox
+
+
+//QDialog

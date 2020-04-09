@@ -2,6 +2,7 @@
 #define NEWGAME_H
 
 #include <QDialog>
+#include "Constant.h"
 
 namespace Ui {
 class NewGame;
@@ -15,8 +16,15 @@ public:
     explicit NewGame(QWidget *parent = nullptr);
     ~NewGame();
 
+
+
 private:
     Ui::NewGame *ui;
+
+public slots:
+
+signals:
+
 };
 
 #endif // NEWGAME_H

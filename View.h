@@ -26,6 +26,7 @@ public:
     void loadTestPawn();
     void stopMetronome();
     void startMetronome();
+    QString getChronometerTime();
     void setChronometerTo(int hour, int min, int s);
 public slots:
     void onTimerTimeout();

@@ -14,6 +14,8 @@ Presenter::Presenter()
     _visualPawns = new Pawn[_gridSize*_gridSize];
     _indicators = new Indicator[_indicatorSize];
 
+    _newGame = new NewGame();
+
     initVisualPawnWithDifficulty(Easy);
 
     _model = new ModelTakuzu(this);
@@ -51,6 +53,8 @@ Presenter::Presenter()
 
     _view->loadUi(_gridSize,_visualPawns,_indicators);
 
+    int result = _newGame->exec();
+
     connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));
     connect(_model,SIGNAL(incorrectPawnsInRow(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInRow(std::set<std::pair<int,int>>)));
     connect(_model,SIGNAL(incorrectPawnsInColumn(std::set<std::pair<int,int>>)),this,SLOT(onIncorrectPawnsInColumn(std::set<std::pair<int,int>>)));
@@ -69,6 +73,7 @@ Presenter::~Presenter()
     delete _model;
     delete [] _indicators;
     delete _view;
+    delete _newGame;
 }
 
 void Presenter::initVisualPawnWithDifficulty(const Difficulty & difficulty)
@@ -137,11 +142,13 @@ void Presenter::saveGrid(QString name)
         grid+=_visualPawns[k].getCompleteState();
     }
     _save.setValue(name,grid);
+    _save.setValue(name+"_timer",_view->getChronometerTime());
 }
 
 void Presenter::loadSavedGrid(QString name)
 {
     QString grid = _save.value(name,0).toString();
+    QString time = _save.value(name+"_timer",0).toString();
     QString gridSize = "";
     int k=0;
     const QChar* data=grid.constData();
@@ -176,12 +183,37 @@ void Presenter::loadSavedGrid(QString name)
         pawnId++;
     }
 
+    int hour,min,sec;
 
-    grid = "";
-    for (int k=0;k<_gridSize*_gridSize;k++){
-        grid+=_visualPawns[k].getCompleteState();
+    const QChar* timer_data=time.constData();
+
+    k=0;
+
+    QString timer = "";
+    while(timer_data[k]!="-"){
+        timer += timer_data[k];
+        k++;
     }
-    //std::cout<<"----------HEHO---------"<<std::endl<<std::endl<<grid.toStdString()<<std::endl<<std::endl<<std::flush;
+    k++;
+    hour=timer.toInt();
+
+    timer = "";
+    while(timer_data[k]!="-"){
+        timer += timer_data[k];
+        k++;
+    }
+    k++;
+    min=timer.toInt();
+
+    timer = "";
+    while(timer_data[k]!="-"){
+        timer += timer_data[k];
+        k++;
+    }
+    k++;
+    sec=timer.toInt();
+
+    _view->setChronometerTo(hour,min,sec);
 }
 
 
@@ -268,3 +300,8 @@ void Presenter::onGameFinished()
 
 }
 
+void Presenter::onNewGame(int size, Difficulty difficulty){
+    _gridSize = size;
+    initVisualPawnWithDifficulty(difficulty);
+    show();
+}

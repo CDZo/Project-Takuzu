@@ -3,6 +3,7 @@
 #include <QObject>
 #include "ModelTakuzu.h"
 #include "View.h"
+#include "NewGame.h"
 #include <QSettings>
 
 class Presenter: public QObject
@@ -21,6 +22,8 @@ private:
     ModelTakuzu *_model;
     Pawn *_visualPawns;
     Indicator * _indicators;
+    NewGame * _newGame;
+
 
     int _gridSize = 0;
     int _indicatorSize = 0;
@@ -35,6 +38,8 @@ public slots:
     void onIdenticalRows(std::set<std::pair<int,int>> rows);
     void onIdenticalColumns(std::set<std::pair<int,int>> columns);
     void onGameFinished();
+
+    void onNewGame(int size, Difficulty difficulty);
 
 signals:
     void pawnChanged(const int & id, const State & state);
