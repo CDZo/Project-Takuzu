@@ -29,6 +29,7 @@ SOURCES += \
     Load.cpp \
     ModelTakuzu.cpp \
     NewGame.cpp \
+    Option.cpp \
     Presenter.cpp \
     Save.cpp \
     TestModel.cpp \
@@ -46,6 +47,7 @@ HEADERS += \
     Load.h \
     ModelTakuzu.h \
     NewGame.h \
+    Option.h \
     Presenter.h \
     Save.h \
     TestModel.h \
@@ -57,6 +59,7 @@ FORMS += \
         Error.ui \
         Load.ui \
         NewGame.ui \
+        Option.ui \
         Save.ui \
         vue.ui
 
