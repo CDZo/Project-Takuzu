@@ -37,12 +37,6 @@ Presenter::Presenter()
     connect(_view,SIGNAL(savePressed()),this,SLOT(onPressedSave()));
     connect(_view,SIGNAL(loadPressed()),this,SLOT(onPressedLoad()));
     connect(_view,SIGNAL(optionPressed()),this,SLOT(onPressedOption()));
-
-
-
-
-
-
 }
 
 
@@ -52,7 +46,6 @@ Presenter::~Presenter()
     delete _model;
     delete [] _indicators;
     delete _view;
-    delete _newGame;
     delete _error;
     delete _newGame;
     delete _saveDialog;
