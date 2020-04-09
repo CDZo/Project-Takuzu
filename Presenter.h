@@ -18,14 +18,16 @@ public:
     void show();
 private:
     void resetFalsePawns();
+    void initConnectionWithModel();
+
     View *_view;
     ModelTakuzu *_model;
     Pawn *_visualPawns;
     Indicator * _indicators;
 
     NewGame * _newGame;
-    Difficulty _newDifficulty;
-    int _newSize;
+    Difficulty _newDifficulty = Easy;
+    int _newSize = 6;
 
 
     int _gridSize = 0;
@@ -46,7 +48,7 @@ public slots:
     void onReceivingNewSize(int index);
     void onReceivingNewDifficulty(int index);
 
-    void receivingPressedNew();
+    void onPressedNew();
 
 signals:
     void pawnChanged(const int & id, const State & state);
