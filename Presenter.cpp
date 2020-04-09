@@ -24,6 +24,8 @@ Presenter::Presenter()
 
     _error = new Error;
 
+    _option = new Option;
+
     connect(_newGame,SIGNAL(sendSizeIndex(int)),this,SLOT(onReceivingNewSize(int)));
     connect(_newGame,SIGNAL(sendDifficultyIndex(int)),this,SLOT(onReceivingNewDifficulty(int)));
 
@@ -31,9 +33,11 @@ Presenter::Presenter()
 
     connect(_loadDialog,SIGNAL(loadNameChanged(QString)),this,SLOT(onReceivingLoadName(QString)));
 
-    connect(_view,SIGNAL(sendPressedNew()),this,SLOT(onPressedNew()));
-    connect(_view,SIGNAL(sendPressedSave()),this,SLOT(onPressedSave()));
-    connect(_view,SIGNAL(sendPressedLoad()),this,SLOT(onPressedLoad()));
+    connect(_view,SIGNAL(newPressed()),this,SLOT(onPressedNew()));
+    connect(_view,SIGNAL(savePressed()),this,SLOT(onPressedSave()));
+    connect(_view,SIGNAL(loadPressed()),this,SLOT(onPressedLoad()));
+    connect(_view,SIGNAL(optionPressed()),this,SLOT(onPressedOption()));
+
 
 
 
@@ -49,6 +53,11 @@ Presenter::~Presenter()
     delete [] _indicators;
     delete _view;
     delete _newGame;
+    delete _error;
+    delete _newGame;
+    delete _saveDialog;
+    delete _loadDialog;
+    delete _option;
 }
 
 Pawn * Presenter::initVisualPawnWith(const int & gridSize,const Difficulty & difficulty)
@@ -453,6 +462,11 @@ void Presenter::onPressedNew() {
         _view->setStatusBarTextWith("");
     }
     // std::cout<<"code retrieve after execution :"<< playerNeedNewGrid<<std::endl<<std::flush;
+}
+
+void Presenter::onPressedOption()
+{
+    int playerNeedOption = _option->exec();
 }
 
 

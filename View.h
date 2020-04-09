@@ -32,9 +32,10 @@ public:
     void reloadUi(const int & size, Pawn * pawns, Indicator * indicator);
 public slots:
     void onTimerTimeout();
-    void pressedNew ();
-    void pressedSave (bool check);
-    void pressedLoad (bool check);
+    void onNewPressed();
+    void onSavePressed();
+    void onLoadPressed();
+    void onOptionPressed();
 
 private:
     QGridLayout* loadPawnsOnGrid(const int & size, Pawn * pawns);
@@ -45,9 +46,10 @@ private:
     QElapsedTimer *_time;
 
 signals:
-    void sendPressedNew();
-    void sendPressedSave();
-    void sendPressedLoad();
+    void newPressed();
+    void savePressed();
+    void loadPressed();
+    void optionPressed();
 };
 
 #endif

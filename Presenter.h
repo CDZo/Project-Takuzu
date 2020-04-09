@@ -1,13 +1,14 @@
 #ifndef PRESENTER_H
 #define PRESENTER_H
 #include <QObject>
+#include <QSettings>
 #include "ModelTakuzu.h"
 #include "View.h"
 #include "NewGame.h"
 #include "Load.h"
 #include "Save.h"
 #include "Error.h"
-#include <QSettings>
+#include "Option.h"
 
 class Presenter: public QObject
 {
@@ -36,17 +37,16 @@ private:
     ModelTakuzu *_model;
     Pawn *_visualPawns;
     Indicator * _indicators;
+    int _newSize = 6;
+    Difficulty _newDifficulty = Easy;
 
     Error * _error;
-
     NewGame * _newGame;
-    Difficulty _newDifficulty = Easy;
-    int _newSize = 6;
-
     Save * _saveDialog;
-    QString _saveName;
-
     Load * _loadDialog;
+    Option * _option;
+
+    QString _saveName;
     QString _loadName;
 
 
@@ -75,6 +75,8 @@ public slots:
     void onPressedSave();
     void onPressedLoad();
     void onPressedNew();
+    void onPressedOption();
+
 
 signals:
     void pawnChanged(const int & id, const State & state);

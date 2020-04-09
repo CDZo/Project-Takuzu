@@ -19,9 +19,10 @@ View::View(QWidget *parent) :
     ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
     ui->actionOption->setIcon(QIcon::fromTheme("document-properties"));
     setStatusBarTextWith("");
-    connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(pressedNew()));
-    connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(pressedSave(bool)));
-    connect(ui->actionOpen,SIGNAL(triggered(bool)),this,SLOT(pressedLoad(bool)));
+    connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(onNewPressed()));
+    connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(onSavePressed()));
+    connect(ui->actionOpen,SIGNAL(triggered(bool)),this,SLOT(onLoadPressed()));
+    connect(ui->actionOption,SIGNAL(triggered(bool)),this,SLOT(onOptionPressed()));
 }
 
 View::~View()
@@ -209,17 +210,22 @@ void View::onTimerTimeout()
     _chronometer->setTime(_chronometer->time().addMSecs(_time->restart()));
 }
 
-void View::pressedNew ()
+void View::onNewPressed ()
 {
-    emit sendPressedNew();
+    emit newPressed();
 }
 
-void View::pressedSave (bool check)
+void View::onSavePressed ()
 {
-    emit sendPressedSave();
+    emit savePressed();
 }
 
-void View::pressedLoad (bool check)
+void View::onLoadPressed ()
 {
-    emit sendPressedLoad();
+    emit loadPressed();
+}
+
+void View::onOptionPressed()
+{
+    emit optionPressed();
 }
