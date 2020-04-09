@@ -15,14 +15,12 @@ public:
     explicit Load(QWidget *parent = nullptr);
     ~Load();
 
+private slots:
+    void onNameChanged(const QString &arg1);
+signals:
+    void loadNameChanged(const QString &arg1);
 private:
     Ui::Load *ui;
-
-public slots:
-    void onText(const QString &text);
-
-signals:
-    void sendText (const QString &text);
 };
 
 #endif // LOAD_H

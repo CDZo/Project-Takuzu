@@ -6,7 +6,7 @@ Save::Save(QWidget *parent) :
     ui(new Ui::Save)
 {
     ui->setupUi(this);
-    connect(ui->saveNameEdit,SIGNAL(textChanged(QString)),this,SLOT(onText(QString)));
+    connect(ui->saveName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
 }
 
 Save::~Save()
@@ -14,7 +14,7 @@ Save::~Save()
     delete ui;
 }
 
-void Save::onText(const QString &text)
+void Save::onNameChanged(const QString &name)
 {
-    emit sendText(text);
+   emit saveNameChanged(name);
 }

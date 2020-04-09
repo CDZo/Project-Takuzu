@@ -6,7 +6,7 @@ Load::Load(QWidget *parent) :
     ui(new Ui::Load)
 {
     ui->setupUi(this);
-    connect(ui->loadNameEdit,SIGNAL(textChanged(QString)),this,SLOT(onText(QString)));
+    connect(ui->loadName,SIGNAL(textChanged(QString)),this,SLOT(onNameChanged(QString)));
 }
 
 Load::~Load()
@@ -14,7 +14,7 @@ Load::~Load()
     delete ui;
 }
 
-void Load::onText(const QString &text)
+void Load::onNameChanged(const QString &name)
 {
-    emit sendText(text);
+    emit loadNameChanged(name);
 }

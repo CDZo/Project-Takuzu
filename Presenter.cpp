@@ -27,9 +27,9 @@ Presenter::Presenter()
     connect(_newGame,SIGNAL(sendSizeIndex(int)),this,SLOT(onReceivingNewSize(int)));
     connect(_newGame,SIGNAL(sendDifficultyIndex(int)),this,SLOT(onReceivingNewDifficulty(int)));
 
-    connect(_saveDialog,SIGNAL(sendText(QString)),this,SLOT(onReceivingSaveName(QString)));
+    connect(_saveDialog,SIGNAL(saveNameChanged(QString)),this,SLOT(onReceivingSaveName(QString)));
 
-    connect(_loadDialog,SIGNAL(sendText(QString)),this,SLOT(onReceivingLoadName(QString)));
+    connect(_loadDialog,SIGNAL(loadNameChanged(QString)),this,SLOT(onReceivingLoadName(QString)));
 
     connect(_view,SIGNAL(sendPressedNew()),this,SLOT(onPressedNew()));
     connect(_view,SIGNAL(sendPressedSave()),this,SLOT(onPressedSave()));

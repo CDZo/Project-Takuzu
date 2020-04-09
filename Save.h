@@ -14,15 +14,12 @@ class Save : public QDialog
 public:
     explicit Save(QWidget *parent = nullptr);
     ~Save();
-
+private slots:
+    void onNameChanged(const QString &arg1);
+signals:
+    void saveNameChanged(const QString &arg1);
 private:
     Ui::Save *ui;
-
-public slots:
-    void onText(const QString &text);
-
-signals:
-    void sendText (const QString &text);
 };
 
 #endif // SAVE_H
