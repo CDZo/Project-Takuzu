@@ -1,5 +1,5 @@
 #include "Save.h"
-#include "ui_save.h"
+#include "ui_Save.h"
 
 Save::Save(QWidget *parent) :
     QDialog(parent),
