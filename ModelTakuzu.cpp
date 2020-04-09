@@ -34,6 +34,20 @@ void ModelTakuzu::initGrid(const int &size, Pawn *pawns)
     initColoredPawnNumber();
 }
 
+void ModelTakuzu::replaceGrid(const int &size, Pawn *pawns)
+{
+    //_pawngrid is just a copy of pawns
+    delete[] _pawnGrid;
+    removeAllObserver();
+    _gridSize = size;
+    _pawnGrid = new Pawn[size * size];
+    for(int i = 0; i< size*size;i++ ) {
+        _pawnGrid[i].setState(pawns[i].getState());
+        _pawnGrid[i].setId(i);
+    }
+    initColoredPawnNumber();
+}
+
 bool ModelTakuzu::putInGrid(int row, int column, State state)
 {
     if (column >= 0 && row >= 0) {
@@ -131,6 +145,11 @@ bool ModelTakuzu::gridRespectRules()
 bool ModelTakuzu::gridIsFull()
 {
     return _coloredPawn == (_gridSize*_gridSize);
+}
+
+void ModelTakuzu::removeAllObserver()
+{
+    _observers.clear();
 }
 
 void ModelTakuzu::initColoredPawnNumber()

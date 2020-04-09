@@ -18,6 +18,7 @@ public:
     void setSize(const int & size);
     void initGrid(const int &size);
     void initGrid(const int & size, Pawn* pawns);
+    void replaceGrid(const int & size, Pawn* pawns);
     bool putInGrid(int row, int column, State state);
     void display();
 
@@ -76,6 +77,7 @@ private:
     void loadGrid();
     bool gridRespectRules();
     bool gridIsFull();
+    void removeAllObserver();
     std::list<IObserver*> _observers;
     int _gridSize = 0;
     int _coloredPawn = 0;
