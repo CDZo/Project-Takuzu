@@ -17,7 +17,8 @@ View::View(QWidget *parent) :
     ui->actionNew->setIcon(QIcon::fromTheme("document-new"));
     ui->actionOpen->setIcon(QIcon::fromTheme("document-open"));
     ui->actionSave->setIcon(QIcon::fromTheme("document-save"));
-    ui->statusBar->showMessage("status bar here");
+    ui->actionOption->setIcon(QIcon::fromTheme("document-properties"));
+    setStatusBarTextWith("");
     connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(pressedNew()));
 }
 
@@ -30,7 +31,6 @@ View::~View()
 
 QGridLayout* View::loadPawnsOnGrid(const int & size,Pawn * pawns)
 {
-
     QGridLayout *gridLayout = new QGridLayout;
 
     for (int row = 0; row < size; row++) {
@@ -38,8 +38,6 @@ QGridLayout* View::loadPawnsOnGrid(const int & size,Pawn * pawns)
             gridLayout->addWidget(&pawns[ row * size + column],row,column);
         }
     }
-    gridLayout->setSizeConstraint(QLayout::SetFixedSize);
-
     return gridLayout;
 }
 
