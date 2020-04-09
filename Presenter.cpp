@@ -240,14 +240,31 @@ Indicator * Presenter::initNewIndicator(const int &gridSize)
     return indicators;
 }
 
+
 void Presenter::replaceGrid(const int &size, const Difficulty &difficulty)
 {
     _gridSize = size;
     _indicatorSize = 2* _gridSize;
+    /*TODO check memory leak*/
+    delete [] _visualPawns;
+    delete [] _indicators;
     _visualPawns = initVisualPawnWith(_gridSize,difficulty);
     _indicators = initNewIndicator(_gridSize);
+    _model->replaceGrid(_gridSize,_visualPawns);
 
-
+    for(int i = 0; i < _indicatorSize;i++) {
+        _indicators[i].setSubject(_model);
+        _model->addObserver(&_indicators[i]);
+        _indicators[i].setMinimumSize(45,45);
+    }
+    for(int i = 0; i < _gridSize*_gridSize;i++) {
+        _visualPawns[i].setMinimumSize(45,45);
+        _visualPawns[i].changeDesignWith(new Pawn::BrightSquare);
+        //_visualPawns[i].setFixedSize(32,32);
+        connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
+        _visualPawns[i].setId(i);
+    }
+    _view->loadUi(_gridSize,_visualPawns,_indicators);
 }
 
 
@@ -355,7 +372,7 @@ void Presenter::onReceivingNewDifficulty(int index){
 void Presenter::onPressedNew() {
     int playerNeedNewGrid = _newGame->exec();
     if(playerNeedNewGrid) {
-        initNewGrid(_newSize,_newDifficulty);
+        replaceGrid(_newSize,_newDifficulty);
     }
     std::cout<<"code retrieve after execution :"<< playerNeedNewGrid<<std::endl<<std::flush;
 }
