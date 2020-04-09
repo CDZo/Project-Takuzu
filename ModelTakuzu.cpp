@@ -282,9 +282,9 @@ std::set<int> ModelTakuzu::findUnbalancedRows()
         for(int column = 0; column < _gridSize; column++) {
             previousState = _pawnGrid[row * _gridSize + column].getState();
             switch(previousState) {
-            case 1:counter++;
+            case Black:counter++;
                 break;
-            case 2:counter--;
+            case White:counter--;
                 break;
             }
         }
@@ -305,9 +305,9 @@ std::set<int> ModelTakuzu::findUnbalancedColumns()
         for(int row = 0; row < _gridSize; row++) {
             previousState = _pawnGrid[row * _gridSize + column].getState();
             switch(previousState) {
-            case 1:counter++;
+            case Black:counter++;
                 break;
-            case 2:counter--;
+            case White:counter--;
                 break;
             }
         }

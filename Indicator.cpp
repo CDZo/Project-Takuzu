@@ -26,10 +26,10 @@ void Indicator::paintEvent(QPaintEvent *)
     //painter.fillRect(rect(),Qt::green);
     switch(_orientation) {
     case Horizontal:
-        painter.drawText(rect(),Qt::AlignCenter,QString::number(_blackPawn) +" "+ QString::number(_whitePawn));
+        drawHorizontally();
         break;
     case Vertical:
-        painter.drawText(rect(),Qt::AlignCenter,QString::number(_blackPawn) +"\n"+ QString::number(_whitePawn));
+        drawVertically();
         break;
     }
 
@@ -61,4 +61,43 @@ void Indicator::setOrientation(const Orientation & orientation)
 bool Indicator::operator==(const Indicator &other)
 {
     return _orientation == other._orientation && _position == other._position;
+}
+
+void Indicator::drawHorizontally()
+{
+    QPainter painter(this);
+    QFont font = painter.font();
+    font.setPixelSize(20);
+    painter.setFont(font);
+    painter.fillRect(rect(),Qt::gray);
+    QRect blackRect(0,0,width()/2,height());
+    QRect whiteRect(width()/2,1,width()/2,height()-2);
+
+    painter.fillRect(blackRect,Qt::black);
+    painter.fillRect(whiteRect,Qt::white);
+
+    painter.setPen(Qt::white);
+    painter.drawText(blackRect,Qt::AlignCenter,QString::number(_blackPawn));
+    painter.setPen(Qt::black);
+    painter.drawText(whiteRect,Qt::AlignCenter,QString::number(_whitePawn));
+
+}
+
+void Indicator::drawVertically()
+{
+    QPainter painter(this);
+    QFont font = painter.font();
+    font.setPixelSize(20);
+    painter.setFont(font);
+    painter.fillRect(rect(),Qt::gray);
+    QRect blackRect(0,0,width(),height()/2);
+    QRect whiteRect(1,height()/2,width()-2,height()/2);
+
+    painter.fillRect(blackRect,Qt::black);
+    painter.fillRect(whiteRect,Qt::white);
+
+    painter.setPen(Qt::white);
+    painter.drawText(blackRect,Qt::AlignCenter,QString::number(_blackPawn));
+    painter.setPen(Qt::black);
+    painter.drawText(whiteRect,Qt::AlignCenter,QString::number(_whitePawn));
 }

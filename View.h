@@ -28,13 +28,13 @@ public:
     void startMetronome();
     QString getChronometerTime();
     void setChronometerTo(int hour, int min, int s);
+    void setStatusBarTextWith(const QString & text);
 
 public slots:
     void onTimerTimeout();
     void pressedNew (bool check);
 
 private:
-
     QGridLayout* loadPawnsOnGrid(const int & size, Pawn * pawns);
     QGridLayout* loadPawnsOnGrid(const int & size, Pawn * pawns, Indicator * indicator);
     Ui::View *ui;
