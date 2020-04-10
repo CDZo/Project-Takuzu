@@ -25,7 +25,7 @@ public:
     QString getCompleteState();
     bool operator==(const Pawn & other);
     void changeDesignWith(IDesign * newDesign);
-
+    void changeDesignWith(const PawnDesign & design);
 
 public slots:
 signals:

@@ -103,7 +103,24 @@ bool Pawn::operator==(const Pawn &other)
 
 void Pawn::changeDesignWith(IDesign * newDesign)
 {
+    delete _design;
     _design = newDesign;
+}
+
+void Pawn::changeDesignWith(const PawnDesign &design)
+{
+    switch (design) {
+    case PawnDesign::BrightCircle:
+        changeDesignWith(new Pawn::BrightCircle);
+        break;
+    case PawnDesign::BrightSquare:
+        changeDesignWith(new  Pawn::BrightSquare);
+        break;
+    case PawnDesign::DarkCircle:
+        changeDesignWith(new  Pawn::DarkCircle);
+        break;
+    }
+    update();
 }
 
 
