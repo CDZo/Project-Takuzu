@@ -29,6 +29,7 @@ View::~View()
 {
     delete _chronometer;
     delete _time;
+    delete _metronome;
     delete ui;
 }
 
@@ -69,7 +70,6 @@ void View::loadUi(const int &size, Pawn *pawns)
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     QGridLayout *leftLayout = loadPawnsOnGrid(size,pawns);
-    //leftLayout->setSizeConstraint(QLayout::SetMinimumSize);
     mainLayout->addLayout(leftLayout);
 
     QVBoxLayout *rightLayout = new QVBoxLayout;
@@ -83,7 +83,6 @@ void View::loadUi(const int &size, Pawn *pawns)
     rightLayout->setSizeConstraint(QLayout::SetMinimumSize);
 
     mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
-    //mainLayout->setSizeConstraint(QLayout::SetFixedSize);
     mainLayout->setStretch(0,1);
     ui->centralWidget->setLayout(mainLayout);
 

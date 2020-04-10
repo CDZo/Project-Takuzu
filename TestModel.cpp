@@ -2,12 +2,8 @@
 #include "ModelTakuzu.h"
 #include <iostream>
 #include <assert.h>
-
-#define EMPTY 0
-#define BLACK 1
-#define WHITE 2
 #include "Constant.h"
-//enum State {empty, black, white};
+
 TestModel::TestModel()
 {
     should_return_true_when_put_pawn_in_boundary();
@@ -392,7 +388,6 @@ void TestModel::should_return_false_when_grid_is_uncorrectly_finished()
     assert(model.putInGrid(1,0,State::Black));
     assert(model.putInGrid(1,1,State::White));
 
-    //break uniqueness rule
 
     model.initColoredPawnNumber();
     assert(model.isGameFinished() == false);

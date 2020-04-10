@@ -88,7 +88,6 @@ void ModelTakuzu::onPawnChanged(const int &id, const State &newState)
         _coloredPawn--;
     }
     _pawnGrid[id].setState(newState);
-    //std::cout << "row:" << id/_gridSize << " column:" << id%_gridSize << " state:" << state << std::endl;
     notifyObservers();
     rulesLoop();
 }
@@ -313,7 +312,7 @@ std::set<int> ModelTakuzu::findUnbalancedColumns()
     }
     return unbalancedColumns;
 }
-//TODO don't do with extreme
+
 std::set<std::pair<int,int>> ModelTakuzu::findIdenticalColumns()
 {
     bool areEqual;
@@ -333,7 +332,7 @@ std::set<std::pair<int,int>> ModelTakuzu::findIdenticalColumns()
     }
     return twinColumns;
 }
-//TODO only side by side row
+
 std::set<std::pair<int,int>> ModelTakuzu::findIdenticalRows()
 {
     bool areEqual;

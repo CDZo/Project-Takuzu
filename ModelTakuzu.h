@@ -31,21 +31,15 @@ public:
 
     std::set<int> findUnbalancedColumns();
 
-    /**
-     * @brief check the uniqueness of every columns
-     * @return return a set of pair of twin colunms or a set with an unique pair with gridsize
-     */
+
     std::set<std::pair<int,int>> findIdenticalColumns();
 
-    /**
-     * @brief check the uniqueness of every rows
-     * @return return a set of pair of twin rows or a set with an unique pair with gridsize
-     */
     std::set<std::pair<int,int>> findIdenticalRows();
 
     void rulesLoop();
+
     /**
-     * @brief isGameFinished check rules and number of not Empty pawns.
+     * @brief isGameFinished check rules and number of colored pawns.
      * @return true and emit signal notity or false.
      */
     bool isGameFinished();

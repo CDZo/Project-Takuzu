@@ -202,9 +202,8 @@ void Presenter::replaceWithNewGrid(const int &size, const Difficulty &difficulty
         _indicators[i].setVisible(_needHelpIndicator == Qt::CheckState::Checked);
     }
     for(int i = 0; i < _gridSize*_gridSize;i++) {
-        _visualPawns[i].setMinimumSize(45,45);
+
         _visualPawns[i].changeDesignWith(_pawnDesign);
-        //_visualPawns[i].setFixedSize(32,32);
         connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
         _visualPawns[i].setId(i);
     }
@@ -232,7 +231,6 @@ void Presenter::replaceGrid(const int &size, Pawn *pawns)
     for(int i = 0; i < _gridSize*_gridSize;i++) {
         _visualPawns[i].setMinimumSize(45,45);
         _visualPawns[i].changeDesignWith(_pawnDesign);
-        //_visualPawns[i].setFixedSize(32,32);
         connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
         _visualPawns[i].setId(i);
     }
@@ -473,7 +471,7 @@ void Presenter::onGameFinished()
     _view->update();
     QString information(_view->getChronometerTime());
 
-    _information->setInformationTextWith("You Won !! (＾▽＾) ");
+    _information->setInformationTextWith(tr("You Won !! (＾▽＾) "));
     _information->exec();
 
 
@@ -581,10 +579,8 @@ void Presenter::onPressedOption()
 
 void Presenter::onReceivingSaveName(QString text){
     _saveName=text;
-    std::cout<<std::endl<<std::endl<<"Save >>"+text.toStdString()<<"<<"<<std::endl<<std::endl<<std::flush;
 }
 
 void Presenter::onReceivingLoadName(QString text){
     _loadName=text;
-    std::cout<<std::endl<<std::endl<<"Load >>"+text.toStdString()<<"<<"<<std::endl<<std::endl<<std::flush;
 }

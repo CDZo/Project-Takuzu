@@ -23,10 +23,3 @@ void NewGame::onSizeIndex(int index){
 void NewGame::onDifficultyIndex(int index){
     emit sendDifficultyIndex(index);
 }
-
-
-
-//QComboBox
-
-
-//QDialog

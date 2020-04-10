@@ -23,7 +23,6 @@ void Indicator::paintEvent(QPaintEvent *)
     QFont font = painter.font();
     font.setPixelSize(20);
     painter.setFont(font);
-    //painter.fillRect(rect(),Qt::green);
     switch(_orientation) {
     case Horizontal:
         drawHorizontally();

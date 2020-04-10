@@ -11,8 +11,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setOrganizationName("Ensicaen");
     QCoreApplication::setOrganizationDomain("ensicaen.fr");
-    QCoreApplication::setApplicationName("Binairo");
-
+    QCoreApplication::setApplicationName("Takuzu");
 
 
     if (argc != 2) {
@@ -32,7 +31,7 @@ int main(int argc, char *argv[])
         if(translator.load(QLocale(),"takuzu","_",":/translation/")) {
             std::cout << "translator loaded"<< std::endl;
         } else {
-            std::cout << "translator failed"<< std::endl;
+            std::cout << "translator default"<< std::endl;
         }
         a.installTranslator(&translator);
         Presenter presenter;
@@ -40,6 +39,6 @@ int main(int argc, char *argv[])
         presenter.show();
         return a.exec();
     }
-    std::cout << "Wrong id_programm" <<std::endl;
+    std::cout << "id_programm incorrect" <<std::endl;
 
 }
