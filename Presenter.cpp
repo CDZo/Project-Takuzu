@@ -8,35 +8,15 @@
 #include <time.h>
 
 Presenter::Presenter()
-{     
+{
+    initViews();
+
     initNewGrid(6,Easy);
     //_newGame->setModal(true);
 
     initConnectionWithModel();
+    initConnectionWithViews();
 
-    _save = new QSettings;
-
-    _newGame = new NewGame;
-
-    _saveDialog = new Save;
-
-    _loadDialog = new Load;
-
-    _error = new Error;
-
-    _option = new Option;
-
-    connect(_newGame,SIGNAL(sendSizeIndex(int)),this,SLOT(onReceivingNewSize(int)));
-    connect(_newGame,SIGNAL(sendDifficultyIndex(int)),this,SLOT(onReceivingNewDifficulty(int)));
-
-    connect(_saveDialog,SIGNAL(saveNameChanged(QString)),this,SLOT(onReceivingSaveName(QString)));
-
-    connect(_loadDialog,SIGNAL(loadNameChanged(QString)),this,SLOT(onReceivingLoadName(QString)));
-
-    connect(_view,SIGNAL(newPressed()),this,SLOT(onPressedNew()));
-    connect(_view,SIGNAL(savePressed()),this,SLOT(onPressedSave()));
-    connect(_view,SIGNAL(loadPressed()),this,SLOT(onPressedLoad()));
-    connect(_view,SIGNAL(optionPressed()),this,SLOT(onPressedOption()));
 }
 
 
@@ -185,7 +165,7 @@ void Presenter::initNewGrid(const int &size, const Difficulty &difficulty)
         connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
         _visualPawns[i].setId(i);
     }
-    _view = new View;
+
     _view->loadUi(_gridSize,_visualPawns,_indicators);
 }
 
@@ -328,11 +308,79 @@ void Presenter::changeTimerWithSavedTimer(QString name)
     _view->setChronometerTo(hour,min,sec);
 }
 
+void Presenter::initViews()
+{
+    _view = new View;
+
+    _save = new QSettings;
+
+    _newGame = new NewGame;
+
+    _saveDialog = new Save;
+
+    _loadDialog = new Load;
+
+    _error = new Error;
+
+    _option = new Option;
+}
+
+void Presenter::initConnectionWithViews()
+{
+    connect(_view,SIGNAL(newPressed()),this,SLOT(onPressedNew()));
+    connect(_view,SIGNAL(savePressed()),this,SLOT(onPressedSave()));
+    connect(_view,SIGNAL(loadPressed()),this,SLOT(onPressedLoad()));
+    connect(_view,SIGNAL(optionPressed()),this,SLOT(onPressedOption()));
+
+    connect(_newGame,SIGNAL(sendSizeIndex(int)),this,SLOT(onReceivingNewSize(int)));
+    connect(_newGame,SIGNAL(sendDifficultyIndex(int)),this,SLOT(onReceivingNewDifficulty(int)));
+
+    connect(_saveDialog,SIGNAL(saveNameChanged(QString)),this,SLOT(onReceivingSaveName(QString)));
+
+    connect(_loadDialog,SIGNAL(loadNameChanged(QString)),this,SLOT(onReceivingLoadName(QString)));
+
+    connect(_option,SIGNAL(helpIncorrectInRowColumn(Qt::CheckState)),this,SLOT(onHelpIncorrectInRowColumn(Qt::CheckState)));
+    connect(_option,SIGNAL(helpUnbalancedRowColumn(Qt::CheckState)),this,SLOT(onHelpUnbalancedRowColumn(Qt::CheckState)));
+    connect(_option,SIGNAL(helpIdenticalRowColumn(Qt::CheckState)),this,SLOT(onHelpIdenticalRowColumn(Qt::CheckState)));
+
+}
+
+void Presenter::setIncorrectRowPawnWith(const bool &value, const std::set<std::pair<int, int> > &pawns)
+{
+    for(std::set<std::pair<int, int>>::iterator it = pawns.begin();it != pawns.end();it++) {
+        _visualPawns[it->first * _gridSize + it->second].setFalse(value);
+    }
+}
+
+void Presenter::setIncorrectColumnPawnWith(const bool &value, const std::set<std::pair<int, int> > &pawns)
+{
+    for(std::set<std::pair<int, int>>::iterator it = pawns.begin();it != pawns.end();it++) {
+        _visualPawns[it->first * _gridSize + it->second].setFalse(value);
+    }
+}
+
+void Presenter::setColumnWith(const bool &value, std::set<int> columns)
+{
+    for(std::set<int>::iterator it = columns.begin();it != columns.end();it++) {
+        for(int row = 0; row < _gridSize; row++) {
+            _visualPawns[row * _gridSize + *it].setFalse(value);
+        }
+    }
+}
+
+void Presenter::setRowWith(const bool &value, std::set<int> rows)
+{
+    for(std::set<int>::iterator it = rows.begin();it != rows.end();it++) {
+        for(int column = 0; column < _gridSize; column++) {
+            _visualPawns[*it * _gridSize + column].setFalse(value);
+        }
+    }
+}
+
 
 
 void Presenter::onPawnClicked(const int & id, const State & state)
 {
-    //std::cout << "id: "<<id<<" state : "<<state <<std::endl;
     resetFalsePawns();
     _view->setStatusBarTextWith(tr(""));
     emit pawnChanged(id, state);
@@ -340,71 +388,68 @@ void Presenter::onPawnClicked(const int & id, const State & state)
 
 void Presenter::onIncorrectPawnsInRow(const std::set<std::pair<int, int>> pawns)
 {
-    //std::cout<<"Incorrect Pawn in Row :"<<std::endl;
-    for(std::set<std::pair<int, int>>::iterator it = pawns.begin();it != pawns.end();it++) {
-        _visualPawns[it->first * _gridSize + it->second].setFalse(true);
-        //std::cout << "x: " << it->first << " y : " << it->second <<std::endl;
+    if(_needHelpIncorrectInRowColumn) {
+        setIncorrectRowPawnWith(true,pawns);
+        _view->update();
     }
-    _view->update();
 }
 
-void Presenter::onIncorrectPawnsInColumn(const std::set<std::pair<int, int> > pawns)
+void Presenter::onIncorrectPawnsInColumn(const std::set<std::pair<int, int>> pawns)
 {
-    //std::cout<<"Incorrect Pawn in Column :"<<std::endl;
-    for(std::set<std::pair<int, int>>::iterator it = pawns.begin();it != pawns.end();it++) {
-        _visualPawns[it->first * _gridSize + it->second].setFalse(true);
-        //std::cout << "x: " << it->first << " y : " << it->second <<std::endl;
+    if (_needHelpIncorrectInRowColumn) {
+        setIncorrectColumnPawnWith(true,pawns);
+        _view->update();
     }
-    _view->update();
 }
 
 void Presenter::onUnbalancedRows(std::set<int> rows)
 {
-    for(std::set<int>::iterator it = rows.begin();it != rows.end();it++) {
-        for(int column = 0; column < _gridSize; column++) {
-            _visualPawns[*it * _gridSize + column].setFalse(true);
-        }
+    if (_needHelpUnbalancedRowColumn) {
+        setRowWith(true,rows);
+        _view->setStatusBarTextWith(tr("unbalanced row/column"));
+        _view->update();
     }
-    _view->setStatusBarTextWith(tr("unbalanced row"));
-    _view->update();
 }
 
 void Presenter::onUnbalancedColumns(std::set<int> columns)
 {
-    for(std::set<int>::iterator it = columns.begin();it != columns.end();it++) {
-        for(int row = 0; row < _gridSize; row++) {
-            _visualPawns[row * _gridSize + *it].setFalse(true);
-        }
+
+    if (_needHelpUnbalancedRowColumn) {
+        setColumnWith(true,columns);
+        _view->setStatusBarTextWith(tr("unbalanced row/column"));
+        _view->update();
     }
-    _view->setStatusBarTextWith(tr("unbalanced column"));
-    _view->update();
+
 }
 
 
 void Presenter::onIdenticalRows(std::set<std::pair<int, int> > rows)
 {
-
+    std::set<int> singleRows;
     for(std::set<std::pair<int,int>>::iterator it = rows.begin();it != rows.end();it++) {
-        for(int column = 0; column < _gridSize; column++) {
-            _visualPawns[it->first * _gridSize + column].setFalse(true);
-            _visualPawns[it->second * _gridSize + column].setFalse(true);
-        }
+        singleRows.insert(it->first);
+        singleRows.insert(it->second);
     }
-    _view->setStatusBarTextWith(tr("identical rows"));
-    _view->update();
+    if(_needHelpIdenticalRowColunm) {
+        setRowWith(true,singleRows);
+        _view->setStatusBarTextWith(tr("identical rows/columns"));
+        _view->update();
+    }
 }
 
 void Presenter::onIdenticalColumns(std::set<std::pair<int, int> > columns)
 {
-
+    std::set<int> singleColumns;
     for(std::set<std::pair<int,int>>::iterator it = columns.begin();it != columns.end();it++) {
-        for(int row = 0; row < _gridSize; row++) {
-            _visualPawns[row * _gridSize + it->first].setFalse(true);
-            _visualPawns[row * _gridSize + it->second].setFalse(true);
-        }
+        singleColumns.insert(it->first);
+        singleColumns.insert(it->second);
     }
-    _view->setStatusBarTextWith(tr("identical column"));
-    _view->update();
+
+    if(_needHelpIdenticalRowColunm == Qt::CheckState::Checked) {
+        setColumnWith(true,singleColumns);
+        _view->setStatusBarTextWith(tr("identical rows/columns"));
+        _view->update();
+    }
 }
 
 void Presenter::onGameFinished()
@@ -423,7 +468,6 @@ void Presenter::onGameFinished()
 
 
 void Presenter::onReceivingNewSize(int index){
-    // std::cout<<"size"<<std::flush;
     switch (index){
     case 0:
         _newSize=6;
@@ -437,7 +481,6 @@ void Presenter::onReceivingNewSize(int index){
     }
 }
 void Presenter::onReceivingNewDifficulty(int index){
-    // std::cout<<"diff"<<std::flush;
     switch (index){
     case 0:
         _newDifficulty=Easy;
@@ -454,12 +497,36 @@ void Presenter::onPressedNew() {
         replaceWithNewGrid(_newSize,_newDifficulty);
         _view->setStatusBarTextWith("");
     }
-    // std::cout<<"code retrieve after execution :"<< playerNeedNewGrid<<std::endl<<std::flush;
 }
 
 void Presenter::onPressedOption()
 {
-    int playerNeedOption = _option->exec();
+    int playerWantOption = _option->exec();
+    if (playerWantOption) {
+        _needHelpIncorrectInRowColumn = _newHelpIncorrectInRowColumn;
+        _needHelpUnbalancedRowColumn = _newHelpUnbalancedRowColumn;
+        _needHelpIdenticalRowColunm = _newHelpIdenticalRowColunm;
+        resetFalsePawns();
+        _model->rulesLoop();
+    }
+}
+
+void Presenter::onHelpIncorrectInRowColumn(Qt::CheckState state)
+{
+    _newHelpIncorrectInRowColumn = state;
+    std::cout<<"onHelpIncorrectInRowColumn :"<< state <<std::endl<<std::flush;
+}
+
+void Presenter::onHelpUnbalancedRowColumn(Qt::CheckState state)
+{
+    _newHelpUnbalancedRowColumn = state;
+    std::cout<<"onHelpUnbalancedRowColumn :"<< state <<std::endl<<std::flush;
+}
+
+void Presenter::onHelpIdenticalRowColumn(Qt::CheckState state)
+{
+    _newHelpIdenticalRowColunm = state;
+    std::cout<<"onHelpIdenticalRowColumn :"<< state <<std::endl<<std::flush;
 }
 
 

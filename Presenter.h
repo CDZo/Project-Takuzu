@@ -31,7 +31,13 @@ private:
     void replaceGrid(const int & size, Pawn* pawns);
     Pawn * loadSavedGrid(QString name);
     void changeTimerWithSavedTimer(QString name);
-
+    void initViews();
+    void initConnectionWithViews();
+    void setIncorrectRowPawnWith(const bool &value,const std::set<std::pair<int, int>> &pawns);
+    void setIncorrectColumnPawnWith(const bool &value,const std::set<std::pair<int, int>> &pawns);
+    void setColumnWith(const bool &value, std::set<int> columns);
+    void setRowWith(const bool &value, std::set<int> rows);
+private:
 
     View *_view;
     ModelTakuzu *_model;
@@ -53,6 +59,16 @@ private:
     int _gridSize = 0;
     int _indicatorSize = 0;
     QSettings * _save;
+
+    Qt::CheckState _needHelpIncorrectInRowColumn = Qt::CheckState::Unchecked;
+    Qt::CheckState _newHelpIncorrectInRowColumn = Qt::CheckState::Unchecked;
+
+    Qt::CheckState _needHelpUnbalancedRowColumn = Qt::CheckState::Unchecked;
+    Qt::CheckState _newHelpUnbalancedRowColumn = Qt::CheckState::Unchecked;
+
+    Qt::CheckState _needHelpIdenticalRowColunm = Qt::CheckState::Unchecked;
+    Qt::CheckState _newHelpIdenticalRowColunm = Qt::CheckState::Unchecked;
+
 
 public slots:
     void onPawnClicked(const int & id, const State & state);
@@ -76,6 +92,10 @@ public slots:
     void onPressedLoad();
     void onPressedNew();
     void onPressedOption();
+
+    void onHelpIncorrectInRowColumn(Qt::CheckState state);
+    void onHelpUnbalancedRowColumn(Qt::CheckState state);
+    void onHelpIdenticalRowColumn(Qt::CheckState state);
 
 
 signals:
