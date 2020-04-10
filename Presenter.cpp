@@ -535,29 +535,36 @@ void Presenter::onHelpIdenticalRowColumn(Qt::CheckState state)
 
 
 void Presenter::onPressedNew() {
+    _view->stopMetronome();
     int playerNeedNewGrid = _newGame->exec();
     if(playerNeedNewGrid) {
         replaceWithNewGrid(_newSize,_newDifficulty);
         _view->setStatusBarTextWith("");
     }
+    _view->startMetronome();
 }
 void Presenter::onPressedLoad() {
+    _view->stopMetronome();
     int playerNeedLoad = _loadDialog->exec();
     if(playerNeedLoad) {
         loadSavedGame(_loadName);
     }
+    _view->startMetronome();
 }
 
 void Presenter::onPressedSave() {
+    _view->stopMetronome();
     int playerNeedSave = _saveDialog->exec();
     if(playerNeedSave) {
         saveGrid(_saveName);
     }
+    _view->startMetronome();
 }
 
 
 void Presenter::onPressedOption()
 {
+    _view->stopMetronome();
     int playerWantOption = _option->exec();
     if (playerWantOption) {
         _pawnDesign = _newPawnDesign;
@@ -572,6 +579,7 @@ void Presenter::onPressedOption()
 
         _model->rulesLoop();
     }
+    _view->startMetronome();
 }
 
 
