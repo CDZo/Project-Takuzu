@@ -6,12 +6,12 @@
     <message>
         <location filename="Information.ui" line="26"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <location filename="Information.ui" line="32"/>
         <source>Quelque chose s&apos;est mal déroulé</source>
-        <translation type="unfinished"></translation>
+        <translation>Quelque chose s&apos;est mal déroulé</translation>
     </message>
 </context>
 <context>
@@ -19,12 +19,12 @@
     <message>
         <location filename="Load.ui" line="32"/>
         <source>Chargement</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement</translation>
     </message>
     <message>
         <location filename="Load.ui" line="38"/>
         <source>Nom de la sauvegarde</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de la sauvegarde</translation>
     </message>
 </context>
 <context>
@@ -32,42 +32,42 @@
     <message>
         <location filename="NewGame.ui" line="32"/>
         <source>Nouvelle grille</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouvelle grille</translation>
     </message>
     <message>
         <location filename="NewGame.ui" line="41"/>
         <source>Difficulté</source>
-        <translation type="unfinished"></translation>
+        <translation>Difficulté</translation>
     </message>
     <message>
         <location filename="NewGame.ui" line="49"/>
         <source>Facile</source>
-        <translation type="unfinished"></translation>
+        <translation>Facile</translation>
     </message>
     <message>
         <location filename="NewGame.ui" line="54"/>
         <source>Difficile</source>
-        <translation type="unfinished"></translation>
+        <translation>Difficile</translation>
     </message>
     <message>
         <location filename="NewGame.ui" line="62"/>
         <source>Taille</source>
-        <translation type="unfinished"></translation>
+        <translation>Taile</translation>
     </message>
     <message>
         <location filename="NewGame.ui" line="70"/>
         <source>6</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="NewGame.ui" line="75"/>
         <source>8</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="NewGame.ui" line="80"/>
         <source>10</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -75,62 +75,62 @@
     <message>
         <location filename="Option.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Option</translation>
     </message>
     <message>
         <location filename="Option.ui" line="20"/>
         <source>Option Graphique</source>
-        <translation type="unfinished"></translation>
+        <translation>Option Graphique</translation>
     </message>
     <message>
         <location filename="Option.ui" line="26"/>
         <source>Thème du pion</source>
-        <translation type="unfinished"></translation>
+        <translation>Thème du pion</translation>
     </message>
     <message>
         <location filename="Option.ui" line="49"/>
         <source>Choix des aides</source>
-        <translation type="unfinished"></translation>
+        <translation>Choix des aides</translation>
     </message>
     <message>
         <location filename="Option.ui" line="55"/>
         <source>Montrer les lignes et colonnes déséquilibrées</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer les lignes et colonnes déséquilibrées</translation>
     </message>
     <message>
         <location filename="Option.ui" line="62"/>
         <source>Montrer si plus de 2 pions sont identiques côte à côte </source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer si plus de 2 pions sont identiques côte à côte </translation>
     </message>
     <message>
         <location filename="Option.ui" line="72"/>
         <source>Montrer les lignes et colonnes identiques</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer les lignes et colonnes identiques</translation>
     </message>
     <message>
         <location filename="Option.ui" line="79"/>
         <source>Montrer le nombre de pion</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer le nombre de pion</translation>
     </message>
     <message>
         <location filename="Option.cpp" line="16"/>
         <source>cercle clair</source>
-        <translation type="unfinished"></translation>
+        <translation>Classique</translation>
     </message>
     <message>
         <location filename="Option.cpp" line="17"/>
         <source>carré clair</source>
-        <translation type="unfinished"></translation>
+        <translation>Classique carré</translation>
     </message>
     <message>
         <location filename="Option.cpp" line="18"/>
         <source>cercle foncé</source>
-        <translation type="unfinished"></translation>
+        <translation>Classique sombre</translation>
     </message>
     <message>
         <location filename="Option.cpp" line="19"/>
         <source>carré foncé</source>
-        <translation type="unfinished"></translation>
+        <translation>Classique carré sombre</translation>
     </message>
 </context>
 <context>
@@ -138,24 +138,29 @@
     <message>
         <location filename="Presenter.cpp" line="80"/>
         <source>Error opening file</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur d&apos;ouverture de fichier</translation>
     </message>
     <message>
         <location filename="Presenter.cpp" line="109"/>
         <source>Incorrect file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de fichier incorrect</translation>
     </message>
     <message>
-        <location filename="Presenter.cpp" line="421"/>
-        <location filename="Presenter.cpp" line="431"/>
+        <location filename="Presenter.cpp" line="419"/>
+        <location filename="Presenter.cpp" line="429"/>
         <source>unbalanced row/column</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne/colonne déséquilibrée</translation>
     </message>
     <message>
-        <location filename="Presenter.cpp" line="447"/>
-        <location filename="Presenter.cpp" line="462"/>
+        <location filename="Presenter.cpp" line="445"/>
+        <location filename="Presenter.cpp" line="460"/>
         <source>identical rows/columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne/colonne identique</translation>
+    </message>
+    <message>
+        <location filename="Presenter.cpp" line="474"/>
+        <source>You Won !! (＾▽＾) </source>
+        <translation>Vous avez gagné (＾▽＾) </translation>
     </message>
 </context>
 <context>
@@ -170,12 +175,12 @@
     <message>
         <location filename="Save.ui" line="32"/>
         <source>Sauvegarde</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde</translation>
     </message>
     <message>
         <location filename="Save.ui" line="38"/>
         <source>Nom de la sauvegarde</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de la sauvegarde</translation>
     </message>
 </context>
 <context>
@@ -189,7 +194,7 @@
         <location filename="vue.ui" line="70"/>
         <source>&amp;Save...</source>
         <oldsource>&amp;Save</oldsource>
-        <translation type="unfinished">&amp;Enregistrer</translation>
+        <translation>&amp;Enregistrer...</translation>
     </message>
     <message>
         <location filename="vue.ui" line="73"/>
@@ -199,13 +204,13 @@
     <message>
         <location filename="vue.ui" line="76"/>
         <source>Ctrl+S</source>
-        <translation></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="vue.ui" line="81"/>
         <source>&amp;Open...</source>
         <oldsource>&amp;Open</oldsource>
-        <translation type="unfinished">&amp;Ouvrir</translation>
+        <translation>&amp;Ouvrir...</translation>
     </message>
     <message>
         <location filename="vue.ui" line="84"/>
@@ -221,7 +226,7 @@
         <location filename="vue.ui" line="92"/>
         <source>&amp;New...</source>
         <oldsource>&amp;New</oldsource>
-        <translation type="unfinished">&amp;Nouvelle</translation>
+        <translation>&amp;Nouvelle...</translation>
     </message>
     <message>
         <location filename="vue.ui" line="95"/>
@@ -237,7 +242,7 @@
         <location filename="vue.ui" line="103"/>
         <source>&amp;Option...</source>
         <oldsource>&amp;Option</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Option...</translation>
     </message>
 </context>
 <context>
