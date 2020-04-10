@@ -180,11 +180,6 @@ void ModelTakuzu::addObserver(IObserver * observer)
     _observers.push_back(observer);
 }
 
-void ModelTakuzu::removeObserver(IObserver * observer)
-{
-    _observers.erase(std::remove(_observers.begin(),_observers.end(), observer));
-}
-
 void updateVariablesWith(const int & state,int * counter,int * firstIncorrectPawn, const int & valueIncorrectPawn)
 {
     if(state != Empty) {
