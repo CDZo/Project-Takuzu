@@ -2,7 +2,7 @@
 #define OPTION_H
 
 #include <QDialog>
-
+#include "Constant.h"
 namespace Ui {
 class Option;
 }
@@ -15,11 +15,13 @@ public:
     explicit Option(QWidget *parent = nullptr);
     ~Option();
 signals:
+    void pawnDesignChanged(PawnDesign design);
     void helpIncorrectInRowColumn(Qt::CheckState state);
     void helpUnbalancedRowColumn(Qt::CheckState state);
     void helpIdenticalRowColumn(Qt::CheckState state);
 
 private slots:
+    void onDesignChanged(int design);
     void onIncorrectInRowColumn(int state);
     void onUnbalancedRowColumn(int state);
     void onIdenticalRowColumn(int state);
