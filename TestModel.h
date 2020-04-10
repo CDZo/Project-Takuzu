@@ -24,8 +24,7 @@ private:
     void should_return_rows_when_they_are_unbalanced();
 
     void should_return_empty_set_when_all_columns_are_balanced();
-    void should_return_column_when_it_is_unbalanced();
-
+    void should_return_columns_when_there_are_unbalanced();
 
     void should_return_empty_set_when_all_columns_are_unique();
     void should_return_empty_set_when_columns_are_unique_but_rows_not();

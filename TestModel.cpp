@@ -26,7 +26,7 @@ TestModel::TestModel()
     should_return_rows_when_they_are_unbalanced();
 
     should_return_empty_set_when_all_columns_are_balanced();
-    should_return_column_when_it_is_unbalanced();
+    should_return_columns_when_there_are_unbalanced();
 
     should_return_empty_set_when_all_columns_are_unique();
     should_return_empty_set_when_columns_are_unique_but_rows_not();
@@ -191,9 +191,9 @@ void TestModel::should_return_rows_when_they_are_unbalanced()
 {
     ModelTakuzu model(nullptr);
     int size = 3 ;
-
     model.initGrid(size);
     assert(model.putInGrid(0,0,State::White));
+
     assert(model.putInGrid(2,2,State::Black));
 
     std::set<int> Rows;
@@ -217,7 +217,7 @@ void TestModel::should_return_empty_set_when_all_columns_are_balanced()
     assert(Rows.empty());
 }
 
-void TestModel::should_return_column_when_it_is_unbalanced()
+void TestModel::should_return_columns_when_there_are_unbalanced()
 {
     ModelTakuzu model(nullptr);
     int size = 6 ;
@@ -268,21 +268,28 @@ void TestModel::should_return_empty_set_when_columns_are_unique_but_rows_not()
 void TestModel::should_return_faulty_column_when_uniqueness_is_not_respected()
 {
     ModelTakuzu model(nullptr);
-    int size = 3 ;
+    int size = 6 ;
 
     model.initGrid(size);
     assert(model.putInGrid(0,0,State::White));
-    assert(model.putInGrid(0,1,State::White));
-    assert(model.putInGrid(0,2,State::White));
+    assert(model.putInGrid(1,0,State::White));
+    assert(model.putInGrid(2,0,State::White));
 
-    assert(model.putInGrid(1,0,State::Black));
-    assert(model.putInGrid(1,1,State::Black));
+    assert(model.putInGrid(0,2,State::Black));
     assert(model.putInGrid(1,2,State::Black));
+    assert(model.putInGrid(2,2,State::Black));
 
-    std::set<std::pair<int,int>> wrongColumn;
-    wrongColumn.insert(std::make_pair(0,1));
-    wrongColumn.insert(std::make_pair(1,2));
-    assert(model.findIdenticalColumns() == wrongColumn);
+    assert(model.putInGrid(0,5,State::Black));
+    assert(model.putInGrid(1,5,State::Black));
+    assert(model.putInGrid(2,5,State::Black));
+
+    std::set<std::pair<int,int>> columns;
+    columns.insert(std::make_pair(1,3));
+    columns.insert(std::make_pair(1,4));
+    columns.insert(std::make_pair(2,5));
+    columns.insert(std::make_pair(3,4));
+
+    assert(model.findIdenticalColumns() == columns);
 }
 
 void TestModel::should_return_empty_set_when_all_rows_are_unique()
@@ -330,6 +337,33 @@ void TestModel::should_return_faulty_row_when_uniqueness_is_not_respected()
     std::set<std::pair<int,int>> Row;
     Row.insert(std::make_pair(0,1));
     assert(model.findIdenticalRows() == Row);
+
+    size = 6 ;
+    model.initGrid(size);
+    assert(model.putInGrid(0,0,State::Black));
+    assert(model.putInGrid(0,1,State::Black));
+    assert(model.putInGrid(0,2,State::White));
+
+    assert(model.putInGrid(2,0,State::Black));
+    assert(model.putInGrid(2,1,State::Black));
+    assert(model.putInGrid(2,2,State::White));
+
+
+    assert(model.putInGrid(5,0,State::Black));
+    assert(model.putInGrid(5,1,State::Black));
+    assert(model.putInGrid(5,2,State::White));
+    Row.clear();
+    Row.insert(std::make_pair(0,2));
+    Row.insert(std::make_pair(0,5));
+    Row.insert(std::make_pair(1,3));
+    Row.insert(std::make_pair(1,4));
+    Row.insert(std::make_pair(2,5));
+    Row.insert(std::make_pair(3,4));
+
+    assert(model.findIdenticalRows() == Row);
+
+
+
 }
 
 void TestModel::should_return_true_when_grid_is_correctly_finished()
