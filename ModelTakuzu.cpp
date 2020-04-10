@@ -170,7 +170,7 @@ std::pair<int, int> ModelTakuzu::getData(Orientation orientation, int position)
         break;
     case Vertical:
         return countPawnInColumn(position);
-        break; 
+        break;
     }
     return std::make_pair(-1,-1);
 }
@@ -318,39 +318,45 @@ std::set<int> ModelTakuzu::findUnbalancedColumns()
     }
     return unbalancedColumns;
 }
-
+//TODO don't do with extreme
 std::set<std::pair<int,int>> ModelTakuzu::findIdenticalColumns()
 {
     bool areEqual;
     std::set<std::pair<int,int>> twinColumns;
     for(int column = 0; column < _gridSize - 1; column++) {
-        for(int row = 0; row < _gridSize;row++) {
-            areEqual = (_pawnGrid[row * _gridSize + column] == _pawnGrid[row * _gridSize + column+1]);
-            if(!areEqual) {
-                break;
+        for(int nextColumn = column+1; nextColumn<_gridSize;nextColumn++) {
+            for(int row = 0; row < _gridSize;row++) {
+                areEqual = (_pawnGrid[row * _gridSize + column] == _pawnGrid[row * _gridSize + nextColumn]);
+                if(!areEqual) {
+                    break;
+                }
             }
-        }
-        if (areEqual) {
-            twinColumns.insert(std::make_pair(column,column+1));
+            if (areEqual) {
+                twinColumns.insert(std::make_pair(column,nextColumn));
+            }
         }
     }
     return twinColumns;
 }
-
+//TODO only side by side row
 std::set<std::pair<int,int>> ModelTakuzu::findIdenticalRows()
 {
     bool areEqual;
     std::set<std::pair<int,int>> twinRows;
     for(int row = 0; row < _gridSize - 1; row++) {
-        for(int column = 0; column < _gridSize; column++) {
-            areEqual = (_pawnGrid[row * _gridSize + column] == _pawnGrid[(row + 1) * _gridSize + column]);
-            if(!areEqual) {
-                break;
+        for(int nextRow = row+1; nextRow< _gridSize;nextRow++) {
+            for(int column = 0; column < _gridSize; column++) {
+                areEqual = (_pawnGrid[row * _gridSize + column] == _pawnGrid[(nextRow) * _gridSize + column]);
+                if(!areEqual) {
+                    break;
+                }
+            }
+            if (areEqual) {
+                twinRows.insert(std::make_pair(row,nextRow));
             }
         }
-        if (areEqual) {
-            twinRows.insert(std::make_pair(row,row+1));
-        }
+
+
     }
     return twinRows;
 }
@@ -364,7 +370,7 @@ void ModelTakuzu::rulesLoop()
         std::set<int> irregularColumns = findUnbalancedColumns();
         std::set<std::pair<int,int>> equivalentRows = findIdenticalRows();
         std::set<std::pair<int,int>> equivalentColumns = findIdenticalColumns();
-
+        std::cout<<"Model Identical Row/column signal "<<!equivalentRows.empty() <<"/"<< !equivalentColumns.empty()<<std::endl<<std::flush;
         if (!faultyPawnInRow.empty()){
             emit incorrectPawnsInRow(faultyPawnInRow);
         }
@@ -379,9 +385,11 @@ void ModelTakuzu::rulesLoop()
         }
         if(!equivalentRows.empty()) {
             emit identicalRows(equivalentRows);
+            std::cout<<"Model Identical Row signal"<<std::endl<<std::flush;
         }
         if (!equivalentColumns.empty()) {
             emit identicalColumns(equivalentColumns);
+
         }
     }
 }
