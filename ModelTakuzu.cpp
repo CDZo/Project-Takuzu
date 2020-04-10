@@ -370,7 +370,6 @@ void ModelTakuzu::rulesLoop()
         std::set<int> irregularColumns = findUnbalancedColumns();
         std::set<std::pair<int,int>> equivalentRows = findIdenticalRows();
         std::set<std::pair<int,int>> equivalentColumns = findIdenticalColumns();
-        std::cout<<"Model Identical Row/column signal "<<!equivalentRows.empty() <<"/"<< !equivalentColumns.empty()<<std::endl<<std::flush;
         if (!faultyPawnInRow.empty()){
             emit incorrectPawnsInRow(faultyPawnInRow);
         }
@@ -385,7 +384,6 @@ void ModelTakuzu::rulesLoop()
         }
         if(!equivalentRows.empty()) {
             emit identicalRows(equivalentRows);
-            std::cout<<"Model Identical Row signal"<<std::endl<<std::flush;
         }
         if (!equivalentColumns.empty()) {
             emit identicalColumns(equivalentColumns);
