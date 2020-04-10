@@ -24,8 +24,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-    Error.cpp \
     Indicator.cpp \
+    Information.cpp \
     Load.cpp \
     ModelTakuzu.cpp \
     NewGame.cpp \
@@ -40,10 +40,10 @@ SOURCES += \
 
 HEADERS += \
     Constant.h \
-    Error.h \
     IObserver.h \
     ISubject.h \
     Indicator.h \
+    Information.h \
     Load.h \
     ModelTakuzu.h \
     NewGame.h \
@@ -56,7 +56,7 @@ HEADERS += \
     Pawn.h
 
 FORMS += \
-        Error.ui \
+        Information.ui \
         Load.ui \
         NewGame.ui \
         Option.ui \
@@ -66,7 +66,8 @@ FORMS += \
 TRANSLATIONS = takuzu_fr.ts \
     takuzu_en.ts
 
-DISTFILES +=
+DISTFILES += \
+    readme.md
 
 RESOURCES += \
     grid.qrc \
