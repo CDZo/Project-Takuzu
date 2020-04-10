@@ -207,7 +207,7 @@ void Presenter::replaceWithNewGrid(const int &size, const Difficulty &difficulty
     }
     for(int i = 0; i < _gridSize*_gridSize;i++) {
         _visualPawns[i].setMinimumSize(45,45);
-        _visualPawns[i].changeDesignWith(new Pawn::BrightSquare);
+        _visualPawns[i].changeDesignWith(_pawnDesign);
         //_visualPawns[i].setFixedSize(32,32);
         connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
         _visualPawns[i].setId(i);
@@ -233,7 +233,7 @@ void Presenter::replaceGrid(const int &size, Pawn *pawns)
     }
     for(int i = 0; i < _gridSize*_gridSize;i++) {
         _visualPawns[i].setMinimumSize(45,45);
-        _visualPawns[i].changeDesignWith(new Pawn::BrightSquare);
+        _visualPawns[i].changeDesignWith(_pawnDesign);
         //_visualPawns[i].setFixedSize(32,32);
         connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
         _visualPawns[i].setId(i);
@@ -276,6 +276,7 @@ Pawn *Presenter::loadSavedGrid(QString name)
             pawnGrid[pawnId].setLock(true);
         }
         pawnGrid[pawnId].setId(pawnId);
+
         pawnId++;
     }
     return pawnGrid;
