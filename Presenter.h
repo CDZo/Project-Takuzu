@@ -7,8 +7,8 @@
 #include "NewGame.h"
 #include "Load.h"
 #include "Save.h"
-#include "Error.h"
 #include "Option.h"
+#include "Information.h"
 
 class Presenter: public QObject
 {
@@ -16,25 +16,26 @@ class Presenter: public QObject
 public:
     Presenter();
     ~Presenter();
+    void show();
     Pawn * initVisualPawnWith(const int & gridSize,const Difficulty & difficulty);
     void saveGrid(QString name);
     void loadSavedGame(QString name);
-    void show();
 
 private:
-    void resetFalsePawns();
-    void changeAllPawnDesignWith(const PawnDesign & newDesign);
+    void initNewGrid(const int & size, const Difficulty & difficulty);
+    void initViews();
+    void initConnectionWithViews();
     void initConnectionWithModel();
 
-    void initNewGrid(const int & size, const Difficulty & difficulty);
-    Indicator * initNewIndicator(const int & gridSize);
     void replaceWithNewGrid(const int & size, const Difficulty & difficulty);
+    Indicator * initNewIndicator(const int & gridSize);
+    void resetFalsePawns();
+    void changeAllPawnDesignWith(const PawnDesign & newDesign);
+
     void replaceGrid(const int & size, Pawn* pawns);
     Pawn * loadSavedGrid(QString name);
     void changeTimerWithSavedTimer(QString name);
 
-    void initViews();
-    void initConnectionWithViews();
     void setIncorrectRowPawnWith(const bool &value,const std::set<std::pair<int, int>> &pawns);
     void setIncorrectColumnPawnWith(const bool &value,const std::set<std::pair<int, int>> &pawns);
     void setColumnWith(const bool &value, std::set<int> columns);
@@ -49,12 +50,11 @@ private:
     int _newSize = 6;
     Difficulty _newDifficulty = Easy;
 
-    Error * _error;
     NewGame * _newGame;
     Save * _saveDialog;
     Load * _loadDialog;
     Option * _option;
-
+    Information * _information;
     QString _saveName;
     QString _loadName;
 
@@ -63,8 +63,8 @@ private:
     int _indicatorSize = 0;
     QSettings * _save;
 
-    PawnDesign _pawnDesign = PawnDesign::BrightCircle;
-    PawnDesign _newPawnDesign = PawnDesign::BrightCircle;
+    PawnDesign _pawnDesign = PawnDesign::BrightSquare;
+    PawnDesign _newPawnDesign = PawnDesign::BrightSquare;
 
 
     Qt::CheckState _needHelpIncorrectInRowColumn = Qt::CheckState::Checked;

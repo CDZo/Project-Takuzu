@@ -10,13 +10,9 @@
 Presenter::Presenter()
 {
     initViews();
-
     initNewGrid(6,Easy);
-    //_newGame->setModal(true);
-
     initConnectionWithModel();
     initConnectionWithViews();
-
 }
 
 
@@ -26,7 +22,7 @@ Presenter::~Presenter()
     delete _model;
     delete [] _indicators;
     delete _view;
-    delete _error;
+    delete _information;
     delete _newGame;
     delete _saveDialog;
     delete _loadDialog;
@@ -46,10 +42,7 @@ Pawn * Presenter::initVisualPawnWith(const int & gridSize,const Difficulty & dif
         filePath += "_hard.txt";
         break;
     }
-    //std::cout<<filePath.toStdString()<<std::endl<<std::flush;
-
     QString grid = "";
-
     QFile file(filePath);
 
     if (file.open(QIODevice::ReadOnly)){
@@ -79,16 +72,16 @@ Pawn * Presenter::initVisualPawnWith(const int & gridSize,const Difficulty & dif
             }
 
         }
-        //std::cout<<_gridSize<<std::endl<<std::flush;
-        //std::cout<<grid.toStdString()<<std::endl<<std::flush;
         file.close();
         return pawnGrid;
     }
     else {
-        std::cout<<"Error opening file"<<std::endl<<std::flush;
+        _view->stopMetronome();
+        _information->setInformationTextWith(tr("Error opening file"));
+        _information->exec();
+        _view->startMetronome();
         return pawnGrid;
     }
-
 }
 
 void Presenter::saveGrid(QString name)
@@ -113,7 +106,8 @@ void Presenter::loadSavedGame(QString name)
         changeTimerWithSavedTimer(name);
     }
     else {
-        _error->exec();
+        _information->setInformationTextWith(tr("Incorrect file name"));
+        _information->exec();
     }
 }
 
@@ -170,7 +164,6 @@ void Presenter::initNewGrid(const int &size, const Difficulty &difficulty)
     for(int i = 0; i < _gridSize*_gridSize;i++) {
         _visualPawns[i].setMinimumSize(45,45);
         _visualPawns[i].changeDesignWith(new Pawn::BrightSquare);
-        //_visualPawns[i].setFixedSize(32,32);
         connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
         _visualPawns[i].setId(i);
     }
@@ -332,9 +325,9 @@ void Presenter::initViews()
 
     _loadDialog = new Load;
 
-    _error = new Error;
-
     _option = new Option;
+
+    _information = new Information;
 }
 
 void Presenter::initConnectionWithViews()
@@ -476,10 +469,13 @@ void Presenter::onGameFinished()
     for(int i =0; i< _gridSize*_gridSize;i++) {
         _visualPawns[i].setLock(true);
     }
-
     _view->stopMetronome();
     _view->update();
-    _view->setStatusBarTextWith(tr("You Won !! (＾▽＾)"));
+    QString information(_view->getChronometerTime());
+
+    _information->setInformationTextWith("You Won !! (＾▽＾) ");
+    _information->exec();
+
 
 }
 
