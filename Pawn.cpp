@@ -7,7 +7,7 @@ Pawn::~Pawn()
 
 Pawn::Pawn(QWidget *parent) : QWidget(parent)
 {
-    _design = new BrightCircle;
+    _design = new BrightSquare;
 
 }
 
@@ -118,6 +118,9 @@ void Pawn::changeDesignWith(const PawnDesign &design)
         break;
     case PawnDesign::DarkCircle:
         changeDesignWith(new  Pawn::DarkCircle);
+        break;
+    case PawnDesign::DarkSquare:
+        changeDesignWith(new Pawn::DarkSquare);
         break;
     }
     update();
@@ -268,7 +271,7 @@ void Pawn::BrightSquare::displayLockPawn(Pawn *pawn)
         int diameterX = pawn->width()-2*marginX;
         int diameterY = pawn->height() -2*marginY;
 
-        painter.drawEllipse(marginX, marginY, diameterX, diameterY);
+        painter.drawRect(marginX, marginY, diameterX, diameterY);
     }
 }
 
@@ -341,5 +344,77 @@ void Pawn::DarkCircle::displayLockPawn(Pawn *pawn)
         int diameterY = pawn->height() -2*marginY;
 
         painter.drawEllipse(marginX, marginY, diameterX, diameterY);
+    }
+}
+
+Pawn::DarkSquare::DarkSquare()
+{
+
+}
+
+Pawn::DarkSquare::~DarkSquare()
+{
+
+}
+
+void Pawn::DarkSquare::displayEmptyPawn(Pawn *pawn)
+{
+    QPainter painter(pawn);
+    painter.fillRect(pawn->rect(),Qt::black);
+}
+
+void Pawn::DarkSquare::displayWhitePawn(Pawn *pawn)
+{
+    QPainter painter(pawn);
+    QBrush brush(Qt::white);
+    QPen pen(Qt::white);
+    if(pawn->_isFalse) {
+        painter.fillRect(pawn->rect(),Qt::red);
+    } else {
+        painter.fillRect(pawn->rect(),Qt::black);
+    }
+    painter.setBrush(brush);
+    painter.setPen(pen);
+    painter.drawRect(pawn->width()*0.05,pawn->height()*0.05,pawn->width()*0.9,pawn->height()*0.9);
+}
+
+void Pawn::DarkSquare::displayBlackPawn(Pawn *pawn)
+{
+    QPainter painter(pawn);
+    QBrush brush(Qt::black);
+    QPen pen(Qt::gray);
+    if(pawn->_isFalse) {
+        painter.fillRect(pawn->rect(),Qt::red);
+    } else {
+        painter.fillRect(pawn->rect(),Qt::black);
+    }
+    painter.setBrush(brush);
+    painter.setPen(pen);
+    painter.drawRect(pawn->width()*0.05,pawn->height()*0.05,pawn->width()*0.9,pawn->height()*0.9);
+}
+
+void Pawn::DarkSquare::displayLockPawn(Pawn *pawn)
+{
+    if (pawn->_isLock) {
+        QPainter painter(pawn);
+        QBrush brush(Qt::gray);
+        QPen pen(Qt::gray);
+
+        if(pawn->_isFalse) {
+            pen.setColor(Qt::red);
+            brush.setColor(Qt::red);
+        } else {
+            pen.setColor(Qt::gray);
+            brush.setColor(Qt::gray);
+        }
+        painter.setBrush(brush);
+        painter.setPen(pen);
+
+        int marginX = pawn->width() * 0.45;
+        int marginY = pawn->height() * 0.45;
+        int diameterX = pawn->width()-2*marginX;
+        int diameterY = pawn->height() -2*marginY;
+
+        painter.drawRect(marginX, marginY, diameterX, diameterY);
     }
 }

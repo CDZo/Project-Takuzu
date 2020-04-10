@@ -70,6 +70,15 @@ public:
         void displayBlackPawn(Pawn* pawn) override;
         void displayLockPawn(Pawn* pawn) override;
     };
+    class DarkSquare: public IDesign{
+    public:
+        DarkSquare();
+        ~DarkSquare();
+        void displayEmptyPawn(Pawn* pawn) override;
+        void displayWhitePawn(Pawn* pawn) override;
+        void displayBlackPawn(Pawn* pawn) override;
+        void displayLockPawn(Pawn* pawn) override;
+    };
 
 private:
     IDesign* _design;
