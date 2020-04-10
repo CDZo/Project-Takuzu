@@ -155,15 +155,16 @@ void Presenter::initNewGrid(const int &size, const Difficulty &difficulty)
     _gridSize = size;
     _indicatorSize = 2* _gridSize;
     _visualPawns = initVisualPawnWith(_gridSize,difficulty);
-    _indicators = initNewIndicator(_gridSize);
 
     _model = new ModelTakuzu(this);
     _model->initGrid(_gridSize,_visualPawns);
 
+    _indicators = initNewIndicator(_gridSize);
     for(int i = 0; i < _indicatorSize;i++) {
         _indicators[i].setSubject(_model);
         _model->addObserver(&_indicators[i]);
         _indicators[i].setMinimumSize(45,45);
+        _indicators[i].setVisible(_needHelpIndicator == Qt::CheckState::Checked);
     }
 
     for(int i = 0; i < _gridSize*_gridSize;i++) {
@@ -173,6 +174,7 @@ void Presenter::initNewGrid(const int &size, const Difficulty &difficulty)
         connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
         _visualPawns[i].setId(i);
     }
+
 
     _view->loadUi(_gridSize,_visualPawns,_indicators);
 }
@@ -204,6 +206,7 @@ void Presenter::replaceWithNewGrid(const int &size, const Difficulty &difficulty
         _indicators[i].setSubject(_model);
         _model->addObserver(&_indicators[i]);
         _indicators[i].setMinimumSize(45,45);
+        _indicators[i].setVisible(_needHelpIndicator == Qt::CheckState::Checked);
     }
     for(int i = 0; i < _gridSize*_gridSize;i++) {
         _visualPawns[i].setMinimumSize(45,45);
@@ -212,6 +215,7 @@ void Presenter::replaceWithNewGrid(const int &size, const Difficulty &difficulty
         connect(&_visualPawns[i],SIGNAL(onClicked(int,State)),this,SLOT(onPawnClicked(int, State)));
         _visualPawns[i].setId(i);
     }
+
     _view->reloadUi(_gridSize,_visualPawns,_indicators);
 }
 
@@ -230,6 +234,7 @@ void Presenter::replaceGrid(const int &size, Pawn *pawns)
         _indicators[i].setSubject(_model);
         _model->addObserver(&_indicators[i]);
         _indicators[i].setMinimumSize(45,45);
+        _indicators[i].setVisible(_needHelpIndicator == Qt::CheckState::Checked);
     }
     for(int i = 0; i < _gridSize*_gridSize;i++) {
         _visualPawns[i].setMinimumSize(45,45);
@@ -240,8 +245,6 @@ void Presenter::replaceGrid(const int &size, Pawn *pawns)
     }
     _view->reloadUi(_gridSize,_visualPawns,_indicators);
 }
-
-
 
 Pawn *Presenter::loadSavedGrid(QString name)
 {
@@ -349,6 +352,7 @@ void Presenter::initConnectionWithViews()
     connect(_loadDialog,SIGNAL(loadNameChanged(QString)),this,SLOT(onReceivingLoadName(QString)));
 
     connect(_option,SIGNAL(pawnDesignChanged(PawnDesign)),this,SLOT(onDesignChanged(PawnDesign)));
+    connect(_option,SIGNAL(helpIndicator(Qt::CheckState)),this,SLOT(onHelpIndicator(Qt::CheckState)));
     connect(_option,SIGNAL(helpIncorrectInRowColumn(Qt::CheckState)),this,SLOT(onHelpIncorrectInRowColumn(Qt::CheckState)));
     connect(_option,SIGNAL(helpUnbalancedRowColumn(Qt::CheckState)),this,SLOT(onHelpUnbalancedRowColumn(Qt::CheckState)));
     connect(_option,SIGNAL(helpIdenticalRowColumn(Qt::CheckState)),this,SLOT(onHelpIdenticalRowColumn(Qt::CheckState)));
@@ -387,7 +391,12 @@ void Presenter::setRowWith(const bool &value, std::set<int> rows)
     }
 }
 
-
+void Presenter::setIndicatorVisibilityTo(bool value)
+{
+    for (int i = 0; i< _indicatorSize;i++) {
+        _indicators[i].setVisible(value);
+    }
+}
 
 void Presenter::onPawnClicked(const int & id, const State & state)
 {
@@ -474,10 +483,7 @@ void Presenter::onGameFinished()
 
 }
 
-
-
-
-void Presenter::onReceivingNewSize(int index){
+void Presenter::onReceivingNewSize(int index){ 
     switch (index){
     case 0:
         _newSize=6;
@@ -490,6 +496,7 @@ void Presenter::onReceivingNewSize(int index){
         break;
     }
 }
+
 void Presenter::onReceivingNewDifficulty(int index){
     switch (index){
     case 0:
@@ -501,6 +508,32 @@ void Presenter::onReceivingNewDifficulty(int index){
     }
 }
 
+void Presenter::onDesignChanged(PawnDesign design)
+{
+    _newPawnDesign = design;
+}
+
+void Presenter::onHelpIndicator(Qt::CheckState state)
+{
+    _newHelpIndicator = state;
+}
+
+void Presenter::onHelpIncorrectInRowColumn(Qt::CheckState state)
+{
+    _newHelpIncorrectInRowColumn = state;
+}
+
+void Presenter::onHelpUnbalancedRowColumn(Qt::CheckState state)
+{
+    _newHelpUnbalancedRowColumn = state;
+}
+
+void Presenter::onHelpIdenticalRowColumn(Qt::CheckState state)
+{
+    _newHelpIdenticalRowColunm = state;
+}
+
+
 void Presenter::onPressedNew() {
     int playerNeedNewGrid = _newGame->exec();
     if(playerNeedNewGrid) {
@@ -508,61 +541,39 @@ void Presenter::onPressedNew() {
         _view->setStatusBarTextWith("");
     }
 }
-
-void Presenter::onPressedOption()
-{
-    int playerWantOption = _option->exec();
-    if (playerWantOption) {
-        _pawnDesign = _newPawnDesign;
-        changeAllPawnDesignWith(_pawnDesign);
-        _needHelpIncorrectInRowColumn = _newHelpIncorrectInRowColumn;
-        _needHelpUnbalancedRowColumn = _newHelpUnbalancedRowColumn;
-        _needHelpIdenticalRowColunm = _newHelpIdenticalRowColunm;
-        resetFalsePawns();
-
-        _model->rulesLoop();
+void Presenter::onPressedLoad() {
+    int playerNeedLoad = _loadDialog->exec();
+    if(playerNeedLoad) {
+        loadSavedGame(_loadName);
     }
 }
-
-void Presenter::onDesignChanged(PawnDesign design)
-{
-    _newPawnDesign = design;
-}
-
-void Presenter::onHelpIncorrectInRowColumn(Qt::CheckState state)
-{
-    _newHelpIncorrectInRowColumn = state;
-    std::cout<<"onHelpIncorrectInRowColumn :"<< state <<std::endl<<std::flush;
-}
-
-void Presenter::onHelpUnbalancedRowColumn(Qt::CheckState state)
-{
-    _newHelpUnbalancedRowColumn = state;
-    std::cout<<"onHelpUnbalancedRowColumn :"<< state <<std::endl<<std::flush;
-}
-
-void Presenter::onHelpIdenticalRowColumn(Qt::CheckState state)
-{
-    _newHelpIdenticalRowColunm = state;
-    std::cout<<"onHelpIdenticalRowColumn :"<< state <<std::endl<<std::flush;
-}
-
 
 void Presenter::onPressedSave() {
     int playerNeedSave = _saveDialog->exec();
     if(playerNeedSave) {
         saveGrid(_saveName);
     }
-    std::cout<<"code retrieve after execution :"<< playerNeedSave<<std::endl<<std::flush;
 }
 
-void Presenter::onPressedLoad() {
-    int playerNeedLoad = _loadDialog->exec();
-    if(playerNeedLoad) {
-        loadSavedGame(_loadName);
+
+void Presenter::onPressedOption()
+{
+    int playerWantOption = _option->exec();
+    if (playerWantOption) {
+        _pawnDesign = _newPawnDesign;
+        _needHelpIncorrectInRowColumn = _newHelpIncorrectInRowColumn;
+        _needHelpUnbalancedRowColumn = _newHelpUnbalancedRowColumn;
+        _needHelpIdenticalRowColunm = _newHelpIdenticalRowColunm;
+        _needHelpIndicator = _newHelpIndicator;
+
+        changeAllPawnDesignWith(_pawnDesign);
+        setIndicatorVisibilityTo(_needHelpIndicator == Qt::CheckState::Checked);
+        resetFalsePawns();
+
+        _model->rulesLoop();
     }
-    std::cout<<"code retrieve after execution :"<< playerNeedLoad<<std::endl<<std::flush;
 }
+
 
 void Presenter::onReceivingSaveName(QString text){
     _saveName=text;

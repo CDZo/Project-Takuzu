@@ -32,12 +32,14 @@ private:
     void replaceGrid(const int & size, Pawn* pawns);
     Pawn * loadSavedGrid(QString name);
     void changeTimerWithSavedTimer(QString name);
+
     void initViews();
     void initConnectionWithViews();
     void setIncorrectRowPawnWith(const bool &value,const std::set<std::pair<int, int>> &pawns);
     void setIncorrectColumnPawnWith(const bool &value,const std::set<std::pair<int, int>> &pawns);
     void setColumnWith(const bool &value, std::set<int> columns);
     void setRowWith(const bool &value, std::set<int> rows);
+    void setIndicatorVisibilityTo(bool value);
 private:
 
     View *_view;
@@ -64,14 +66,19 @@ private:
     PawnDesign _pawnDesign = PawnDesign::BrightCircle;
     PawnDesign _newPawnDesign = PawnDesign::BrightCircle;
 
-    Qt::CheckState _needHelpIncorrectInRowColumn = Qt::CheckState::Unchecked;
-    Qt::CheckState _newHelpIncorrectInRowColumn = Qt::CheckState::Unchecked;
+
+    Qt::CheckState _needHelpIncorrectInRowColumn = Qt::CheckState::Checked;
+    Qt::CheckState _newHelpIncorrectInRowColumn = Qt::CheckState::Checked;
 
     Qt::CheckState _needHelpUnbalancedRowColumn = Qt::CheckState::Unchecked;
     Qt::CheckState _newHelpUnbalancedRowColumn = Qt::CheckState::Unchecked;
 
     Qt::CheckState _needHelpIdenticalRowColunm = Qt::CheckState::Unchecked;
     Qt::CheckState _newHelpIdenticalRowColunm = Qt::CheckState::Unchecked;
+
+
+    Qt::CheckState _needHelpIndicator = Qt::CheckState::Checked;
+    Qt::CheckState _newHelpIndicator = Qt::CheckState::Checked;
 
 
 public slots:
@@ -98,6 +105,7 @@ public slots:
     void onPressedOption();
 
     void onDesignChanged(PawnDesign design);
+    void onHelpIndicator(Qt::CheckState state);
     void onHelpIncorrectInRowColumn(Qt::CheckState state);
     void onHelpUnbalancedRowColumn(Qt::CheckState state);
     void onHelpIdenticalRowColumn(Qt::CheckState state);

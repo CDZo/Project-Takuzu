@@ -19,12 +19,13 @@ signals:
     void helpIncorrectInRowColumn(Qt::CheckState state);
     void helpUnbalancedRowColumn(Qt::CheckState state);
     void helpIdenticalRowColumn(Qt::CheckState state);
-
+    void helpIndicator(Qt::CheckState state);
 private slots:
     void onDesignChanged(int design);
     void onIncorrectInRowColumn(int state);
     void onUnbalancedRowColumn(int state);
     void onIdenticalRowColumn(int state);
+    void onIndicatorChanged(int state);
 
 private:
     Ui::Option *ui;
