@@ -67,7 +67,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionSave">
    <property name="text">
-    <string>&amp;Save</string>
+    <string>&amp;Save...</string>
    </property>
    <property name="toolTip">
     <string>Save your current grid</string>
@@ -78,7 +78,7 @@
   </action>
   <action name="actionOpen">
    <property name="text">
-    <string>&amp;Open</string>
+    <string>&amp;Open...</string>
    </property>
    <property name="toolTip">
     <string>Open a grid</string>
@@ -100,7 +100,7 @@
   </action>
   <action name="actionOption">
    <property name="text">
-    <string>&amp;Option</string>
+    <string>&amp;Option...</string>
    </property>
   </action>
  </widget>
