@@ -23,6 +23,7 @@ public:
 
 private:
     void resetFalsePawns();
+    void changeAllPawnDesignWith(const PawnDesign & newDesign);
     void initConnectionWithModel();
 
     void initNewGrid(const int & size, const Difficulty & difficulty);
@@ -60,6 +61,9 @@ private:
     int _indicatorSize = 0;
     QSettings * _save;
 
+    PawnDesign _pawnDesign = PawnDesign::BrightCircle;
+    PawnDesign _newPawnDesign = PawnDesign::BrightCircle;
+
     Qt::CheckState _needHelpIncorrectInRowColumn = Qt::CheckState::Unchecked;
     Qt::CheckState _newHelpIncorrectInRowColumn = Qt::CheckState::Unchecked;
 
@@ -93,6 +97,7 @@ public slots:
     void onPressedNew();
     void onPressedOption();
 
+    void onDesignChanged(PawnDesign design);
     void onHelpIncorrectInRowColumn(Qt::CheckState state);
     void onHelpUnbalancedRowColumn(Qt::CheckState state);
     void onHelpIdenticalRowColumn(Qt::CheckState state);

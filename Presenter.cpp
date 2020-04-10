@@ -130,6 +130,14 @@ void Presenter::resetFalsePawns()
     _view->update();
 }
 
+void Presenter::changeAllPawnDesignWith(const PawnDesign &newDesign)
+{
+    for(int i = 0; i< _gridSize*_gridSize;i++) {
+        _visualPawns[i].changeDesignWith(newDesign);
+    }
+    _view->update();
+}
+
 void Presenter::initConnectionWithModel()
 {
     connect(this,SIGNAL(pawnChanged(int, State)),_model,SLOT(onPawnChanged(int, State)));
@@ -339,6 +347,7 @@ void Presenter::initConnectionWithViews()
 
     connect(_loadDialog,SIGNAL(loadNameChanged(QString)),this,SLOT(onReceivingLoadName(QString)));
 
+    connect(_option,SIGNAL(pawnDesignChanged(PawnDesign)),this,SLOT(onDesignChanged(PawnDesign)));
     connect(_option,SIGNAL(helpIncorrectInRowColumn(Qt::CheckState)),this,SLOT(onHelpIncorrectInRowColumn(Qt::CheckState)));
     connect(_option,SIGNAL(helpUnbalancedRowColumn(Qt::CheckState)),this,SLOT(onHelpUnbalancedRowColumn(Qt::CheckState)));
     connect(_option,SIGNAL(helpIdenticalRowColumn(Qt::CheckState)),this,SLOT(onHelpIdenticalRowColumn(Qt::CheckState)));
@@ -503,12 +512,20 @@ void Presenter::onPressedOption()
 {
     int playerWantOption = _option->exec();
     if (playerWantOption) {
+        _pawnDesign = _newPawnDesign;
+        changeAllPawnDesignWith(_pawnDesign);
         _needHelpIncorrectInRowColumn = _newHelpIncorrectInRowColumn;
         _needHelpUnbalancedRowColumn = _newHelpUnbalancedRowColumn;
         _needHelpIdenticalRowColunm = _newHelpIdenticalRowColunm;
         resetFalsePawns();
+
         _model->rulesLoop();
     }
+}
+
+void Presenter::onDesignChanged(PawnDesign design)
+{
+    _newPawnDesign = design;
 }
 
 void Presenter::onHelpIncorrectInRowColumn(Qt::CheckState state)
