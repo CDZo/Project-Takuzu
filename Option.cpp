@@ -16,6 +16,7 @@ Option::Option(QWidget *parent) :
     listDesign.insert(PawnDesign::BrightCircle,tr("cercle clair"));
     listDesign.insert(PawnDesign::BrightSquare,tr("carré clair"));
     listDesign.insert(PawnDesign::DarkCircle,tr("cercle foncé"));
+    listDesign.insert(PawnDesign::DarkSquare,tr("carré foncé"));
 
     ui->comboDesign->addItems(listDesign);
     ui->optionPawn->setState(State::Black);
