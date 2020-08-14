@@ -1,6 +1,8 @@
-# Rapport [project Takuzu](https://gitlab.ecole.ensicaen.fr/cdezobry/project_takuzu)
+# Rapport project Takuzu
 + Cédric Dezobry
 + Thibault Laroumagne
+
+Projet réalisé avec QtCreator pour le cours d'interface graphique
 
 ## Fonctionnalitées implémentées parmi celles suggérées :
 + Choix de la taille et du niveau de difficulté
