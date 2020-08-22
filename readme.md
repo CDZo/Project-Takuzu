@@ -1,7 +1,7 @@
 # Rapport project Takuzu
 ![Grille d'une partie de Takuzu](pictures/Takuzu_small.png "Grille d'une partie de Takuzu")
-+ Cédric Dezobry
-+ Thibault Laroumagne
++ Cédric Dezobry (cedric.dezobry@gmail.com)
++ Thibault Laroumagne (tlaroumagne@ecole.ensicaen.fr)
 
 Projet réalisé avec QtCreator 5.14.1 pour le cours d'interface graphique
 
