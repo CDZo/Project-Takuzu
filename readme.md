@@ -1,8 +1,9 @@
 # Rapport project Takuzu
+![Grille d'une partie de Takuzu](pictures/Takuzu_small.png "Grille d'une partie de Takuzu")
 + Cédric Dezobry
 + Thibault Laroumagne
 
-Projet réalisé avec QtCreator pour le cours d'interface graphique
+Projet réalisé avec QtCreator 5.14.1 pour le cours d'interface graphique
 
 ## Fonctionnalitées implémentées parmi celles suggérées :
 + Choix de la taille et du niveau de difficulté
@@ -12,16 +13,16 @@ Projet réalisé avec QtCreator pour le cours d'interface graphique
 + Personnalisation de l'affichage des états des cases
 + Choix libre parmi les aides visuelles
 
-## Fonctionnalitées qui n'ont pas pu l'être:
-+ indication des lignes/colonnes correctes
-+ différents modes d'assistance
-+ Undo/Redo
+## Capture d'écran
+![Grande grille d'une partie de Takuzu](pictures/Takuzu_large.png "Grande grille d'une partie de Takuzu")
+![Popup d'option](pictures/Takuzu_option.png "Popup d'option")
+![Aides visuelles](pictures/Takuzu_erreur.png "Aide visuelles")
 
 ## Les particularités "innovantes"
 + Plusieurs design de pion disponibles.
 + Visualisation du changement de design du pion dans la fenêtre des options
-+ Le chronométre est arrété lors de l'ouverture de popup
-+ Lors du chargement d'une grile sauvegardée, le chronométre est remis a jour
++ Le chronomètre est arrété lors de l'ouverture de popup
++ Lors du chargement d'une grile sauvegardée, le chronomètre est remis a jour
 
 ## La répartition du travail au sein du binome
 
