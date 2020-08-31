@@ -1,4 +1,4 @@
-# Rapport project Takuzu
+# Rapport projet Takuzu
 ![Grille d'une partie de Takuzu](pictures/Takuzu_small.png "Grille d'une partie de Takuzu")
 + Cédric Dezobry (cedric.dezobry@gmail.com)
 + Thibault Laroumagne (tlaroumagne@ecole.ensicaen.fr)
